@@ -71,13 +71,7 @@ BASE_DIR.mkdir(parents=True, exist_ok=True)
 app = FastAPI(title="Dis Dat")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://example.invalid",
-        "https://example.invalid",
-        "http://localhost:5173",
-        "http://localhost:4173",
-        "null",   # Figma plugin UI iframes run from a null origin — needed for the "pull my library" fetch
-    ],
+    allow_origins=[origin.strip() for origin in os.getenv("DISDAT_ALLOWED_ORIGINS", "").split(",") if origin.strip()],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["Authorization", "Content-Type", "stripe-signature"],

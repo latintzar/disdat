@@ -1230,7 +1230,7 @@
         "sha256": "7761a6cd9ff77aa4768a937fc3c84a6bd223555e57c2abf8ea4e95eb0c896f7d"
       }
     ],
-    "changes": "Operator-specific origins, email addresses and paths replaced; explicit startup guard; capture proxy redirects disabled.",
+    "changes": "Operator-specific origins, email addresses and paths replaced; explicit startup guard; operator-configured CORS and static paths; capture proxy redirects disabled.",
     "validation": "offline startup guard and redirect tests; wider security and live service unverified"
   }
 }

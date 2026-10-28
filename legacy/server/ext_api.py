@@ -832,13 +832,13 @@ def media(name: str) -> FileResponse:
     import re as _re
     if not _re.fullmatch(r"[a-z0-9-]+\.(mp4|gif|png)", name):
         raise HTTPException(404, "not found")
-    return FileResponse(f"/path/to/configure")
+    return FileResponse(pathlib.Path(os.getenv("DISDAT_MEDIA_DIR", "/path/to/configure")) / name)
 
 
 @router.get("/ext.zip")
 def ext_zip() -> FileResponse:
     """The public extension build — for smoke tests / direct sideload before (and beside) the Web Store."""
-    return FileResponse("/path/to/configure", media_type="application/zip", filename="disdat-extension.zip")
+    return FileResponse(os.getenv("DISDAT_EXTENSION_ZIP", "/path/to/configure"), media_type="application/zip", filename="disdat-extension.zip")
 
 
 @router.get("/skill", response_class=HTMLResponse)
