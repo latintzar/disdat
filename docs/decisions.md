@@ -13,3 +13,13 @@ Retrospective, 28 October 2026. This records choices made for the initial source
 | Preserve the active website and trace its subset | The visible page retains its authored HTML/CSS demonstrations. Historical copied-engine research/lab code, its dependent Library rows and unused reference demos/media stay in the private original while their redistribution provenance is unresolved. The Library retains fifteen token/spring/UI specimens and local export. The source beta therefore covers a useful working subset of the full Dis Dat estate. | [website](../website/src/DisDat.tsx); [main demonstration](../website/public/research-vision.html); [Library](../website/public/library.html); [export scope](export-scope.md); [provenance](../PROVENANCE.json) |
 
 The original architecture notes in [original](original) preserve the product's earlier implementation work and proposals. The choices above describe this extraction.
+
+## 28 October 2026: portable website and installer
+
+The approved Disdat.dev Home and Download React components now build through the repository's ordinary Vite entry point. Its fonts and product demonstration are local files, with font notices and source hashes retained. The owner's compiled account snapshot and deployment metadata stay outside this export; optional hosted client routes remain in source.
+
+A clone configures its own API and public Supabase client settings. Hosted routes show setup before mounting their auth hooks when those settings are incomplete. Every retained account, billing, referral, MCP and Figma endpoint uses the configured API base. This keeps the original service contracts while making account ownership explicit. Private provider and billing values belong on the recipient's backend.
+
+The installer packager uses a reviewed file/hash manifest rather than copying an arbitrary extension directory. It overrides any private local configuration with a pinned setup-only template. Fixed archive metadata reproduces the current published ZIP byte for byte. Extension updates therefore require reviewing that manifest and hash as well as the code. The 27 runtime source files are unchanged by this website update.
+
+The retained Library uses the same local font families, including its original IBM Plex Mono weights from Google Fonts under IBM's OFL notice. Small-screen controls wrap within their existing specimens, and its closed chat rail stays outside the reading/focus surface. Chat retains its original `/x/labchat` contract with an explicit recipient API base; the default offers setup before a service request. Local token export remains independent of that optional service.

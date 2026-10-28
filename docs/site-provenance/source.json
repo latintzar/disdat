@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-28",
+  "component_source": "Approved Disdat.dev website source",
+  "files": {
+    "website/src/DisDat.tsx": "d0cb9cdd87125d2948da01dca59ef53bbd0b20d8e9c23dfc16251298f636719b",
+    "website/src/Download.tsx": "bebbe8a855280d792f39481251104e006fe606cbaffb7e77cb04ae0c16c4b8c9",
+    "website/public/research-vision.html": "aeb9e60942803fc57063acffc7963e4719c590b97a8cf2cf5beb7b7c0ed282c3"
+  },
+  "font_source": "fonts.json",
+  "download_header_change": "GitHub added alongside Download extension; original layout retained",
+  "copy_change": "Exact supplied H1, direct extension-download body CTAs, shared navbar links and linked footer"
+}

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { clearFromApp, handleAuthCallback, isFromApp, mountAccount, rememberFromApp, signInWithGoogle, supabase } from './auth'
+import { API_BASE, clearFromApp, handleAuthCallback, isFromApp, mountAccount, rememberFromApp, signInWithGoogle, supabase } from './auth'
 
-const INSTALL_URL = '/download'
+const INSTALL_URL = 'https://github.com/latintzar/disdat/releases/latest/download/disdat-extension.zip'
 const SOURCE_URL = 'https://github.com/latintzar/disdat'
-const STRIPE_PRO = 'https://buy.stripe.com/4gMeV68JS8zS14x6Noe3e01'
 const UPDATED = 'May 2026'
 
 // ── Shared shell (header + footer) ──────────────────────────────────────────
@@ -17,28 +16,11 @@ function Shell({ children, wide = false, sourceInstall = false }: { children: Re
             <img src="/favicon-32.png" alt="" width={26} height={26} className="pixelated" style={{ imageRendering: 'pixelated' }} />
             <span className="display font-semibold tracking-tight text-lg">Dis Dat</span>
           </a>
-          <a href={INSTALL_URL} className="bg-[#16110D] text-[#FBF7EE] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#FF5C2A] transition">Install</a>
+          <div className="flex items-center gap-3"><a href={SOURCE_URL} className="text-sm hover:text-[#FF5C2A]">GitHub</a><a href={INSTALL_URL} className="bg-[#16110D] text-[#FBF7EE] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#FF5C2A] transition">Download extension</a></div>
         </div>
       </header>
       <main className={`mx-auto px-5 py-12 md:py-16 ${wide ? 'max-w-5xl' : 'max-w-2xl'}`}>{children}</main>
-      <footer className="border-t border-[#16110D]/10 py-8 px-5">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-sm text-[#16110D]/50">
-          <span className="display">Dis Dat</span>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {sourceInstall ? <>
-              <a href={SOURCE_URL} className="hover:text-[#16110D]">Source</a>
-              <a href={`${SOURCE_URL}/blob/main/docs/configuration.md`} className="hover:text-[#16110D]">Data flow</a>
-              <a href={`${SOURCE_URL}/blob/main/LICENSE`} className="hover:text-[#16110D]">MIT licence</a>
-            </> : <>
-            <a href="/privacy" className="hover:text-[#16110D]">Privacy</a>
-            <a href="/terms" className="hover:text-[#16110D]">Terms</a>
-            <a href="/cookies" className="hover:text-[#16110D]">Cookies</a>
-            <a href="/data-controls" className="hover:text-[#16110D]">Data controls</a>
-            </>}
-            <a href="mailto:peter@disdat.dev" className="hover:text-[#16110D]">peter@disdat.dev</a>
-          </div>
-        </div>
-      </footer>
+      <footer className="border-t border-[#16110D]/10 py-8 px-5 text-center text-sm text-[#16110D]/50"><a href="https://atelierneyra.com">made by atelier neyra</a></footer>
     </div>
   )
 }
@@ -65,6 +47,13 @@ function Legal({ title, children }: { title: string; children: React.ReactNode }
 // ── Get started — light, branded, one job: sign you in then send to /download.
 // Web has no "account" page; subscription is managed inside the Mac app
 // (which opens Stripe Customer Portal directly).
+export function HostedSetup() {
+  return <Shell><h1 className="display text-4xl mb-4">Hosted service setup</h1>
+    <p className="text-[#16110D]/70 mb-6">Connect your own API and Supabase project in website/.env.local to use account and billing pages.</p>
+    <a href="/download" className="text-[#FF5C2A] underline">Download extension</a>
+  </Shell>
+}
+
 export function GetStarted() {
   useEffect(() => {
     let cancelled = false
@@ -138,7 +127,7 @@ function FigmaCard({ setMsg }: { setMsg: (s: string) => void }) {
   const [busy, setBusy] = useState(false)
   const load = async () => {
     const { data: { session } } = await supabase().auth.getSession(); if (!session) return
-    const r = await fetch('https://api.disdat.dev/x/figma/status', { headers: { Authorization: 'Bearer ' + session.access_token } })
+    const r = await fetch(`${API_BASE}/x/figma/status`, { headers: { Authorization: 'Bearer ' + session.access_token } })
     if (r.ok) setSt(await r.json())
   }
   useEffect(() => {
@@ -150,18 +139,18 @@ function FigmaCard({ setMsg }: { setMsg: (s: string) => void }) {
   const connect = async () => {
     setBusy(true)
     const { data: { session } } = await supabase().auth.getSession(); if (!session) { setBusy(false); return }
-    const r = await fetch('https://api.disdat.dev/x/figma/start', { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
+    const r = await fetch(`${API_BASE}/x/figma/start`, { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
     if (r.ok) { const j = await r.json(); window.location.href = j.url }
     else { setMsg('Figma isn’t set up yet — the app credentials are missing.'); setBusy(false) }
   }
   const disconnect = async () => {
     const { data: { session } } = await supabase().auth.getSession(); if (!session) return
-    await fetch('https://api.disdat.dev/x/figma/disconnect', { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
+    await fetch(`${API_BASE}/x/figma/disconnect`, { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
     load()
   }
   const copyKey = async () => {
     const { data: { session } } = await supabase().auth.getSession(); if (!session) return
-    const r = await fetch('https://api.disdat.dev/x/keys', { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
+    const r = await fetch(`${API_BASE}/x/keys`, { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
     if (r.ok) { const j = await r.json(); navigator.clipboard?.writeText(j.key); setMsg('Library key copied — paste it into the DisDat Figma plugin.') }
   }
   const figmaMark = (
@@ -226,12 +215,12 @@ export function Account() {
         const mcpSid = new URLSearchParams(window.location.search).get('mcp_auth')
         if (mcpSid) {
           if (!session) { setState('signedout'); return }
-          const ap = await fetch('https://api.disdat.dev/x/mcp-approve', { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json' }, body: JSON.stringify({ sid: mcpSid }) })
+          const ap = await fetch(`${API_BASE}/x/mcp-approve`, { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json' }, body: JSON.stringify({ sid: mcpSid }) })
           if (ap.ok) { const j = await ap.json(); window.location.replace(j.continue); return }
         }
         if (!session) { setState('signedout'); return }
         setEmail(session.user?.email ?? null)
-        const r = await fetch('https://api.disdat.dev/x/me', { headers: { Authorization: 'Bearer ' + session.access_token } })
+        const r = await fetch(`${API_BASE}/x/me`, { headers: { Authorization: 'Bearer ' + session.access_token } })
         if (r.ok) setMe(await r.json())
         setState('ready')
       } catch (e) { console.warn('account load failed', e); setState('ready') }
@@ -245,7 +234,7 @@ export function Account() {
     try {
       const { data: { session } } = await supabase().auth.getSession()
       if (!session) return
-      const r = await fetch('https://api.disdat.dev/x/redeem', { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json' }, body: JSON.stringify({ code: refIn.trim() }) })
+      const r = await fetch(`${API_BASE}/x/redeem`, { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json' }, body: JSON.stringify({ code: refIn.trim() }) })
       const j = await r.json()
       if (r.ok) { setRefMsg(j.message || 'Done 🎉'); setMe(m => m ? { ...m, plan: j.plan, minutes_left: j.minutes_left, redeemed: true } : m) }
       else setRefMsg(j.detail || 'That didn’t work — check the code.')
@@ -257,7 +246,7 @@ export function Account() {
     try {
       const { data: { session } } = await supabase().auth.getSession()
       if (!session) { window.location.href = '/get-started'; return }
-      const r = await fetch('https://api.disdat.dev/billing/' + which, { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
+      const r = await fetch(`${API_BASE}/billing/` + which, { method: 'POST', headers: { Authorization: 'Bearer ' + session.access_token } })
       const j = await r.json()
       if (j && j.url) window.location.href = j.url
       else setBusy('')
@@ -327,8 +316,8 @@ export function Account() {
           <div className="font-semibold mb-1">Your library, everywhere</div>
           <p className="text-sm text-[#16110D]/60 mb-3">Connect your coding agent to your saved tokens, or feed them into Figma.</p>
           <div className="flex items-center gap-2 mb-2">
-            <span className="mono text-xs bg-[#FBF7EE] border border-[#16110D]/12 rounded-lg px-3 py-2 flex-1 truncate">https://api.disdat.dev/mcp</span>
-            <button onClick={() => navigator.clipboard?.writeText('https://api.disdat.dev/mcp')} className="text-xs font-semibold border border-[#16110D]/15 rounded-lg px-3 py-2 hover:border-[#FF5C2A] hover:text-[#FF5C2A]">Copy MCP address</button>
+            <span className="mono text-xs bg-[#FBF7EE] border border-[#16110D]/12 rounded-lg px-3 py-2 flex-1 truncate">{API_BASE + '/mcp'}</span>
+            <button onClick={() => navigator.clipboard?.writeText(`${API_BASE}/mcp`)} className="text-xs font-semibold border border-[#16110D]/15 rounded-lg px-3 py-2 hover:border-[#FF5C2A] hover:text-[#FF5C2A]">Copy MCP address</button>
           </div>
           <p className="text-xs text-[#16110D]/50">Paste it as a custom MCP in Claude or Codex — it opens this site to authenticate and shows what it can access.</p>
         </div>
@@ -375,37 +364,14 @@ export function AuthCallback() {
 }
 
 // ── Download ────────────────────────────────────────────────────────────────
-export function Download() {
-  return (
-    <Shell sourceInstall>
-      <a href="/" className="mono text-xs text-[#FF5C2A] hover:underline">← Back to home</a>
-      <div className="pt-8 max-w-lg mx-auto text-center">
-        <img src="/icon-1024.png" alt="" width={84} height={84} className="mx-auto rounded-[20px] shadow-lg mb-6" />
-        <h1 className="display text-4xl md:text-5xl font-medium tracking-tight mb-3">Install Dis Dat</h1>
-        <p className="text-[#16110D]/60 mb-8">Your agent sets up the Chrome extension with your Deepgram and Groq or Anthropic keys.</p>
-        <a href={`${SOURCE_URL}#install-with-your-agent`} className="inline-flex bg-[#FF5C2A] text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#16110D] transition">Install with your agent</a>
-        <div className="rounded-2xl border border-[#16110D]/10 bg-white p-6 text-left mt-8">
-          <p className="font-semibold mb-3">Give your agent this instruction</p>
-          <p className="mono text-sm text-[#16110D]/75 break-words">Read {SOURCE_URL}/blob/main/skills/disdat-setup/SKILL.md and set up Dis Dat in own-key mode. Use private local input for my provider keys.</p>
-        </div>
-        <ol className="text-left space-y-3 mt-10">
-          {['Your agent runs setup and doctor, then gives you the generated extension directory.', 'In chrome://extensions, enable Developer mode and load that directory with Load unpacked.', 'Record a page, save the capture locally and give your agent the downloaded file.'].map((t, i) => (
-            <li key={i} className="flex gap-3 items-start text-[15px] text-[#16110D]/75"><span className="mono text-[#FF5C2A] font-semibold">{i + 1}.</span><span>{t}</span></li>
-          ))}
-        </ol>
-        <p className="text-sm text-[#16110D]/60 mt-8">macOS or Linux · Python 3.10+ · desktop Chrome · provider usage billed by your providers</p>
-        <a className="inline-block text-sm text-[#FF5C2A] underline mt-4" href={`${SOURCE_URL}/blob/main/docs/configuration.md`}>Configuration and data flow</a>
-      </div>
-    </Shell>
-  )
-}
+export { Download } from './Download'
 
 export function Privacy() {
   return (
     <Legal title="Privacy Policy">
       <p>Dis Dat turns a screen recording + your voice into feedback for your coding agent. Here's exactly what that involves.</p>
       <h2>What we process</h2>
-      <p>When you record, the app captures <strong>screenshots of your screen, your microphone audio, and your cursor positions</strong>. On stop, that bundle is uploaded to our server (<span className="mono">api.disdat.dev</span>), where your audio is transcribed (Deepgram) and the marked screenshots + transcript are sent to an AI model (Anthropic / OpenRouter) to write your feedback. We store the resulting bundle so the link you paste keeps working.</p>
+      <p>When you record, the app captures <strong>screenshots of your screen, your microphone audio, and your cursor positions</strong>. On stop, that bundle is uploaded to our server (<span className="mono">{API_BASE || "your configured API"}</span>), where your audio is transcribed (Deepgram) and the marked screenshots + transcript are sent to an AI model (Anthropic / OpenRouter) to write your feedback. We store the resulting bundle so the link you paste keeps working.</p>
       <h2>What we keep</h2>
       <p>Your account email (via Google sign-in), your feedback sessions (screenshots, transcript, generated markdown), and basic usage counts for billing. That's it. We don't sell your data, and we don't use your recordings to train models.</p>
       <h2>Your screen is sensitive</h2>

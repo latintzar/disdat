@@ -9,6 +9,7 @@ const P = {
 }
 
 const SOURCE_URL = 'https://github.com/latintzar/disdat'
+const DOWNLOAD_URL = 'https://github.com/latintzar/disdat/releases/latest/download/disdat-extension.zip'
 
 function EyebrowBar() {
   return null
@@ -40,7 +41,7 @@ export default function DisDat() {
 function GlobalStyle() {
   return (
     <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
       .display { font-family: 'Fraunces', serif; font-optical-sizing: auto; }
       .mono { font-family: 'JetBrains Mono', monospace; }
       .pixelated { image-rendering: pixelated; shape-rendering: crispEdges; }
@@ -195,7 +196,7 @@ function Nav() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
   return (
-    <nav className="sticky top-0 z-40">
+    <nav className="disdat-primary-nav sticky top-0 z-40">
       {/* Full-bleed bar background — fades out on scroll. Opacity is a
           compositor-only property, so this never triggers layout/paint jank. */}
       <div
@@ -215,31 +216,16 @@ function Nav() {
       >
         <Logo />
         <div className="hidden md:flex items-center gap-6 text-sm">
-          <a href={SOURCE_URL} className="hover:opacity-60 transition">Source</a>
-          <a href="/download" className="bg-[#16110D] text-[#FBF7EE] px-4 py-2 text-sm rounded-full font-medium hover:bg-[#FF5C2A] transition">Install</a>
+          <a href={SOURCE_URL} className="hover:opacity-60 transition">GitHub</a>
+          <a href={DOWNLOAD_URL} className="bg-[#16110D] text-[#FBF7EE] px-4 py-2 text-sm rounded-full font-medium hover:bg-[#FF5C2A] transition">Download extension</a>
         </div>
         <div className="md:hidden flex items-center gap-4">
-          <a href={SOURCE_URL} className="text-sm hover:opacity-60 transition">Source</a>
-          <a href="/download" className="bg-[#16110D] text-[#FBF7EE] px-4 py-2 rounded-full text-sm font-medium">Install</a>
+          <a href={SOURCE_URL} className="text-sm hover:opacity-60 transition">GitHub</a>
+          <a href={DOWNLOAD_URL} className="bg-[#16110D] text-[#FBF7EE] px-4 py-2 rounded-full text-sm font-medium">Download extension</a>
         </div>
       </div>
     </nav>
   )
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-[#16110D]/10 py-8 px-5 bg-[#FBF7EE]">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm text-[#16110D]/50">
-        <Logo small />
-        <div className="flex flex-wrap gap-x-5 gap-y-2">
-          <a href="/download" className="hover:text-[#16110D]">Install</a>
-          <a href={SOURCE_URL} className="hover:text-[#16110D]">Source</a>
-          <a href={`${SOURCE_URL}/blob/main/docs/configuration.md`} className="hover:text-[#16110D]">Data flow</a>
-          <a href={`${SOURCE_URL}/blob/main/LICENSE`} className="hover:text-[#16110D]">MIT licence</a>
-          <a href="mailto:peter@disdat.dev" className="hover:text-[#16110D]">peter@disdat.dev</a>
-        </div>
-      </div>
-    </footer>
-  )
-}
+function Footer(){return <footer className="border-t border-[#16110D]/10 py-8 px-5 bg-[#FBF7EE] text-center text-sm text-[#16110D]/50"><a href="https://atelierneyra.com">made by atelier neyra</a></footer>}

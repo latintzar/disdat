@@ -274,7 +274,7 @@ def package(args):
     with zipfile.ZipFile(output, "x", zipfile.ZIP_DEFLATED) as archive:
         for path in files:
             archive.write(path, str(Path("disdat") / path.relative_to(ROOT)))
-    print(json.dumps({"path": str(output), "files": len(files), "status": "private_candidate"}, indent=2))
+    print(json.dumps({"path": str(output), "files": len(files), "status": "source_archive"}, indent=2))
 
 
 def main():

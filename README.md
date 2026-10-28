@@ -1,6 +1,6 @@
-# Page context for coding agents
+# Disdat is a browser extension for coding agents.
 
-Record a web page while you point and talk. Dis Dat gives your coding agent your spoken brief alongside the actual DOM, styles, framework state, motion and runtime events you were looking at.
+Point and talk while it records the DOM, styles, framework state, motion and runtime events you are looking at.
 
 Use your own Deepgram key for transcription and choose Groq or Anthropic for the written briefing. Your capture saves as a local JSON file that the agent can unpack and read.
 
@@ -9,6 +9,8 @@ Use your own Deepgram key for transcription and choose Groq or Anthropic for the
 [Website demonstration.](docs/assets/README.md)
 
 ## Install with your agent
+
+[Download the extension](https://github.com/latintzar/disdat/releases/latest/download/disdat-extension.zip) · [Website](https://disdat.dev)
 
 Requirements: Python 3.10+ on macOS or Linux, and desktop Chrome or Chromium. Give your agent this checkout and the [setup skill](skills/disdat-setup/SKILL.md).
 
@@ -48,7 +50,8 @@ Choose the existing hosted path explicitly with `python3 tools/disdat.py setup -
 ## Other tools
 
 - [Token MCP](mcp/README.md): let an agent query a local token library, export CSS/DTCG or use the existing optional Figma path.
-- [Website source](website/README.md): the existing Dis Dat website and product demonstrations.
+- [Website source](website/README.md): the Dis Dat home page, download page and product demonstrations.
+- [Extension packaging](docs/extension-download.md): reproduce the exact unconfigured download from reviewed source files.
 - [Release status](RELEASE-STATUS.md): included source, validation and remaining work.
 - [Provenance](PROVENANCE.json): exact original source commit and copied files.
 - [Export scope](docs/export-scope.md): retained source and historical experiments preserved privately.

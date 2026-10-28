@@ -25,13 +25,18 @@ jobs:
       - name: Python and offline MCP tests
         run: python -m unittest discover -s tests -p 'test_*.py'
       - name: Runtime tests
-        run: node --test tests/runtime.test.cjs
+        run: node --test tests/runtime.test.cjs tests/website.test.mjs
+      - name: Reproduce extension download
+        run: python3 tools/package-extension.py --output "$RUNNER_TEMP/disdat-extension.zip"
       - name: Install website dependencies
         working-directory: website
         run: npm ci
       - name: Build website
         working-directory: website
         run: npm run build
+      - name: Typecheck website
+        working-directory: website
+        run: npx tsc --noEmit
 
   browser:
     runs-on: ubuntu-24.04

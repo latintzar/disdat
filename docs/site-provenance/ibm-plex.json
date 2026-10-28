@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-28",
+  "css_source": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+  "license_source": "https://raw.githubusercontent.com/IBM/plex/master/LICENSE.txt",
+  "license_sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+  "files": [
+    {
+      "weight": "400",
+      "file": "ibm-plex-mono-400.woff2",
+      "source": "https://fonts.gstatic.com/s/ibmplexmono/v20/-F63fjptAgt5VM-kVkqdyU8n1i8q1w.woff2",
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+    },
+    {
+      "weight": "500",
+      "file": "ibm-plex-mono-500.woff2",
+      "source": "https://fonts.gstatic.com/s/ibmplexmono/v20/-F6qfjptAgt5VM-kVkqdyU8n3twJwlBFgg.woff2",
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+    },
+    {
+      "weight": "600",
+      "file": "ibm-plex-mono-600.woff2",
+      "source": "https://fonts.gstatic.com/s/ibmplexmono/v20/-F6qfjptAgt5VM-kVkqdyU8n3vAOwlBFgg.woff2",
+      "sha256": "0d1f0b8d0722224e32e9f28261bdc86c79115be73444ae5eceb73976a1bcdf83"
+    }
+  ]
+}

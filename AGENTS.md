@@ -12,9 +12,12 @@ Validate changes with:
 
 ```sh
 python3 -m unittest discover -s tests -p 'test_*.py'
-node --test tests/runtime.test.cjs
+node --test tests/runtime.test.cjs tests/website.test.mjs
+python3 tools/package-extension.py --output /tmp/disdat-extension.zip
 ```
 
 With Playwright and Chromium installed, `python3 tests/browser_extension.py` loads the real extension and records a fake microphone. It checks same-tab navigation, foreign-tab exclusion, inactive screenshot handling, closed-overlay and Blob privacy, recursive storage redaction, extension-owned download and agent unpack using mocked provider HTTP. Tests use synthetic captures and make zero live provider calls. Live provider calls incur the user's own usage and require their selected account.
 
 Package source with `python3 tools/disdat.py package --out /private/disdat-source.zip`. Packaging includes notices and rejects private configuration found in the selected source. A successful package check is one part of release review; RELEASE-STATUS.md retains the wider scope.
+
+Website work uses ordinary `npm ci`, `npm run build` and `npx tsc --noEmit` inside `website/`. Public settings belong to the recipient; `.env.example` and `website/DEPLOY.md` describe the optional hosted contracts. Preserve the zero-account default and keep provider secrets outside Vite's public settings. The separate installer packager pins reviewed source hashes and setup-only configuration; update its manifest only with a reviewed installer change.

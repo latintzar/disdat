@@ -927,5 +927,45 @@
       "caption": "Website demonstration."
     },
     "packaging": ".github source included in public package allowlist so CI remains in regenerated source archives"
+  },
+  "website_update": {
+    "date": "2026-10-28",
+    "baseline_commit": "ae9f30d003819ebbe1b8394d40b37d076073056a",
+    "source": "approved Disdat.dev Home/Download React components and local font/embed assets",
+    "changes": [
+      "Normal Vite build instead of owner-specific compilation paths",
+      "Download GitHub navbar link",
+      "Recipient-owned hosted settings and guarded account routes",
+      "Portable reviewed-file extension installer packager"
+    ],
+    "runtime_files_unchanged": {
+      "request-mic.js": "1a885277ac093148fecb5a9b945b3a01a80797c550fd3334a09e55113a5e677b",
+      "manifest.json": "3b02f85d8c9a97e32bee6c80520988e4de24c9ebc5e52288208e013a288577ca",
+      "privacy.js": "82c883ae03e1f645df097e5c0347654a324ade2724745f02eac6295233df3932",
+      "icon16.png": "05664bb0aad93e99db7b0d7689c2a4644eb6cbd97408777c0914a0d6e6dee897",
+      "icon32.png": "ce0ec17d02273bfc2e7db0cece50a900a6fbec0735b93c5639702cee0d3d865c",
+      "local-delivery.js": "bdcd4d57ba2cef135b26cd4df338d707bcee8dcac8ddc97b0f41fb60491fe762",
+      "onboarding.js": "1ee39692d99ec3b648a516979b258600620503994e316418c68d1c0931ee1756",
+      "onboarding.html": "f0a4e4e3cd24d7ae33e3c4eeac1c1afa434920253535e1385571e006de4e6dd6",
+      "runtime.js": "00aba88815fce522c6097e5f0be011d175a152d934403632398cbf7c1ac723f1",
+      "background.js": "f322b18516de57990b1310bf61e70fb37600a7e0642d72cdc93bc9b78c920f38",
+      "README.md": "fdc88ee11081d646eb2f938fe7f92f9f2635473a254f87475c77e8d0381bd81d",
+      "inject-main.js": "dc231f9bd9bfc088eb99014f5899f7d0f3863c0cd57076ba6d073e01443d7832",
+      "request-mic.html": "0ef9a435197049f9b51050cafdd42934c2a162425223417d1ab4974f0cccc903",
+      "icon48.png": "36b57f5b9ced6cfae1f3c7bd21a6ee3b864f1080f9ce4bfdd1247810bd78094c",
+      "private-downloads.js": "c20dc3676321ec210204256a505e2b0d97c436179e993ed65b9a56af4d401c2d",
+      "icon128.png": "e2932b894b47f85f5b39a2a9a6f04e05485c3dd887a147eab34c6e579d025308",
+      "inject-hooks.js": "502daf74a7106a558614232c39da0de1d861bc5e3f4b7138c7946aa031380236",
+      "offscreen.js": "2fde172eb192038300c20df87ba8ec99956488da8bb2696e2a1d5fee946adad6",
+      "offscreen.html": "615afc7defdc4c78c08a0fd30bf23112ae280959519d69fac769bc05f0bba752",
+      "content.js": "5581ac9efac5e4813efb781dfe2298c7676b801e55cc9ede472f2b2a60216e1c",
+      "agents/lovable.png": "2e7d15a9884a33d9aada100617356c7678472d00e6e935e78dd02045f969afc1",
+      "agents/github.webp": "38273b3f6a241a75a398e5147dd0b6311b979d19f5dc1f8725cf8795010c4883",
+      "agents/cursor.webp": "728221a6c0a428a740d3f7853fafa94e85d71a7af228bbe3a356054dddd64ceb",
+      "agents/chatgpt.avif": "09f3da470eeeb8917fe5e707ae9cb100666d750057c1bf70852fa0ade99272e0",
+      "agents/claude.avif": "af21bbf25c43ea57ada2546e7ee2e2ff241e3f1ddcda198a3dcf09b748a2f886",
+      "fonts/inter.woff2": "c940764593d0fe5d596be327ca7558855e018039fb78509aa21921fd3644c3e4",
+      "fonts/fraunces.woff2": "2c3287428a81fc670a67e56fd0d87f76ddc0b3ef4f25104c0adc600cf68fe24e"
+    }
   }
 }

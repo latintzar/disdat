@@ -1,0 +1,20 @@
+[
+  {
+    "family": "Fraunces",
+    "css_source": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&display=swap",
+    "binary_source": "https://fonts.gstatic.com/s/fraunces/v38/6NUh8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7hzFUPJH58nib1603gg7S2nfgRYIctxujDg.ttf",
+    "sha256": "3eb6cf0a14feb1876cc464fa093af4e0c5b05dc46dec65619c1d95f2a1ab5aa7"
+  },
+  {
+    "family": "Inter",
+    "css_source": "https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap",
+    "binary_source": "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf",
+    "sha256": "1b08e7fc267a5c7e1d614100f604b83e7e8a0be241f0f288faa2b3ac93a683ba"
+  },
+  {
+    "family": "JetBrains Mono",
+    "css_source": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..600&display=swap",
+    "binary_source": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPQ.ttf",
+    "sha256": "44ce4a84f20d60f24539bd0cef11f79c29e38609e0f8adf18551c9794a5d9dc3"
+  }
+]

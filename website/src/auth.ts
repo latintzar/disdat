@@ -4,19 +4,25 @@
 // Env (Vite, public — anon key only — never service_role):
 //   VITE_SUPABASE_URL
 //   VITE_SUPABASE_ANON_KEY
-//   VITE_API_BASE  (defaults to https://api.disdat.dev)
+//   VITE_API_BASE (recipient-owned API; configure all three settings)
 
 import { createClient, type Session, type SupabaseClient } from '@supabase/supabase-js'
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://xafabacaacgkutrqqmag.supabase.co'
-const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
-export const API_BASE = import.meta.env.VITE_API_BASE || 'https://api.disdat.dev'
+import { resolveHostedConfig } from './hosted-config.mjs'
+export const hostedConfiguration = resolveHostedConfig({
+  VITE_API_BASE: import.meta.env.VITE_API_BASE,
+  VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+  VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY,
+})
+const SUPABASE_URL = hostedConfiguration.supabaseUrl
+const SUPABASE_ANON = hostedConfiguration.supabaseKey
+export const API_BASE = hostedConfiguration.apiBase
 
 let _client: SupabaseClient | null = null
 export function supabase(): SupabaseClient {
   if (_client) return _client
-  if (!SUPABASE_ANON) {
-    console.warn('VITE_SUPABASE_ANON_KEY missing — sign-in will fail until it is set in .env.local')
+  if (!hostedConfiguration.configured) {
+    throw new Error('Configure the recipient-owned hosted service in website/.env.local.');
   }
   _client = createClient(SUPABASE_URL, SUPABASE_ANON, {
     auth: {
