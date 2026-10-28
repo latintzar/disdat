@@ -38,3 +38,7 @@ The Chromium recording proof used a fake microphone and mocked provider response
 ## Local inference recovery
 
 The original WebLLM and Whisper implementation has been reconnected as a separate local runtime mode. It requires an operator-supplied compatible model WASM and downloads model weights after the operator starts recording. Local adapter, privacy and setup tests use mocks. Real GPU inference and transcription quality remain unverified; see `docs/local-models.md` for provenance, licenses and setup.
+
+## Figma importer recovery
+
+The original token-to-Variables plugin is available in `figma-plugin/` with an operator-configurable library origin. DTCG conversion has an offline test. Live Figma and server integration remain unverified.

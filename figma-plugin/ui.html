@@ -1,0 +1,91 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 12px -apple-system, Inter, system-ui, sans-serif; color: var(--figma-color-text, #1e1e1e); background: var(--figma-color-bg, #fff); }
+  .wrap { padding: 14px; display: flex; flex-direction: column; gap: 10px; height: 100vh; }
+  h1 { font: 700 13px -apple-system, system-ui; margin: 0; display: flex; align-items: center; gap: 7px; }
+  h1 i { width: 8px; height: 8px; border-radius: 50%; background: #FF5C2A; }
+  p.sub { margin: 0; color: var(--figma-color-text-secondary, #666); line-height: 1.45; }
+  .tabs { display: flex; gap: 6px; }
+  .tab { flex: 1; border: 1px solid var(--figma-color-border, #e5e5e5); background: var(--figma-color-bg, #fff); border-radius: 6px; padding: 6px; font-weight: 600; cursor: pointer; color: inherit; }
+  .tab.on { background: var(--figma-color-bg-brand, #0d99ff); color: #fff; border-color: transparent; }
+  textarea, input { width: 100%; border: 1px solid var(--figma-color-border, #e5e5e5); border-radius: 6px; padding: 8px; font: 11px ui-monospace, monospace; background: var(--figma-color-bg-secondary, #f5f5f5); color: inherit; resize: vertical; }
+  textarea { flex: 1; min-height: 220px; }
+  .row { display: none; flex-direction: column; gap: 8px; flex: 1; }
+  .row.on { display: flex; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  label { font-weight: 600; color: var(--figma-color-text-secondary, #666); }
+  .btns { display: flex; gap: 8px; }
+  button.go { flex: 1; border: none; background: #FF5C2A; color: #fff; border-radius: 6px; padding: 9px; font-weight: 700; cursor: pointer; }
+  button.ghost { border: 1px solid var(--figma-color-border, #e5e5e5); background: transparent; color: inherit; border-radius: 6px; padding: 9px 12px; cursor: pointer; }
+  .status { font: 11px ui-monospace, monospace; min-height: 16px; color: var(--figma-color-text-secondary, #666); }
+  .status.err { color: #d1372b; }
+  .status.ok { color: #1f9d57; }
+</style>
+
+<div class="wrap">
+  <h1><i></i>DisDat — Import Tokens</h1>
+  <p class="sub">Turns your DisDat token library into real Figma <b>Variables</b> (one “DisDat” collection). Works on any plan. Importing replaces the existing DisDat collection.</p>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="paste">Paste JSON</button>
+    <button class="tab" data-tab="fetch">From my library</button>
+  </div>
+
+  <div class="row on" id="row-paste">
+    <label>DTCG JSON — from the lab’s <b>↗ Export → Figma</b> tab</label>
+    <textarea id="json" placeholder='{ "color": { "surface": { "paper": { "$value": "#FAF7F3", "$type": "color" } } } }'></textarea>
+  </div>
+
+  <div class="row" id="row-fetch">
+    <div class="field"><label>Your HTTPS library server</label><input id="server" placeholder="https://your-server.example"></div>
+    <div class="field"><label>Your library key</label><input id="key" type="password" placeholder="Library key"></div>
+    <p class="sub">Enter your server URL and its allowed domain in the plugin manifest.</p>
+  </div>
+
+  <div class="status" id="status"></div>
+  <div class="btns">
+    <button class="go" id="go">Import as Variables</button>
+    <button class="ghost" id="close">Close</button>
+  </div>
+</div>
+
+<script>
+  let tab = 'paste';
+  const status = (t, cls) => { const s = document.getElementById('status'); s.textContent = t; s.className = 'status' + (cls ? ' ' + cls : ''); };
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    tab = b.dataset.tab;
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
+    document.getElementById('row-paste').classList.toggle('on', tab === 'paste');
+    document.getElementById('row-fetch').classList.toggle('on', tab === 'fetch');
+  }));
+  document.getElementById('close').onclick = () => parent.postMessage({ pluginMessage: { type: 'close' } }, '*');
+  document.getElementById('go').onclick = async () => {
+    try {
+      let dtcg;
+      if (tab === 'paste') {
+        const raw = document.getElementById('json').value.trim();
+        if (!raw) return status('Paste your DTCG JSON first.', 'err');
+        dtcg = raw;
+      } else {
+        const key = document.getElementById('key').value.trim();
+        if (!key) return status('Enter your library key.', 'err');
+        status('Fetching your library…');
+        const server = new URL(document.getElementById('server').value.trim());
+        if (server.protocol !== 'https:' || server.username || server.password || server.pathname !== '/' || server.search || server.hash) return status('Enter an HTTPS server origin.', 'err');
+        const r = await fetch(server.origin + '/x/tokens', { redirect: 'error', headers: { Authorization: 'Bearer ' + key } });
+        if (!r.ok) return status('Could not fetch (' + r.status + '). Check your key.', 'err');
+        dtcg = await r.json();
+      }
+      status('Importing…');
+      parent.postMessage({ pluginMessage: { type: 'import', dtcg } }, '*');
+    } catch (e) { status(String(e && e.message || e), 'err'); }
+  };
+  onmessage = (e) => {
+    const m = e.data.pluginMessage; if (!m) return;
+    if (m.type === 'done') status(`Imported ${m.ok}/${m.total} tokens` + (m.failed && m.failed.length ? ` · ${m.failed.length} skipped` : ' ✓'), m.failed && m.failed.length ? '' : 'ok');
+    if (m.type === 'error') status(m.message, 'err');
+  };
+</script>

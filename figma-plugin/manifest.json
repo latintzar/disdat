@@ -1,0 +1,16 @@
+{
+  "name": "DisDat \u2014 Import Tokens",
+  "id": "disdat-import-tokens",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": [
+    "figma"
+  ],
+  "networkAccess": {
+    "allowedDomains": [
+      "https://example.com"
+    ],
+    "reasoning": "Fetch a token library from the operator-configured HTTPS server."
+  }
+}

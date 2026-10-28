@@ -984,5 +984,15 @@
     "model_library": "operator supplied, excluded from repository",
     "inference_validation": "mocked adapter tests; real GPU and model downloads not exercised",
     "transformers_modification": "One string literal is expressed as concatenated literals with identical runtime value, resolving a GitHub false-positive secret scan on the unmodified upstream model class name."
+  },
+  "figma_plugin_recovery": {
+    "source_commit": "dbac69422281b857b9425ee01bb1876ddbdb7c2c",
+    "original_files": {
+      "code.js": "86be4ac09ab67d433ac108cefc9868a57e22354c5b9563c5bb34f6559b1edc7b",
+      "manifest.json": "d77a20b46c9273d7dafe6515b5ad50a3abc9daaae064e9329a267284624323ef",
+      "ui.html": "2f9589a33c6b39dee373398c8f81c2592e80559850b1e67d30712de6fc9d8845"
+    },
+    "changes": "Owner-configurable HTTPS server, placeholder manifest allowlist, redirect rejection, and import replacement notice.",
+    "validation": "offline DTCG conversion test; no live Figma or server run"
   }
 }

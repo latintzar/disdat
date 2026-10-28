@@ -50,6 +50,7 @@ Choose the existing hosted path explicitly with `python3 tools/disdat.py setup -
 
 ## Other tools
 
+- [Figma token importer](figma-plugin/README.md): import a DTCG library as Figma Variables.
 - [Token MCP](mcp/README.md): let an agent query a local token library, export CSS/DTCG or use the existing optional Figma path.
 - [Website source](website/README.md): the Dis Dat home page, download page and product demonstrations.
 - [Extension packaging](docs/extension-download.md): reproduce the exact unconfigured download from reviewed source files.
