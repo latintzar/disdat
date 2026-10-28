@@ -10,3 +10,10 @@
 .disdat-primary-nav a{white-space:nowrap;flex-shrink:0}.disdat-primary-nav>div.relative{gap:12px}@media(max-width:480px){.disdat-primary-nav>div.relative{padding-left:16px;padding-right:16px}.disdat-primary-nav .display{font-size:20px!important;white-space:nowrap}.disdat-primary-nav>div.relative>div:last-child{gap:12px}.disdat-primary-nav>div.relative>div:last-child a{font-size:13px}.disdat-primary-nav>div.relative>div:last-child a:last-child{padding-left:12px;padding-right:12px;min-height:44px;display:inline-flex;align-items:center}}@media(prefers-reduced-motion:reduce){.disdat-primary-nav *{transition:none!important}}
 
 @font-face{font-family:'Fraunces';font-style:normal;font-weight:400 900;font-display:swap;src:url('/assets/fonts/fraunces.woff2') format('woff2')}@font-face{font-family:'Inter';font-style:normal;font-weight:400 700;font-display:swap;src:url('/assets/fonts/inter.woff2') format('woff2')}@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 600;font-display:swap;src:url('/assets/fonts/jetbrains-mono.woff2') format('woff2')}
+/* Keep the existing navigation and both actions within a 320px viewport. */
+@media (max-width: 380px) {
+  .disdat-primary-nav > div.relative { padding-left: 10px; padding-right: 10px; }
+  .disdat-primary-nav > div.relative > div:last-child { gap: 8px; }
+  .disdat-primary-nav > div.relative > div:last-child a { font-size: 12px; }
+  .disdat-primary-nav > div.relative > div:last-child a:last-child { padding-left: 10px; padding-right: 10px; }
+}
