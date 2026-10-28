@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Hardened Runtime — required for notarization -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <false/>
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <false/>
+    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+    <false/>
+
+    <!-- Screen Recording — drives ScreenCaptureKit -->
+    <!-- Note: the TCC permission must also be granted by the user in System Settings.
+         This entitlement just declares intent for the hardened runtime. -->
+
+    <!-- Accessibility — drives AXUIElement cross-app tree walking -->
+    <!-- No specific entitlement needed for this; requires user to add app
+         in System Settings > Privacy > Accessibility. -->
+
+    <!-- Microphone — for voice notes -->
+    <key>com.apple.security.device.microphone</key>
+    <true/>
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
+
+    <!-- Apple Events — for Safari DOM extraction -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+
+    <!-- Outgoing network (for Chrome CDP Phase 2) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+</dict>
+</plist>

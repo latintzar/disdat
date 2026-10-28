@@ -994,5 +994,208 @@
     },
     "changes": "Owner-configurable HTTPS server, placeholder manifest allowlist, redirect rejection, and import replacement notice.",
     "validation": "offline DTCG conversion test; no live Figma or server run"
+  },
+  "macos_recovery": {
+    "source_commit": "dbac69422281b857b9425ee01bb1876ddbdb7c2c",
+    "original_files": [
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_128x128.png",
+        "sha256": "91626ffe554249991594f3179fc286e3721db5288d9707df05f44b86c15e05bb"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_128x128@2x.png",
+        "sha256": "3d4043ff0257adf4bcb71122017a209e7762e0d408f5198154cc94a5eb8174f9"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_16x16.png",
+        "sha256": "9bde59b3125b8bb17fefaef02f5f6751c86fd3fbda2587e1275625911bf39071"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_16x16@2x.png",
+        "sha256": "f0133769542b576064c0b7f7f46fb16a50266942c0cdb8cadf0b5f6408d0a071"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_256x256.png",
+        "sha256": "3d4043ff0257adf4bcb71122017a209e7762e0d408f5198154cc94a5eb8174f9"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_256x256@2x.png",
+        "sha256": "93d78b18bd70429b2afa86ea87ea521af2d44c16909fe0975d46b6a94740a3e2"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_32x32.png",
+        "sha256": "f0133769542b576064c0b7f7f46fb16a50266942c0cdb8cadf0b5f6408d0a071"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_32x32@2x.png",
+        "sha256": "13037bba4eed30d4c95ea823575daa55c5eec728677b8e5b99e3b7a8fbc4bfd8"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_512x512.png",
+        "sha256": "93d78b18bd70429b2afa86ea87ea521af2d44c16909fe0975d46b6a94740a3e2"
+      },
+      {
+        "path": "app/Resources/AppIcon.iconset/icon_512x512@2x.png",
+        "sha256": "4648e3b2d62a65d84b668711ba6c0bd5c32db9fa7235b287823dff3e644c206f"
+      },
+      {
+        "path": "app/Resources/Info.plist",
+        "sha256": "65d1bd007c5c7a2df65865afbd855bf7e62e8b96fc4103fa711f66f7191bab2a"
+      },
+      {
+        "path": "app/Resources/entitlements.plist",
+        "sha256": "b4d2979e28e0ae7c9179583558a9a8271277affbc2ce59d79d4987c4f0233522"
+      },
+      {
+        "path": "app/Sources/AudioEngine.swift",
+        "sha256": "f0de61c324a7692ca24f9571c1ff89de3781cf9e9e9bff3d0783d148880ceb4d"
+      },
+      {
+        "path": "app/Sources/AuthSession.swift",
+        "sha256": "93ffc486e53324891cf0f828671ef104eda19975bd9c3027cc3bb8f002885c9f"
+      },
+      {
+        "path": "app/Sources/FeedbackSession.swift",
+        "sha256": "2a20d47aa380694f9f74747db31ba100ccddb899946e30c25ee2449150ce3703"
+      },
+      {
+        "path": "app/Sources/KeyTap.swift",
+        "sha256": "c0117cd80de951f4b1806b8f30d6660cecfaff8a27ebac6c2f19714e08d98f75"
+      },
+      {
+        "path": "app/Sources/MouseTracker.swift",
+        "sha256": "80201655458aa96c86e389102373d43bd626675eb8faabfb264a3d36aa5d9b1e"
+      },
+      {
+        "path": "app/Sources/Playback.swift",
+        "sha256": "50fa1b990cf87fc9b16a940a0571d5c00e791ae878d7418b73637c07ed9c2d8e"
+      },
+      {
+        "path": "app/Sources/RecorderPill.swift",
+        "sha256": "c4f12f6c7571be4d25758e54193e08151f9dacab134d30ec9985af3cbe49a114"
+      },
+      {
+        "path": "app/Sources/ScreenCapture.swift",
+        "sha256": "cd37e4d89123ff5d169507a70a68709da41306eef9e692e0716ed5dbf76eeece"
+      },
+      {
+        "path": "app/Sources/Shortcut.swift",
+        "sha256": "9275ee94b5f54027256e9aee16ee613767139d479b38289c23e12216a372a093"
+      },
+      {
+        "path": "app/Sources/Store.swift",
+        "sha256": "564f86cb1147163acb3466514c99d4de1aacec2b270cfa39b91a15667e48e96b"
+      },
+      {
+        "path": "app/Sources/UI.swift",
+        "sha256": "ac7e435cbe729c2852bbc119462f346f584c48a7f6ac8d004eb5d21d0963bf0c"
+      },
+      {
+        "path": "app/Sources/Updater.swift",
+        "sha256": "d88527016ec40607c82694d7a9fed522529944d8380a8b7fd1baeb455062a645"
+      },
+      {
+        "path": "app/Sources/Uploader.swift",
+        "sha256": "a1930b5a879d3533f20a6fe8ea2d1d06edd021df3c14ae3b5f519eab1b257047"
+      },
+      {
+        "path": "app/Sources/WaveformView.swift",
+        "sha256": "7b701a9edb007fb5f74120e9a28534a5310fd6c08bc8a2eed05c153bc8f74f18"
+      },
+      {
+        "path": "app/Sources/main.swift",
+        "sha256": "1b32631bb604805a59654e4b5ea0c89327a5a42f604900fe66f21db7dd288862"
+      },
+      {
+        "path": "app/dmg/make-bg.swift",
+        "sha256": "632051082abd809a45073c40a8c0f27660d15a3004d3b0b69959dc4e058679ad"
+      },
+      {
+        "path": "app/icon/make-icon.swift",
+        "sha256": "3aacc80e060b98febb358af24bb6c26366a51f4321179f6dbbd1e8f77973c9cd"
+      },
+      {
+        "path": "macos/SmartCapture/App/AppState.swift",
+        "sha256": "7dd83f8c44bd5f2a07661b43f8b2c1d88cdb8a68e9fccab83ca0663e3901db48"
+      },
+      {
+        "path": "macos/SmartCapture/App/SmartCaptureApp.swift",
+        "sha256": "c04dfd1053f3485faf3d239c2559cfa3415cfc73c949530eafbc64a2e9feacef"
+      },
+      {
+        "path": "macos/SmartCapture/Models/AXNode.swift",
+        "sha256": "bcb32a78ee75536134c0c4442bf7fb60cffe5b739441929aea7a0dddd1238c1f"
+      },
+      {
+        "path": "macos/SmartCapture/Models/CapturePackage.swift",
+        "sha256": "88a4cdd59b0aa7667545c75d72329f788e8f662e869ecc36b955179907392cf5"
+      },
+      {
+        "path": "macos/SmartCapture/Resources/Assets.xcassets/AccentColor.colorset/Contents.json",
+        "sha256": "9af65086fa30b49252fae1a1225731691de794f7775af74d71befeb507d12b7c"
+      },
+      {
+        "path": "macos/SmartCapture/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json",
+        "sha256": "a93d059297d6108109bbdf46e8424cb53bb45d141a98de62122c9ab8ec8709b7"
+      },
+      {
+        "path": "macos/SmartCapture/Resources/Assets.xcassets/Contents.json",
+        "sha256": "0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b"
+      },
+      {
+        "path": "macos/SmartCapture/Resources/Info.plist",
+        "sha256": "90829240ebab2d9e9b46bec052c84565c28c131fc480c54d32b787aab079640b"
+      },
+      {
+        "path": "macos/SmartCapture/Services/AccessibilityService.swift",
+        "sha256": "57bb7166b44de4170f196c126bf6bc7f5a2a91877de9b176f5385e2d7bd357fb"
+      },
+      {
+        "path": "macos/SmartCapture/Services/BrowserBridge.swift",
+        "sha256": "0f24339f5bfb37721e8c41a06e9cc571ce70476b8d732d9149b2ce40385a0251"
+      },
+      {
+        "path": "macos/SmartCapture/Services/CapturePackager.swift",
+        "sha256": "904243bb29b17a05bca989e9d20fa94f6c15182d328a1d7862f2d44317a8d852"
+      },
+      {
+        "path": "macos/SmartCapture/Services/CrashReporter.swift",
+        "sha256": "d1a8f1894b7477e7051aad62e626113d1f8fc510fcfc170d3d62d96d81e366fe"
+      },
+      {
+        "path": "macos/SmartCapture/Services/HotkeyService.swift",
+        "sha256": "8894e5173f40a416ee699229ca98c514ca623e8d6da085a876186cc6e74825cc"
+      },
+      {
+        "path": "macos/SmartCapture/Services/ScreenCaptureService.swift",
+        "sha256": "2f314e10f609397ef70b50faf030fec58f29dbf44ac71b76fa446950d73f3f9d"
+      },
+      {
+        "path": "macos/SmartCapture/Views/AnnotationSheet.swift",
+        "sha256": "c7f9bc311893a29222b8d73e3b364bcf1518c2a747aabb44ae930b30b433acb1"
+      },
+      {
+        "path": "macos/SmartCapture/Views/GridPopoverView.swift",
+        "sha256": "237ae548cafbd343d98f24f25ae9710a193a2075b695137680bd9df9d53218c4"
+      },
+      {
+        "path": "macos/SmartCapture/Views/RegionSelectorWindow.swift",
+        "sha256": "9e0559497d5f6a72b1d170462810fb24680fce90022c772dd23f7a5d098ab2e6"
+      },
+      {
+        "path": "macos/SmartCapture.xcodeproj/project.pbxproj",
+        "sha256": "12ccfa2add169ce5e686a86e90e0735e5c724e337038a6c5ba97b5c1aa3d6729"
+      },
+      {
+        "path": "macos/SmartCapture.xcodeproj/xcshareddata/xcschemes/SmartCapture.xcscheme",
+        "sha256": "1b33109f8dd4f1aaef172c03b493fe7d477e059848edda89b9403d0b34d8ae6e"
+      },
+      {
+        "path": "macos/entitlements.plist",
+        "sha256": "0963cee371741ca7fd631d14d71d7d4c52a32e90844cc64627bb0853c1e333a7"
+      }
+    ],
+    "changes": "Operator-configured service origins and auth key; isolated bundle and callback identifiers; automatic update and crash upload disabled; signing and deployment credentials excluded.",
+    "validation": "CI typechecks the recorder; no real Mac capture, live server or distribution signing"
   }
 }

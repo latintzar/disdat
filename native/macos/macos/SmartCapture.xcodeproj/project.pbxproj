@@ -1,0 +1,296 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A001 /* SmartCaptureApp.swift */ = {isa = PBXBuildFile; fileRef = F001 /* SmartCaptureApp.swift */; };
+		A002 /* AppState.swift */ = {isa = PBXBuildFile; fileRef = F002 /* AppState.swift */; };
+		A003 /* HotkeyService.swift */ = {isa = PBXBuildFile; fileRef = F003 /* HotkeyService.swift */; };
+		A004 /* ScreenCaptureService.swift */ = {isa = PBXBuildFile; fileRef = F004 /* ScreenCaptureService.swift */; };
+		A005 /* AccessibilityService.swift */ = {isa = PBXBuildFile; fileRef = F005 /* AccessibilityService.swift */; };
+		A006 /* BrowserBridge.swift */ = {isa = PBXBuildFile; fileRef = F006 /* BrowserBridge.swift */; };
+		A007 /* CapturePackager.swift */ = {isa = PBXBuildFile; fileRef = F007 /* CapturePackager.swift */; };
+		A008 /* RegionSelectorWindow.swift */ = {isa = PBXBuildFile; fileRef = F008 /* RegionSelectorWindow.swift */; };
+		A009 /* GridPopoverView.swift */ = {isa = PBXBuildFile; fileRef = F009 /* GridPopoverView.swift */; };
+		A010 /* AnnotationSheet.swift */ = {isa = PBXBuildFile; fileRef = F010 /* AnnotationSheet.swift */; };
+		A011 /* CapturePackage.swift */ = {isa = PBXBuildFile; fileRef = F011 /* CapturePackage.swift */; };
+		A012 /* AXNode.swift */ = {isa = PBXBuildFile; fileRef = F012 /* AXNode.swift */; };
+		A015 /* CrashReporter.swift */ = {isa = PBXBuildFile; fileRef = F015 /* CrashReporter.swift */; };
+		A013 /* Info.plist */ = {isa = PBXBuildFile; fileRef = F013 /* Info.plist */; };
+		A014 /* Assets.xcassets */ = {isa = PBXBuildFile; fileRef = F014 /* Assets.xcassets */; };
+		/* Frameworks */
+		AF01 /* ScreenCaptureKit.framework */ = {isa = PBXBuildFile; fileRef = FF01 /* ScreenCaptureKit.framework */; };
+		AF02 /* AVFoundation.framework */ = {isa = PBXBuildFile; fileRef = FF02 /* AVFoundation.framework */; };
+		AF03 /* Carbon.framework */ = {isa = PBXBuildFile; fileRef = FF03 /* Carbon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F001 /* SmartCaptureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartCaptureApp.swift; sourceTree = "<group>"; };
+		F002 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		F003 /* HotkeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyService.swift; sourceTree = "<group>"; };
+		F004 /* ScreenCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureService.swift; sourceTree = "<group>"; };
+		F005 /* AccessibilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityService.swift; sourceTree = "<group>"; };
+		F006 /* BrowserBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserBridge.swift; sourceTree = "<group>"; };
+		F007 /* CapturePackager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturePackager.swift; sourceTree = "<group>"; };
+		F008 /* RegionSelectorWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSelectorWindow.swift; sourceTree = "<group>"; };
+		F009 /* GridPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPopoverView.swift; sourceTree = "<group>"; };
+		F010 /* AnnotationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationSheet.swift; sourceTree = "<group>"; };
+		F011 /* CapturePackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapturePackage.swift; sourceTree = "<group>"; };
+		F012 /* AXNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXNode.swift; sourceTree = "<group>"; };
+		F015 /* CrashReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReporter.swift; sourceTree = "<group>"; };
+		F013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F014 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FPROD /* SmartCapture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartCapture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FENT /* entitlements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = entitlements.plist; sourceTree = "<group>"; };
+		/* Frameworks */
+		FF01 /* ScreenCaptureKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenCaptureKit.framework; path = System/Library/Frameworks/ScreenCaptureKit.framework; sourceTree = SDKROOT; };
+		FF02 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		FF03 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BPFR /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF01 /* ScreenCaptureKit.framework */,
+				AF02 /* AVFoundation.framework */,
+				AF03 /* Carbon.framework */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		GROOT /* / */ = {
+			isa = PBXGroup;
+			children = (
+				GAPP /* SmartCapture */,
+				GFWK /* Frameworks */,
+				GPROD /* Products */,
+				FENT /* entitlements.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		GPROD /* Products */ = {
+			isa = PBXGroup;
+			children = (FPROD /* SmartCapture.app */);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		GFWK /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (FF01 /* ScreenCaptureKit.framework */, FF02 /* AVFoundation.framework */, FF03 /* Carbon.framework */);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		GAPP /* SmartCapture */ = {
+			isa = PBXGroup;
+			children = (
+				GAPPFILES /* App */,
+				GSVC /* Services */,
+				GVIEWS /* Views */,
+				GMODELS /* Models */,
+				GRES /* Resources */,
+			);
+			path = SmartCapture;
+			sourceTree = "<group>";
+		};
+		GAPPFILES /* App */ = {
+			isa = PBXGroup;
+			children = (F001 /* SmartCaptureApp.swift */, F002 /* AppState.swift */);
+			path = App;
+			sourceTree = "<group>";
+		};
+		GSVC /* Services */ = {
+			isa = PBXGroup;
+			children = (F003 /* HotkeyService.swift */, F004 /* ScreenCaptureService.swift */, F005 /* AccessibilityService.swift */, F006 /* BrowserBridge.swift */, F007 /* CapturePackager.swift */, F015 /* CrashReporter.swift */);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		GVIEWS /* Views */ = {
+			isa = PBXGroup;
+			children = (F008 /* RegionSelectorWindow.swift */, F009 /* GridPopoverView.swift */, F010 /* AnnotationSheet.swift */);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		GMODELS /* Models */ = {
+			isa = PBXGroup;
+			children = (F011 /* CapturePackage.swift */, F012 /* AXNode.swift */);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		GRES /* Resources */ = {
+			isa = PBXGroup;
+			children = (F013 /* Info.plist */, F014 /* Assets.xcassets */);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		TARGET1 /* SmartCapture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCCL /* Build configuration list for PBXNativeTarget "SmartCapture" */;
+			buildPhases = (
+				BPSRC /* Sources */,
+				BPFR /* Frameworks */,
+				BPRES /* Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = SmartCapture;
+			productInstallPath = "$(HOME)/Applications";
+			productName = SmartCapture;
+			productReference = FPROD /* SmartCapture.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		PROJ /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				ORGANIZATIONNAME = "Leo";
+			};
+			buildConfigurationList = BCCLPROJ /* Build configuration list for PBXProject "SmartCapture" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (en, Base);
+			mainGroup = GROOT /* / */;
+			productRefGroup = GPROD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (TARGET1 /* SmartCapture */);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BPRES /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (A014 /* Assets.xcassets */);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BPSRC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A001 /* SmartCaptureApp.swift */,
+				A002 /* AppState.swift */,
+				A003 /* HotkeyService.swift */,
+				A004 /* ScreenCaptureService.swift */,
+				A005 /* AccessibilityService.swift */,
+				A006 /* BrowserBridge.swift */,
+				A007 /* CapturePackager.swift */,
+				A008 /* RegionSelectorWindow.swift */,
+				A009 /* GridPopoverView.swift */,
+				A010 /* AnnotationSheet.swift */,
+				A011 /* CapturePackage.swift */,
+				A012 /* AXNode.swift */,
+				A015 /* CrashReporter.swift */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BC_DBG /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = entitlements.plist;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = SmartCapture/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.latintzar.smartcapture;
+				PRODUCT_NAME = SmartCapture;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		BC_REL /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = entitlements.plist;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				INFOPLIST_FILE = SmartCapture/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.latintzar.smartcapture;
+				PRODUCT_NAME = SmartCapture;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		BC_PROJ_DBG /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		BC_PROJ_REL /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BCCLPROJ /* Build configuration list for PBXProject "SmartCapture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (BC_PROJ_DBG /* Debug */, BC_PROJ_REL /* Release */);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BCCL /* Build configuration list for PBXNativeTarget "SmartCapture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (BC_DBG /* Debug */, BC_REL /* Release */);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = PROJ /* Project object */;
+}

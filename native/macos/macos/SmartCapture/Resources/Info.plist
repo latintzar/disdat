@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>dev.latintzar.smartcapture</string>
+	<key>CFBundleName</key>
+	<string>Smart Capture</string>
+	<key>CFBundleDisplayName</key>
+	<string>Smart Capture</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleExecutable</key>
+	<string>SmartCapture</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
+	<key>NSScreenRecordingUsageDescription</key>
+	<string>Smart Capture needs Screen Recording permission to capture any area of your screen.</string>
+	<key>NSAccessibilityUsageDescription</key>
+	<string>Smart Capture uses the Accessibility API to extract UI structure from any window, so your AI agent can understand what is on screen.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Smart Capture can record a voice note attached to each capture.</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Smart Capture uses AppleScript to extract the DOM from Safari when capturing browser windows.</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
+</dict>
+</plist>

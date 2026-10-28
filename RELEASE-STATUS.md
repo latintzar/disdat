@@ -42,3 +42,7 @@ The original WebLLM and Whisper implementation has been reconnected as a separat
 ## Figma importer recovery
 
 The original token-to-Variables plugin is available in `figma-plugin/` with an operator-configurable library origin. DTCG conversion has an offline test. Live Figma and server integration remain unverified.
+
+## Native macOS recovery
+
+The later native recorder and earlier SmartCapture prototype are available under `native/macos/`. They use operator-configured endpoints and separate app identifiers; automatic updates and crash uploads are disabled. CI typechecks the recorder source. Physical Mac capture, sign-in, uploads, distribution signing and the older prototype build remain unverified.

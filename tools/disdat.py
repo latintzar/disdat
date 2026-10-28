@@ -22,7 +22,7 @@ ENV_KEYS = ("DEEPGRAM_API_KEY", "GROQ_API_KEY", "ANTHROPIC_API_KEY")
 DEFAULT_MODELS = {"groq": "openai/gpt-oss-20b", "anthropic": "claude-sonnet-4-6"}
 ARTIFACTS = {"core", "dom", "screenshots", "assets", "sources"}
 MARKER = "disdat-private-runtime-v1"
-PUBLIC_DIRS = ("figma-plugin", "extension", "skills", "mcp", "docs", "tools", "tests", "website", "licenses", ".github")
+PUBLIC_DIRS = ("native", "figma-plugin", "extension", "skills", "mcp", "docs", "tools", "tests", "website", "licenses", ".github")
 PUBLIC_FILES = ("README.md", "AGENTS.md", "PROVENANCE.json", "RELEASE-STATUS.md",
                 "disdat.config.example.json", ".env.example", ".gitignore", "LICENSE",
                 "LICENSE.md", "NOTICE", "NOTICE.md", "THIRD-PARTY-NOTICES.md")

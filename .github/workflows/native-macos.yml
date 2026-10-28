@@ -1,0 +1,25 @@
+name: macOS source
+on:
+  push:
+    paths:
+      - 'native/macos/**'
+      - '.github/workflows/native-macos.yml'
+  pull_request:
+    paths:
+      - 'native/macos/**'
+      - '.github/workflows/native-macos.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compile:
+    runs-on: macos-14
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Typecheck native recorder
+        run: |
+          sdk="$(xcrun --sdk macosx --show-sdk-path)"
+          swiftc -sdk "$sdk" -target arm64-apple-macos13.0 -typecheck native/macos/app/Sources/*.swift
