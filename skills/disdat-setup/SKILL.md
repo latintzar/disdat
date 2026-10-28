@@ -7,6 +7,8 @@ description: Install, configure or diagnose the Dis Dat browser extension and un
 
 Use the repository's `tools/disdat.py` rather than creating a provider setup service or editing browser profile databases. Find the checkout from this skill's location and read `docs/configuration.md` for advanced configuration.
 
+For local models, read `docs/local-models.md` and use `python3 tools/disdat.py setup --mode local --model-lib /private/path/to/compatible-model.wasm`. Preserve the separate model-library terms and do not download model weights without the user choosing local recording. Local model availability and quality require hardware validation.
+
 For own keys, select Groq or Anthropic from the user's stated choice or available private provider configuration. The command needs Deepgram plus the selected briefing provider:
 
 ```sh

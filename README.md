@@ -2,7 +2,7 @@
 
 Point and talk while it records the DOM, styles, framework state, motion and runtime events you are looking at.
 
-Use your own Deepgram key for transcription and choose Groq or Anthropic for the written briefing. Your capture saves as a local JSON file that the agent can unpack and read.
+Local mode uses the original on-device Whisper and WebLLM pipeline. You can also select your own Deepgram and Groq or Anthropic keys. The capture saves as local JSON for your coding agent.
 
 ![Dis Dat website demonstration](docs/assets/point-and-talk-1000.png)
 
@@ -14,14 +14,14 @@ Use your own Deepgram key for transcription and choose Groq or Anthropic for the
 
 Requirements: Python 3.10+ on macOS or Linux, and desktop Chrome or Chromium. Give your agent this checkout and the [setup skill](skills/disdat-setup/SKILL.md).
 
-With your provider keys already in a private environment:
+For local models, prepare a compatible operator-supplied model library as described in [local model setup](docs/local-models.md):
 
 ```sh
-python3 tools/disdat.py setup --provider groq
+python3 tools/disdat.py setup --mode local --model-lib /private/path/to/compatible-model.wasm
 python3 tools/disdat.py doctor
 ```
 
-Use `--provider anthropic` to select Anthropic. Keys can also come from `--env-file /private/disdat.env` or hidden local input with `--prompt`. [Configuration](docs/configuration.md) lists the variables and storage locations.
+For cloud providers, keep your keys in a private environment and use `python3 tools/disdat.py setup --provider groq`, or select `--provider anthropic`. Keys can also come from `--env-file /private/disdat.env` or hidden local input with `--prompt`. [Configuration](docs/configuration.md) lists the variables and storage locations.
 
 Load the extension directory printed by setup through `chrome://extensions` → Developer mode → Load unpacked. Allow microphone access at the first recording. These browser permissions remain under your control.
 
@@ -42,10 +42,11 @@ The [capture skill](skills/disdat/SKILL.md) explains the artifact format and how
 
 | Mode | Transcription and briefing | Artifact delivery |
 |---|---|---|
+| Local | On-device Whisper and WebLLM, with model weights downloaded on first use | Local browser download |
 | Own keys | Direct Deepgram plus your selected Groq or Anthropic account | Local browser download |
 | Hosted | Existing Dis Dat sign-in and hosted provider proxy | Existing hosted artifact workflow |
 
-Choose the existing hosted path explicitly with `python3 tools/disdat.py setup --mode hosted`. Provider usage follows the selected account's terms and billing. [Architecture](docs/architecture.md) explains the data flow; [extraction decisions](docs/decisions.md) explain the tradeoffs.
+Choose the existing hosted path explicitly with `python3 tools/disdat.py setup --mode hosted`. Provider usage follows the selected account's terms and billing. [Local model setup](docs/local-models.md) covers its binary and hardware requirements. [Architecture](docs/architecture.md) explains the data flow; [extraction decisions](docs/decisions.md) explain the tradeoffs.
 
 ## Other tools
 

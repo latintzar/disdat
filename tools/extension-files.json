@@ -1,5 +1,5 @@
 {
-  "source_commit": "ae9f30d003819ebbe1b8394d40b37d076073056a",
+  "source_commit": "395525e3d716e49aa3491ce1e472f951ed453861",
   "files": {
     "request-mic.js": "1a885277ac093148fecb5a9b945b3a01a80797c550fd3334a09e55113a5e677b",
     "manifest.json": "3b02f85d8c9a97e32bee6c80520988e4de24c9ebc5e52288208e013a288577ca",
@@ -9,8 +9,8 @@
     "local-delivery.js": "bdcd4d57ba2cef135b26cd4df338d707bcee8dcac8ddc97b0f41fb60491fe762",
     "onboarding.js": "1ee39692d99ec3b648a516979b258600620503994e316418c68d1c0931ee1756",
     "onboarding.html": "f0a4e4e3cd24d7ae33e3c4eeac1c1afa434920253535e1385571e006de4e6dd6",
-    "runtime.js": "00aba88815fce522c6097e5f0be011d175a152d934403632398cbf7c1ac723f1",
-    "background.js": "f322b18516de57990b1310bf61e70fb37600a7e0642d72cdc93bc9b78c920f38",
+    "runtime.js": "a4ab4711579ffd4f411ea64fe7e5bad2b65240769a20838a6838aadca2c9017e",
+    "background.js": "4eed797715636bf83cf262f92e1c41603f05182502c36246e5fb6722ec0a65e0",
     "README.md": "fdc88ee11081d646eb2f938fe7f92f9f2635473a254f87475c77e8d0381bd81d",
     "inject-main.js": "dc231f9bd9bfc088eb99014f5899f7d0f3863c0cd57076ba6d073e01443d7832",
     "request-mic.html": "0ef9a435197049f9b51050cafdd42934c2a162425223417d1ab4974f0cccc903",
@@ -18,25 +18,36 @@
     "private-downloads.js": "c20dc3676321ec210204256a505e2b0d97c436179e993ed65b9a56af4d401c2d",
     "icon128.png": "e2932b894b47f85f5b39a2a9a6f04e05485c3dd887a147eab34c6e579d025308",
     "inject-hooks.js": "502daf74a7106a558614232c39da0de1d861bc5e3f4b7138c7946aa031380236",
-    "offscreen.js": "2fde172eb192038300c20df87ba8ec99956488da8bb2696e2a1d5fee946adad6",
+    "offscreen.js": "fd76946d19098285cccab53188d3cd22fc6097bee90511d2bcb10f20cd964c3d",
     "offscreen.html": "615afc7defdc4c78c08a0fd30bf23112ae280959519d69fac769bc05f0bba752",
-    "content.js": "5581ac9efac5e4813efb781dfe2298c7676b801e55cc9ede472f2b2a60216e1c",
+    "content.js": "666f7c4be9ba278a299f5c32f2a3ed812d4bf5201d4ed5968b683af714882215",
     "agents/lovable.png": "2e7d15a9884a33d9aada100617356c7678472d00e6e935e78dd02045f969afc1",
     "agents/github.webp": "38273b3f6a241a75a398e5147dd0b6311b979d19f5dc1f8725cf8795010c4883",
     "agents/cursor.webp": "728221a6c0a428a740d3f7853fafa94e85d71a7af228bbe3a356054dddd64ceb",
     "agents/chatgpt.avif": "09f3da470eeeb8917fe5e707ae9cb100666d750057c1bf70852fa0ade99272e0",
     "agents/claude.avif": "af21bbf25c43ea57ada2546e7ee2e2ff241e3f1ddcda198a3dcf09b748a2f886",
     "fonts/inter.woff2": "c940764593d0fe5d596be327ca7558855e018039fb78509aa21921fd3644c3e4",
-    "fonts/fraunces.woff2": "2c3287428a81fc670a67e56fd0d87f76ddc0b3ef4f25104c0adc600cf68fe24e"
+    "fonts/fraunces.woff2": "2c3287428a81fc670a67e56fd0d87f76ddc0b3ef4f25104c0adc600cf68fe24e",
+    "local-inference.js": "f4036b475e48ad14cd41bf9564859bccf01a8a9c3ff91bab4b46c0d82ab2e907",
+    "vendor/web-llm.js": "4917bf1b8969ca20a0b74b2773cbc9c14f77ce7427df491cd56c252f9a6070c7",
+    "vendor/transformers.js": "32edfd6e8f3630218c0a9427105448ec9dd22b81ebadf077fec9ad2f8f67736d",
+    "vendor/ort.webgpu.bundle.min.mjs": "2ec70f685749470635e64dd142c2510dc13b37bb593d9cd6ab4f8923e5204479",
+    "vendor/ort-wasm-simd-threaded.jsep.mjs": "522b3769929f5684c83a12cf1e06eedf073b65d161728b4f3757c75d62b14384",
+    "vendor/ort-wasm-simd-threaded.jsep.wasm": "ae61141f8fbf0a4e43fd7b4f4d40a1a115627f6facc4f33ddf84074a655e33ea"
   },
   "manifest_version": "0.30.0",
-  "zip_sha256": "cc21586ee000ba265c99ba4af95622c4d9cfeb84c01b5271f8f3fdfbd43aa4c4",
+  "zip_sha256": "09ab02b008101efccd42b614184037d98c1a9e9c790871613dcb6580d93befac",
   "template_files": {
     "LICENSE": "fbbd31cd652b5a98eea06d275bf845949a67301b85d7b03a823d1747aa35182f",
-    "THIRD-PARTY-NOTICES.md": "4c6ea8aa9bcddf8bc4174a3bfdfba2636f52bd09e16ee7a502c69ec641ad74fb",
-    "README.md": "f3f4155bec0063034adfd9785e4edb4d5b7643693fa3f4ffe53584d167f36b6a",
+    "THIRD-PARTY-NOTICES.md": "87c797700abb5d64d4508ad47cf565e28bf21572b51775c18c9c0431b45b489b",
+    "README.md": "6bb8e301913c194d9d8d13479321a7cac55b2839f9531c452f99b27745f65ca3",
     "local-config.template.js": "315c500398b8c0229867b3ac2f25a9bc05f7ec24ab1c075083c08ea516f3d29a",
     "licenses/Inter-OFL.txt": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
-    "licenses/Fraunces-OFL.txt": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b"
-  }
+    "licenses/Fraunces-OFL.txt": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b",
+    "licenses/Apache-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "licenses/ONNXRuntime-MIT.txt": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+    "licenses/loglevel-MIT.txt": "670938953c9a91c1b66881d8b3f1a167276e2f32d05d8ba7d9aebde1d15177e1",
+    "docs/local-models.md": "d2242f1ebd1d182ce7115e773c5ddd1716d578b878c6dcf2fa5d89a31c1fbc9d"
+  },
+  "local_inference_source_commit": "7a587a7fd4e72772d98d4d7a6b8413a469809244"
 }

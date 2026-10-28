@@ -967,5 +967,22 @@
       "fonts/inter.woff2": "c940764593d0fe5d596be327ca7558855e018039fb78509aa21921fd3644c3e4",
       "fonts/fraunces.woff2": "2c3287428a81fc670a67e56fd0d87f76ddc0b3ef4f25104c0adc600cf68fe24e"
     }
+  },
+  "local_inference_recovery": {
+    "source_commit": "7a587a7fd4e72772d98d4d7a6b8413a469809244",
+    "original_path": "apps/disdat/product/ext-pointtalk/vendor",
+    "files": {
+      "ort-wasm-simd-threaded.jsep.mjs": "522b3769929f5684c83a12cf1e06eedf073b65d161728b4f3757c75d62b14384",
+      "ort-wasm-simd-threaded.jsep.wasm": "ae61141f8fbf0a4e43fd7b4f4d40a1a115627f6facc4f33ddf84074a655e33ea",
+      "ort.webgpu.bundle.min.mjs": "2ec70f685749470635e64dd142c2510dc13b37bb593d9cd6ab4f8923e5204479",
+      "transformers.js": "32edfd6e8f3630218c0a9427105448ec9dd22b81ebadf077fec9ad2f8f67736d",
+      "web-llm.js": "4917bf1b8969ca20a0b74b2773cbc9c14f77ce7427df491cd56c252f9a6070c7"
+    },
+    "webllm_version": "0.2.84",
+    "transformers_version": "4.2.0",
+    "onnxruntime_web_version": "1.26.0-dev.20260416-b7804b056c",
+    "model_library": "operator supplied, excluded from repository",
+    "inference_validation": "mocked adapter tests; real GPU and model downloads not exercised",
+    "transformers_modification": "One string literal is expressed as concatenated literals with identical runtime value, resolving a GitHub false-positive secret scan on the unmodified upstream model class name."
   }
 }

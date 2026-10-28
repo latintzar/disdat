@@ -23,7 +23,9 @@ class ExtensionPackageTests(unittest.TestCase):
             self.assertEqual(a.read_bytes(), b.read_bytes())
             self.assertEqual(receipt['sha256'], json.loads((ROOT / 'tools/extension-files.json').read_text())['zip_sha256'])
             with zipfile.ZipFile(a) as archive:
-                self.assertEqual(len(archive.namelist()), 32)
+                lock = json.loads((ROOT / 'tools/extension-files.json').read_text())
+                expected = set(lock['files']) | {('local-config.js' if n == 'local-config.template.js' else n) for n in lock['template_files']}
+                self.assertEqual(len(archive.namelist()), len(expected))
                 self.assertRegex(archive.read('disdat-extension/local-config.js'), rb'mode:[\x22\x27]setup[\x22\x27]')
                 for name in ['LICENSE', 'THIRD-PARTY-NOTICES.md', 'licenses/Inter-OFL.txt', 'licenses/Fraunces-OFL.txt']:
                     self.assertIn('disdat-extension/' + name, archive.namelist())

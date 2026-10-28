@@ -1,10 +1,9 @@
-// Dis Dat — offscreen audio (cloud mode). ONE continuous mic stream + MediaRecorder for
-// the whole recording session, so narration survives page navigations. Transcription
-// (Deepgram) and the crunch (Groq) run in the background worker — no local models here,
-// so nothing taxes the user's GPU. The local WebLLM/Whisper engine lives in git history
-// (v0.4–0.6) for a future capable-machine toggle.
+// One offscreen microphone stream survives page navigation. Local mode lazily loads
+// the recovered WebLLM and Whisper adapters; cloud modes use their selected providers.
 const rlog = (level, tag, data) => { try { chrome.runtime.sendMessage({ type: 'rlog', src: 'offscreen', level, tag, data }); } catch (e) {} };
 let rec = null, chunks = [], stream = null, mime = 'audio/webm', audioSessionId = null, audioGeneration = 0;
+let localEngine;
+function local() { return localEngine ||= import(chrome.runtime.getURL('local-inference.js')); }
 
 chrome.runtime.onMessage.addListener((m, sender, send) => {
   if (!m || m.target !== 'offscreen') return;
@@ -16,9 +15,11 @@ chrome.runtime.onMessage.addListener((m, sender, send) => {
     return false;
   }
   if (m.cmd === 'start') { start(m.sessionId).then(send); return true; }
-  if (m.cmd === 'stop') { stop(m.sessionId).then(send); return true; }
+  if (m.cmd === 'stop') { stop(m.sessionId, m.local).then(send); return true; }
+  if (m.cmd === 'llm-init') { local().then(engine => { engine.warm(); send({ok:true}); }).catch(e => send({error:String(e)})); return true; }
+  if (m.cmd === 'llm-prompt') { local().then(engine => engine.prompt(m.sys, m.input, m.maxTokens)).then(send).catch(e => send({error:String(e)})); return true; }
   if (m.cmd === 'mics') { listMics().then(send); return true; }
-  if (m.cmd === 'llm-status') { send({ ready: true }); return false; } // cloud: nothing to download
+  if (m.cmd === 'llm-status') { local().then(engine => send(engine.status())).catch(e => send({error:String(e)})); return true; }
 });
 
 // list audio inputs for the home-screen mic picker. Labels only appear once the extension origin has
@@ -71,7 +72,7 @@ async function start(sessionId) {
     rlog('error', 'audio-start-fail', { err: String((e && e.name) || e) }); return { error: String((e && e.name) || e) };
   }
 }
-async function stop(sessionId) {
+async function stop(sessionId, useLocal) {
   if (!sessionId || audioSessionId !== sessionId) return { error: 'audio-session-mismatch' };
   const currentRec = rec, currentStream = stream, currentChunks = chunks, currentMime = mime;
   audioGeneration++; audioSessionId = null; rec = null; stream = null; chunks = [];
@@ -80,9 +81,14 @@ async function stop(sessionId) {
     await new Promise(res => { currentRec.onstop = res; try { currentRec.requestData(); } catch (e) {} currentRec.stop(); });
     const blob = new Blob(currentChunks, { type: currentMime || 'audio/webm' });
     if (!blob.size) return { ok: true, audioB64: '', mime: currentMime || 'audio/webm' };
+    let transcription = {};
+    if (useLocal) {
+      try { transcription = await (await local()).transcribe(blob); }
+      catch (e) { transcription = {asrErr: String(e.message || e)}; }
+    }
     const b = new Uint8Array(await blob.arrayBuffer());
     let s = ''; for (let i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
-    return { ok: true, audioB64: btoa(s), mime: currentMime || 'audio/webm' };
+    return { ok: true, audioB64: btoa(s), mime: currentMime || 'audio/webm', ...transcription };
   } catch (e) { return { error: String(e) }; }
   finally { try { currentStream?.getTracks().forEach(t => t.stop()); } catch (e) {} }
 }

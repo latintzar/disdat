@@ -3,7 +3,7 @@
 (function (root) {
   'use strict';
   const input = root.DISDAT_CONFIG || {};
-  const mode = ['byok', 'hosted'].includes(input.mode) ? input.mode : 'setup';
+  const mode = ['byok', 'hosted', 'local'].includes(input.mode) ? input.mode : 'setup';
   const llmProvider = ['groq', 'anthropic'].includes(input.llmProvider) ? input.llmProvider : '';
   const defaults = { groq: 'openai/gpt-oss-20b', anthropic: 'claude-sonnet-4-6' };
   const config = Object.freeze({
@@ -21,7 +21,7 @@
       if (!config.llmKey) missing.push(llmProvider === 'anthropic' ? 'ANTHROPIC_API_KEY' : 'GROQ_API_KEY');
     }
     return { mode, ready: missing.length === 0, provider: llmProvider || null,
-      model: config.llmModel || null, missing, delivery: mode === 'byok' ? 'local-file' : 'hosted' };
+      model: config.llmModel || null, missing, delivery: mode === 'hosted' ? 'hosted' : 'local-file' };
   }
   root.DisdatRuntime = Object.freeze({ config, status });
 })(typeof self === 'undefined' ? globalThis : self);

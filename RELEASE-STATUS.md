@@ -33,3 +33,8 @@ CI is configured for thirteen Python tests (seven CLI, two offline MCP and four 
 ## Acceptance limits
 
 The Chromium recording proof used a fake microphone and mocked provider responses. It exercised real extension recording, navigation, privacy boundaries, download and agent unpacking with zero live provider calls. Human microphone/device behaviour, physical-browser microphone/clipboard permissions and selected-account authentication remain untested real-world acceptance checks. These are separate from the passing offline and browser-fixture checks.
+
+
+## Local inference recovery
+
+The original WebLLM and Whisper implementation has been reconnected as a separate local runtime mode. It requires an operator-supplied compatible model WASM and downloads model weights after the operator starts recording. Local adapter, privacy and setup tests use mocks. Real GPU inference and transcription quality remain unverified; see `docs/local-models.md` for provenance, licenses and setup.

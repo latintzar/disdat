@@ -5,8 +5,8 @@ Dis Dat records a spoken reaction and page facts on one time-correlated timeline
 1. `extension/inject-hooks.js` and `inject-main.js` run in the page's main world to observe framework state, listeners, network response shapes and runtime behaviour.
 2. `content.js` gathers pointer/interaction evidence, styles, DOM, animations, assets, screenshots and the page context. It relates those facts to the spoken remarks.
 3. `background.js` coordinates the session and the offscreen microphone document. Session state survives a Chrome service-worker restart through `chrome.storage.session`.
-4. The existing Deepgram adapter transcribes the audio. Own-key mode leaves live browser speech recognition inactive, so it uses this selected transcription path. The selected Groq or Anthropic adapter turns the transcript and bounded page facts into a briefing.
-5. Own-key mode uses `local-delivery.js` to build one JSON bundle. Background sends it to the extension-owned offscreen document, where `private-downloads.js` holds a Blob for Chrome's downloads API. The content script receives an opaque receipt and status for retry. `tools/disdat.py unpack` gives the coding agent separate artifact files.
+4. Local mode uses the recovered offscreen Whisper and WebLLM pipeline for transcription and the briefing. Own-key mode uses Deepgram and the selected Groq or Anthropic adapter. Both align spoken words to bounded page facts.
+5. Local and own-key modes use `local-delivery.js` to build one JSON bundle. Background sends it to the extension-owned offscreen document, where `private-downloads.js` holds a Blob for Chrome's downloads API. The content script receives an opaque receipt and status for retry. `tools/disdat.py unpack` gives the coding agent separate artifact files.
 
 ## Capture boundaries
 
@@ -21,6 +21,8 @@ The recorder uses a closed shadow root and disables page selection of its aggreg
 Setup copies the source extension into a private runtime and writes its configuration there. `runtime.js` exposes a credential-free status to content scripts. Credentials remain in the background worker's runtime configuration. The earlier get/set-keys message endpoints were removed from this candidate.
 
 Own-key mode chooses direct provider requests before inspecting a hosted session. Existing hosted auth in Chrome therefore cannot change the selected provider or redirect a capture to the hosted service. Provider errors stay with the selected provider. The candidate makes the hosted telemetry and upload paths conditional on explicit hosted mode.
+
+Local mode loads the operator-supplied model-specific WebAssembly library from the private extension and downloads model weights on first use. Whisper and Qwen execute on the device. It does not route audio or briefing requests through hosted or own-key providers. [Local model setup](local-models.md) documents the binary and hardware boundary.
 
 Own keys still means external model processing: audio goes to Deepgram; the briefing inputs go to the chosen Groq or Anthropic account. Captured assets and source files are delivered locally. The existing page/asset acquisition needed to observe the site remains part of capture.
 

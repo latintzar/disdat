@@ -21,3 +21,10 @@ Font names/copyright and licence URLs were checked from the included WOFF2 metad
 Original source and retained files are listed in PROVENANCE.json. This notice does not assign a software licence to third-party trademarks, captured website content or user-provided media.
 
 The historical compiled ElevenLabs orb engine/texture and unused stock/Apple reference media are excluded from this source export. [Export scope](docs/export-scope.md) records the exact omitted material preserved in the private original.
+
+
+## Local inference dependencies
+
+The recovered `extension/vendor/` files derive from Dis Dat v0.6.1 (monorepo commit `7a587a7fd4e72772d98d4d7a6b8413a469809244`). The original commit identifies WebLLM 0.2.84; the bundles identify Transformers.js 4.2.0 and ONNX Runtime Web 1.26.0-dev.20260416-b7804b056c. WebLLM and Transformers.js are Apache-2.0; ONNX Runtime Web is MIT. The WebLLM bundle contains a loglevel MIT notice and other embedded notices; retain them. See `licenses/Apache-2.0.txt`, `licenses/ONNXRuntime-MIT.txt`, and `licenses/loglevel-MIT.txt`.
+
+The model-specific WebAssembly library and model weights are supplied independently and are not distributed here. Their upstream terms and provenance are separate; see `docs/local-models.md`.

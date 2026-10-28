@@ -147,17 +147,19 @@ async function startAudio(sessionId) {
   }
   catch (e) { return { error: String(e) }; }
 }
-async function stopAudio(sessionId) {
+async function stopAudio(sessionId, transcribe = false) {
   // stop the mic but KEEP the offscreen doc alive so the warm WebLLM model persists for the crunch.
-  try { if (await hasOffscreen()) return await chrome.runtime.sendMessage({ target: 'offscreen', cmd: 'stop', sessionId }); } catch (e) { return { error: String(e) }; }
+  try { if (await hasOffscreen()) return await chrome.runtime.sendMessage({ target: 'offscreen', cmd: 'stop', sessionId, local: transcribe && RUNTIME.mode === 'local' }); } catch (e) { return { error: String(e) }; }
   return { error: 'no-offscreen' };
 }
 // ---------- bundled on-device crunch (WebLLM, runs inside the offscreen doc) ----------
 async function localLlmInit(model) {
+  if (RUNTIME.mode !== 'local') return { error: 'local-mode-required' };
   try { await ensureOffscreen(); return await chrome.runtime.sendMessage({ target: 'offscreen', cmd: 'llm-init', model }); }
   catch (e) { return { error: String(e) }; }
 }
 async function localLlmPrompt(sys, input, maxTokens) {
+  if (RUNTIME.mode !== 'local') return { error: 'local-mode-required' };
   try { await ensureOffscreen(); return await chrome.runtime.sendMessage({ target: 'offscreen', cmd: 'llm-prompt', sys, input, maxTokens }); }
   catch (e) { return { error: String(e) }; }
 }
@@ -309,6 +311,7 @@ async function anthropicLlm(key, sys, input, maxTokens) {
   return out;
 }
 async function llm(sys, input, maxTokens) {
+  if (RUNTIME.mode === 'local') return localLlmPrompt(sys, input, maxTokens);
   const token = await getToken();
   if (token) {
     try {
@@ -365,14 +368,14 @@ async function stopSession(liveText) {
   if (S.audioState !== 'recording') return { error: S.audioState === 'starting' ? 'microphone-starting' : 'microphone-unavailable' };
   const current = S;
   let transcript = '', words = [], audioSec = 0, via = 'none', dgErr = '';
-  const a = await stopAudio(current.audioSessionId);
+  const a = await stopAudio(current.audioSessionId, true);
   if (S !== current) return { error: 'capture-tab-unavailable' };
   audioSec = (a && a.dur) || 0;
   if (a && a.transcript) {
     transcript = a.transcript; via = 'whisper · on-device';
     words = (a.words || []).map(w => ({ t: +(S.audioOffset + (w.t || 0)).toFixed(2), w: w.w }));
     rlog('bg', 'event', 'asr-used', { words: words.length, len: transcript.length });
-  } else if (a && a.audioB64) {
+  } else if (a && a.audioB64 && RUNTIME.mode !== 'local') {
     const r = await deepgramBytes(b64ToBytes(a.audioB64), a.mime); // optional sharper transcription if a Deepgram key is set
     if (S !== current) return { error: 'capture-tab-unavailable' };
     if (r.transcript) { transcript = r.transcript; via = 'deepgram'; audioSec = r.duration || audioSec; words = (r.words || []).map(w => ({ t: +(S.audioOffset + (w.start || 0)).toFixed(2), w: w.w })); }
@@ -403,6 +406,7 @@ function handleMessage(msg, sender, send) {
       const current = S;
       try { chrome.storage.session.set({ dd: S }); } catch (e) {}
       setRun('run-' + msg.startT); rlog('bg', 'event', 'startSession', { startT: msg.startT });
+      if (RUNTIME.mode === 'local') localLlmInit();
       startAudio(current.audioSessionId).then(a => {
         if (S !== current) { stopAudio(current.audioSessionId); send({ error: 'capture-tab-unavailable' }); return; }
         S.audioState = a?.ok ? 'recording' : 'failed';
@@ -435,7 +439,7 @@ function handleMessage(msg, sender, send) {
     case 'llm': llm(msg.sys, msg.input, msg.maxTokens).then(send); return true;
     case 'localllmInit': localLlmInit(msg.model).then(send); return true;
     case 'localllm': localLlmPrompt(msg.sys, msg.input, msg.maxTokens).then(send); return true;
-    case 'localllm-status': (async () => { try { await ensureOffscreen(); send(await chrome.runtime.sendMessage({ target: 'offscreen', cmd: 'llm-status' })); } catch (e) { send({ error: String(e) }); } })(); return true;
+    case 'localllm-status': (async () => { if (RUNTIME.mode !== 'local') return send({ error: 'local-mode-required' }); try { await ensureOffscreen(); send(await chrome.runtime.sendMessage({ target: 'offscreen', cmd: 'llm-status' })); } catch (e) { send({ error: String(e) }); } })(); return true;
     case 'dd-runtime': send(runtimeStatus()); return false;
     case 'dd-setup': chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') }); send({ ok: true }); return false;
     case 'dd-signin': signIn().then(send); return true;
@@ -470,7 +474,7 @@ async function captureOwner() {
   return lastCaptureOwner;
 }
 const liveSessionMessages = new Set(['engage', 'event', 'net', 'mut', 'console', 'render', 'note', 'stopSession', 'abortSession', 'shot']);
-const captureMessages = new Set(['llm', 'fetchassets', 'fetchcss', 'fetchsrc', 'bundle', 'bundleMulti', 'local-capture', 'local-capture-retry']);
+const captureMessages = new Set(['localllmInit', 'localllm', 'localllm-status', 'llm', 'fetchassets', 'fetchcss', 'fetchsrc', 'bundle', 'bundleMulti', 'local-capture', 'local-capture-retry']);
 chrome.runtime.onMessage.addListener((msg, sender, send) => {
   if (!['startSession', 'sessionState'].includes(msg?.type) && !liveSessionMessages.has(msg?.type) && !captureMessages.has(msg?.type)) return handleMessage(msg, sender, send);
   (async () => {
@@ -506,7 +510,7 @@ chrome.tabs.onDetached.addListener(tabId => {
 });
 
 async function localCaptureDownload(msg, sender, retry) {
-  if (RUNTIME.mode !== 'byok') return { error: 'own-key-mode-required' };
+  if (!['byok', 'local'].includes(RUNTIME.mode)) return { error: 'own-key-mode-required' };
   const owner = await captureOwner();
   if (!owns(sender, owner)) return { error: 'capture-tab-mismatch' };
   let held;

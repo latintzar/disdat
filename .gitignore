@@ -11,3 +11,6 @@ __pycache__/
 website/dist/
 .vercel/
 captures/
+
+# Operator-supplied executable model library belongs in the private runtime.
+extension/vendor/user-model.wasm

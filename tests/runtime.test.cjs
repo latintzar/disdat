@@ -126,7 +126,7 @@ test('session status, mutations, stop, and capture requests stay with the initia
   const owner = bindSession(state);
   for (const foreign of [{ ...owner, tab: { id: 11, windowId: 3 } }, { ...owner, tab: { id: 10, windowId: 4 } }, { ...owner, frameId: 1 }]) {
     assert.equal((await dispatch(state, {type:'sessionState'}, foreign)).recording, false);
-    for (const type of ['engage','event','net','mut','console','render','note','stopSession','abortSession','shot','llm','fetchassets','local-capture']) {
+    for (const type of ['engage','event','net','mut','console','render','note','stopSession','abortSession','shot','llm','localllmInit','localllm','localllm-status','fetchassets','local-capture']) {
       assert.equal((await dispatch(state, {type, ev:{url:'foreign'},page:'foreign'}, foreign)).error, 'capture-tab-mismatch', type);
     }
   }
@@ -279,4 +279,28 @@ test('offscreen cancellation retires a delayed stream without overwriting or sto
   let denied;listeners[0]({target:'offscreen',cmd:'stop',sessionId:'second'},{id:'test-extension',tab:{id:99}},reply=>{denied=reply;});
   assert.equal(denied.error,'offscreen-sender');assert.equal(run('rec.state'),'recording');
   const stopped=await run("stop('second')");assert.ok(stopped.audioB64.length>0);assert.equal(newStream.stopped,1);
+});
+
+
+test('local model errors never fall back to provider accounts', async () => {
+  const state = background({mode: 'local'}, () => { throw new Error('unexpected provider request'); });
+  const info = await state.run('me()');
+  assert.equal(info.mode, 'local');
+  assert.equal(info.ready, true);
+  assert.equal(info.delivery, 'local-file');
+  state.run("localLlmPrompt = async () => ({error:'local engine unavailable'})");
+  const result = await state.run("llm('system','private facts',100)");
+  assert.equal(result.error, 'local engine unavailable');
+  await state.run("logDebug({private:'capture'})");
+  assert.equal(state.requests.length, 0);
+});
+
+test('local speech failure never sends audio to cloud fallback', async () => {
+  const state = background({mode:'local'}, () => { throw new Error('unexpected provider request'); });
+  bindSession(state);
+  state.run("stopAudio = async () => ({audioB64:'YWJj', mime:'audio/webm', asrErr:'local model unavailable'})");
+  const result = await state.run("stopSession('')");
+  assert.equal(result.session.transcript, '');
+  assert.match(result.session.audio.error, /local model unavailable/);
+  assert.equal(state.requests.length, 0);
 });

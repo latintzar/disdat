@@ -1209,8 +1209,8 @@
       ab.hidden = true;
       $('hbarfill').style.width = m.ready ? '100%' : '0%';
       if (m.ready) {
-        $('hstat').textContent = 'Your keys · ' + m.provider;
-        $('hsub').textContent = 'Capture files save to your browser download folder.';
+        $('hstat').textContent = m.mode === 'local' ? 'On-device models' : 'Your keys · ' + m.provider;
+        $('hsub').textContent = m.mode === 'local' ? 'First recording downloads model weights; captures stay on your device.' : 'Capture files save to your browser download folder.';
         setStart('Start recording', () => startRec(), true);
         if (micFailure) showMicRecovery();
       } else {
@@ -1349,7 +1349,7 @@
     stateData = captureState(); headData = captureHead(); domStr = captureDOM(); await pullAssets(); // v2: persisted state + head meta + full DOM tree + re-hosted asset bytes
     setStage('read', 'run');
     setStage('read', 'done', els.length + ' element' + (els.length === 1 ? '' : 's') + ((session.pages && session.pages.length > 1) ? ' · ' + session.pages.length + ' pages' : ''));
-    setStage('crunch', 'run', (session.notes && session.notes.length) ? ('reconciling ' + session.notes.length + ' live notes') : (LOCAL_LLM ? 'preparing the local model…' : 'cloud'));
+    setStage('crunch', 'run', (session.notes && session.notes.length) ? ('reconciling ' + session.notes.length + ' live notes') : (selectedRuntimeMode === 'local' ? 'preparing the local model…' : 'cloud'));
     const fin = await finalizeSession(session);
     stopProgressPoll();
     setStage('crunch', 'done');
@@ -1490,7 +1490,7 @@
   async function packageBundle(session, fin, els) {
     try {
       const runtime = await send({ type: 'dd-runtime' });
-      if (!runtime || !['byok', 'hosted'].includes(runtime.mode)) throw new Error('Choose a runtime mode with the local setup command.');
+      if (!runtime || !['byok', 'hosted', 'local'].includes(runtime.mode)) throw new Error('Choose a runtime mode with the local setup command.');
       const meta = { tool: 'Dis Dat', version: runtime.version, mode: runtime.mode, page: PAGE, pages: session.pages || [PAGE], viewport: sessionCtx && sessionCtx.viewport, dpr: sessionCtx && sessionCtx.dpr, colorScheme: sessionCtx && sessionCtx.colorScheme, fonts: (sessionCtx && sessionCtx.fonts) || [] };
       // core = the always-grab essentials (small): codespeak + FULL transcript + elements + ground-truth + API + state + head + timeline
       const core = { meta, readme: 'Dis Dat `core` artifact: the codespeak + full transcript + the engaged elements (verbatim computed+authored CSS incl :hover/pseudo, html, React state, animations, WebGL shaders+frame), the observed API/network contract, persisted state (localStorage/sessionStorage, secrets redacted, cookies skipped), <head> meta, and the causal timeline. Heavier layers are separate artifacts (dom, screenshots, assets, sources). Each element has an exact rect; meta.viewport/dpr too, so ratios=rect÷viewport — use the CSS values, the screenshots are a visual reference not a ruler. Reproduce from exact values.', prose: fin.text || '', transcript: session.transcript || '', groundTruth: buildGroundTruth(session, els), elements: els, network: (session.net || []).slice(0, 80), console: (session.console || []).slice(-20), state: stateData, head: headData, timeline: buildTimeline(session) };
@@ -1500,7 +1500,7 @@
       if (assetBytes && Object.keys(assetBytes).length) items.push({ key: 'assets', json: JSON.stringify({ meta, assets: assetBytes, info: assetInfo }) });
       if (srcBytes && Object.keys(srcBytes).length) items.push({ key: 'sources', json: JSON.stringify({ meta, sources: srcBytes, info: srcInfo }) });
       const order = items.map(i => i.key);
-      if (runtime.mode === 'byok') {
+      if (['byok', 'local'].includes(runtime.mode)) {
         const filename = 'disdat-capture-' + new Date().toISOString().replace(/[:.]/g, '-') + '.json';
         const capture = globalThis.DisdatLocalDelivery.bundle(items, meta);
         const po = $('pout');
