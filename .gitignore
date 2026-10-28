@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+local-config.js
+dd-config.js
+config.json
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+website/dist/
+.vercel/
+captures/

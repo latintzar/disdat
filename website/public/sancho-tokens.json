@@ -1,0 +1,645 @@
+{
+ "color": {
+  "bg": {
+   "$value": "#FAF7F3",
+   "$type": "color"
+  },
+  "surface": {
+   "$value": "#FAF7F3",
+   "$type": "color"
+  },
+  "surface2": {
+   "$value": "#F2ECE5",
+   "$type": "color"
+  },
+  "elevated": {
+   "$value": "#FFFFFF",
+   "$type": "color"
+  },
+  "border": {
+   "$value": "rgba(26,20,19,0.141)",
+   "$type": "color"
+  },
+  "borderStrong": {
+   "$value": "rgba(26,20,19,0.22)",
+   "$type": "color"
+  },
+  "fg": {
+   "$value": "#1A1413",
+   "$type": "color"
+  },
+  "muted": {
+   "$value": "#6F665C",
+   "$type": "color"
+  },
+  "faint": {
+   "$value": "#998F83",
+   "$type": "color"
+  },
+  "saffron": {
+   "$value": "#C01B2C",
+   "$type": "color"
+  },
+  "saffronText": {
+   "$value": "#831521",
+   "$type": "color"
+  },
+  "saffronDim": {
+   "$value": "rgba(192,27,44,0.161)",
+   "$type": "color"
+  },
+  "chatOutBubble": {
+   "$value": "#FBE2E5",
+   "$type": "color"
+  },
+  "chatOutBorder": {
+   "$value": "rgba(192,27,44,0.2)",
+   "$type": "color"
+  },
+  "chatInBubble": {
+   "$value": "#F5F0E8",
+   "$type": "color"
+  },
+  "chatInBorder": {
+   "$value": "rgba(42,32,24,0.122)",
+   "$type": "color"
+  },
+  "green": {
+   "$value": "#4E9E5E",
+   "$type": "color"
+  },
+  "greenText": {
+   "$value": "#2E6038",
+   "$type": "color"
+  },
+  "greenDim": {
+   "$value": "rgba(78,158,94,0.188)",
+   "$type": "color"
+  },
+  "red": {
+   "$value": "#F4A300",
+   "$type": "color"
+  },
+  "redText": {
+   "$value": "#8A5300",
+   "$type": "color"
+  },
+  "redDim": {
+   "$value": "rgba(244,163,0,0.188)",
+   "$type": "color"
+  },
+  "onSaffron": {
+   "$value": "#FAF7F3",
+   "$type": "color"
+  },
+  "onGreen": {
+   "$value": "#0C2A1E",
+   "$type": "color"
+  },
+  "onRed": {
+   "$value": "#3D2A00",
+   "$type": "color"
+  },
+  "danger": {
+   "$value": "#C01B2C",
+   "$type": "color"
+  },
+  "dangerText": {
+   "$value": "#831521",
+   "$type": "color"
+  },
+  "dangerDim": {
+   "$value": "rgba(192,27,44,0.161)",
+   "$type": "color"
+  },
+  "onDanger": {
+   "$value": "#FAF7F3",
+   "$type": "color"
+  },
+  "highlight": {
+   "$value": "rgba(227,184,78,0.141)",
+   "$type": "color"
+  },
+  "scrim": {
+   "$value": "rgba(33,28,21,0.4)",
+   "$type": "color"
+  },
+  "scrimStrong": {
+   "$value": "rgba(33,28,21,0.6)",
+   "$type": "color"
+  },
+  "onScrim": {
+   "$value": "#FBF8F2",
+   "$type": "color"
+  },
+  "callBgTop": {
+   "$value": "#0F3A2B",
+   "$type": "color"
+  },
+  "callBgBottom": {
+   "$value": "#071711",
+   "$type": "color"
+  },
+  "callFg": {
+   "$value": "#F4EFE7",
+   "$type": "color"
+  },
+  "callMuted": {
+   "$value": "rgba(244,239,231,0.659)",
+   "$type": "color"
+  },
+  "callBar": {
+   "$value": "rgba(251,248,242,0.102)",
+   "$type": "color"
+  },
+  "onCallBg": {
+   "$value": "#FBF8F2",
+   "$type": "color"
+  },
+  "heroTop": {
+   "$value": "#221A13",
+   "$type": "color"
+  },
+  "heroBottom": {
+   "$value": "#130E0A",
+   "$type": "color"
+  },
+  "heroGlass": {
+   "$value": "rgba(251,248,242,0.078)",
+   "$type": "color"
+  },
+  "heroGlassStrong": {
+   "$value": "rgba(251,248,242,0.129)",
+   "$type": "color"
+  },
+  "heroGlassBorder": {
+   "$value": "rgba(251,248,242,0.149)",
+   "$type": "color"
+  },
+  "onHero": {
+   "$value": "#F7F2EA",
+   "$type": "color"
+  },
+  "onHeroMuted": {
+   "$value": "rgba(247,242,234,0.702)",
+   "$type": "color"
+  },
+  "onHeroFaint": {
+   "$value": "rgba(247,242,234,0.502)",
+   "$type": "color"
+  },
+  "heroAccent": {
+   "$value": "#E2707D",
+   "$type": "color"
+  },
+  "heroAccentDim": {
+   "$value": "rgba(226,112,125,0.2)",
+   "$type": "color"
+  },
+  "accentMoss": {
+   "$value": "#2A8358",
+   "$type": "color"
+  },
+  "accentMossDeep": {
+   "$value": "#143D24",
+   "$type": "color"
+  },
+  "accentMossDim": {
+   "$value": "rgba(42,131,88,0.086)",
+   "$type": "color"
+  },
+  "onAccentMoss": {
+   "$value": "#F1FAF4",
+   "$type": "color"
+  },
+  "accentRust": {
+   "$value": "#B04A2B",
+   "$type": "color"
+  },
+  "accentRustDeep": {
+   "$value": "#6E2C16",
+   "$type": "color"
+  },
+  "accentRustDim": {
+   "$value": "rgba(176,74,43,0.094)",
+   "$type": "color"
+  },
+  "onAccentRust": {
+   "$value": "#FBF1EA",
+   "$type": "color"
+  },
+  "accentBerry": {
+   "$value": "#A8466A",
+   "$type": "color"
+  },
+  "accentBerryDeep": {
+   "$value": "#5F2840",
+   "$type": "color"
+  },
+  "accentBerryDim": {
+   "$value": "rgba(168,70,106,0.094)",
+   "$type": "color"
+  },
+  "onAccentBerry": {
+   "$value": "#FBF0F4",
+   "$type": "color"
+  },
+  "accentCana": {
+   "$value": "#C0812F",
+   "$type": "color"
+  },
+  "accentCanaDeep": {
+   "$value": "#8A5816",
+   "$type": "color"
+  },
+  "accentCanaDim": {
+   "$value": "rgba(192,129,47,0.094)",
+   "$type": "color"
+  },
+  "onAccentCana": {
+   "$value": "#FBF3E6",
+   "$type": "color"
+  }
+ },
+ "space": {
+  "xxs": {
+   "$value": "2px",
+   "$type": "dimension"
+  },
+  "xxs2": {
+   "$value": "3px",
+   "$type": "dimension"
+  },
+  "xs": {
+   "$value": "4px",
+   "$type": "dimension"
+  },
+  "sm": {
+   "$value": "8px",
+   "$type": "dimension"
+  },
+  "md": {
+   "$value": "12px",
+   "$type": "dimension"
+  },
+  "lg": {
+   "$value": "16px",
+   "$type": "dimension"
+  },
+  "xl": {
+   "$value": "20px",
+   "$type": "dimension"
+  },
+  "xxl": {
+   "$value": "24px",
+   "$type": "dimension"
+  },
+  "xxxl": {
+   "$value": "32px",
+   "$type": "dimension"
+  },
+  "huge": {
+   "$value": "48px",
+   "$type": "dimension"
+  },
+  "giant": {
+   "$value": "64px",
+   "$type": "dimension"
+  }
+ },
+ "radius": {
+  "sm": {
+   "$value": "6px",
+   "$type": "dimension"
+  },
+  "base": {
+   "$value": "8px",
+   "$type": "dimension"
+  },
+  "card": {
+   "$value": "12px",
+   "$type": "dimension"
+  },
+  "sheet": {
+   "$value": "20px",
+   "$type": "dimension"
+  },
+  "pill": {
+   "$value": "999px",
+   "$type": "dimension"
+  }
+ },
+ "elevation": {
+  "flat": {
+   "$value": "0px",
+   "$type": "dimension"
+  },
+  "hairline": {
+   "$value": "1px",
+   "$type": "dimension"
+  },
+  "card": {
+   "$value": "2px",
+   "$type": "dimension"
+  },
+  "sticky": {
+   "$value": "3px",
+   "$type": "dimension"
+  },
+  "sheet": {
+   "$value": "4px",
+   "$type": "dimension"
+  },
+  "popover": {
+   "$value": "5px",
+   "$type": "dimension"
+  },
+  "toast": {
+   "$value": "6px",
+   "$type": "dimension"
+  }
+ },
+ "button": {
+  "sm": {
+   "$value": "32px",
+   "$type": "dimension"
+  },
+  "md": {
+   "$value": "40px",
+   "$type": "dimension"
+  },
+  "lg": {
+   "$value": "48px",
+   "$type": "dimension"
+  }
+ },
+ "stroke": {
+  "hairline": {
+   "$value": "1px",
+   "$type": "dimension"
+  },
+  "thick": {
+   "$value": "1.5px",
+   "$type": "dimension"
+  }
+ },
+ "icon": {
+  "sm": {
+   "$value": "16px",
+   "$type": "dimension"
+  },
+  "md": {
+   "$value": "20px",
+   "$type": "dimension"
+  },
+  "lg": {
+   "$value": "24px",
+   "$type": "dimension"
+  }
+ },
+ "chat": {
+  "bubbleMaxWidth": {
+   "$value": "250px",
+   "$type": "dimension"
+  },
+  "imageMaxWidth": {
+   "$value": "290px",
+   "$type": "dimension"
+  },
+  "imageMaxHeight": {
+   "$value": "360px",
+   "$type": "dimension"
+  },
+  "vnWidth": {
+   "$value": "250px",
+   "$type": "dimension"
+  },
+  "vnWaveWidth": {
+   "$value": "132px",
+   "$type": "dimension"
+  },
+  "waveHeight": {
+   "$value": "24px",
+   "$type": "dimension"
+  },
+  "avatar": {
+   "$value": "42px",
+   "$type": "dimension"
+  },
+  "play": {
+   "$value": "34px",
+   "$type": "dimension"
+  },
+  "bubbleRadius": {
+   "$value": "7.5px",
+   "$type": "dimension"
+  }
+ },
+ "motion": {
+  "durMicro": {
+   "$value": 130,
+   "$type": "number"
+  },
+  "durStandard": {
+   "$value": 250,
+   "$type": "number"
+  },
+  "durOverlay": {
+   "$value": 380,
+   "$type": "number"
+  }
+ },
+ "voice": {
+  "barCap": {
+   "$value": 56,
+   "$type": "number"
+  },
+  "barWidth": {
+   "$value": "2.5px",
+   "$type": "dimension"
+  },
+  "barGap": {
+   "$value": "2px",
+   "$type": "dimension"
+  },
+  "barMax": {
+   "$value": "22px",
+   "$type": "dimension"
+  },
+  "gate": {
+   "$value": 0.17,
+   "$type": "number"
+  },
+  "pollMs": {
+   "$value": 60,
+   "$type": "number"
+  },
+  "cancelDrag": {
+   "$value": "90px",
+   "$type": "dimension"
+  },
+  "lockDrag": {
+   "$value": "70px",
+   "$type": "dimension"
+  },
+  "minRecordMs": {
+   "$value": 1000,
+   "$type": "number"
+  },
+  "tapMaxMs": {
+   "$value": 260,
+   "$type": "number"
+  }
+ },
+ "spring": {
+  "standard": {
+   "$value": {
+    "damping": 0.85,
+    "stiffness": 500.0
+   },
+   "$type": "spring"
+  },
+  "snappy": {
+   "$value": {
+    "damping": 1.0,
+    "stiffness": 2200.0
+   },
+   "$type": "spring"
+  },
+  "expressive": {
+   "$value": {
+    "damping": 0.6,
+    "stiffness": 300.0
+   },
+   "$type": "spring"
+  },
+  "physicalEase": {
+   "$value": "cubic-bezier(0.31,0.325,0,0.92)",
+   "$type": "cubicBezier"
+  }
+ },
+ "type": {
+  "display": {
+   "$value": {
+    "family": "Fraunces",
+    "weight": 600,
+    "size": 34.0,
+    "lineHeight": 40.0,
+    "tracking": -0.7,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "title": {
+   "$value": {
+    "family": "Inter",
+    "weight": 600,
+    "size": 22.0,
+    "lineHeight": 28.0,
+    "tracking": -0.4,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "heading": {
+   "$value": {
+    "family": "Inter",
+    "weight": 500,
+    "size": 17.0,
+    "lineHeight": 24.0,
+    "tracking": -0.2,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "body": {
+   "$value": {
+    "family": "Inter",
+    "weight": 400,
+    "size": 16.0,
+    "lineHeight": 24.0,
+    "tracking": 0.0,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "bodySm": {
+   "$value": {
+    "family": "Inter",
+    "weight": 400,
+    "size": 14.0,
+    "lineHeight": 20.0,
+    "tracking": 0.0,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "label": {
+   "$value": {
+    "family": "Inter",
+    "weight": 500,
+    "size": 14.0,
+    "lineHeight": 18.0,
+    "tracking": -0.1,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "labelSm": {
+   "$value": {
+    "family": "Inter",
+    "weight": 500,
+    "size": 12.0,
+    "lineHeight": 16.0,
+    "tracking": 0.1,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "caption": {
+   "$value": {
+    "family": "Inter",
+    "weight": 400,
+    "size": 12.0,
+    "lineHeight": 16.0,
+    "tracking": 0.1,
+    "tabular": false
+   },
+   "$type": "typography"
+  },
+  "data": {
+   "$value": {
+    "family": "IBM Plex Mono",
+    "weight": 500,
+    "size": 15.0,
+    "lineHeight": 20.0,
+    "tracking": -0.1,
+    "tabular": true
+   },
+   "$type": "typography"
+  },
+  "dataLg": {
+   "$value": {
+    "family": "IBM Plex Mono",
+    "weight": 600,
+    "size": 19.0,
+    "lineHeight": 24.0,
+    "tracking": -0.2,
+    "tabular": true
+   },
+   "$type": "typography"
+  },
+  "dataSm": {
+   "$value": {
+    "family": "IBM Plex Mono",
+    "weight": 500,
+    "size": 13.0,
+    "lineHeight": 16.0,
+    "tracking": 0.0,
+    "tabular": true
+   },
+   "$type": "typography"
+  }
+ },
+ "$description": "Machine-extracted from Sancho y Panza Kotlin source (Tokens.kt, VoiceRecorderBar.kt). Do not hand-edit; run scripts/extract-sancho-tokens.py."
+}

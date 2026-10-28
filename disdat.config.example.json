@@ -1,0 +1,5 @@
+{
+  "mode": "byok",
+  "llmProvider": "groq",
+  "llmModel": "openai/gpt-oss-20b"
+}

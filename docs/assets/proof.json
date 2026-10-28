@@ -1,0 +1,102 @@
+[
+  {
+    "css_viewport": {
+      "width": 1000,
+      "height": 620
+    },
+    "dpr": 2,
+    "pixel_dimensions": {
+      "width": 2000,
+      "height": 1240
+    },
+    "scene_kind": "Existing authored website demonstration; not live extension capture.",
+    "measure": {
+      "title": "Page context for coding agents · Dis Dat",
+      "phase": "poster",
+      "narration": "this ball looks a bit basic — make it pop.",
+      "recordedNoteVisible": false,
+      "scene": {
+        "x": 0,
+        "y": 0,
+        "width": 1000,
+        "height": 620,
+        "top": 0,
+        "right": 1000,
+        "bottom": 620,
+        "left": 0
+      },
+      "fontCheck": {
+        "inter": true,
+        "fraunces": true,
+        "mono": true
+      },
+      "overflow": false
+    },
+    "errors": [],
+    "blocked": [
+      {
+        "url": "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/vercel-v0-icon.png",
+        "method": "GET"
+      },
+      {
+        "url": "https://lovable.dev/apple-touch-icon.png",
+        "method": "GET"
+      }
+    ],
+    "source_sha256": "a87ef5ce45519ffc4607387d45fe02731b68ffa1d95251e86bc1e3cc94bef86c",
+    "capture_css_sha256": "44b290003ebcaddc503bab38613a36a2b5cf78864e97044066163d0951d5a23d",
+    "renderer_sha256": "20c665d13980e2db31f073d9c53fd3cdc7fec3f3089ee6a638a8e9a28c9ff571",
+    "image": "point-and-talk-1000.png",
+    "image_sha256": "9ba3151f7806a4aa0b11e96cf424085edef5c21953c100a8ddfba96ddfba86fd"
+  },
+  {
+    "css_viewport": {
+      "width": 390,
+      "height": 242
+    },
+    "dpr": 2,
+    "pixel_dimensions": {
+      "width": 780,
+      "height": 484
+    },
+    "scene_kind": "Existing authored website demonstration; not live extension capture.",
+    "measure": {
+      "title": "Page context for coding agents · Dis Dat",
+      "phase": "poster",
+      "narration": "this ball looks a bit basic — make it pop.",
+      "recordedNoteVisible": false,
+      "scene": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 241.79998779296875,
+        "top": 0,
+        "right": 390,
+        "bottom": 241.79998779296875,
+        "left": 0
+      },
+      "fontCheck": {
+        "inter": true,
+        "fraunces": true,
+        "mono": true
+      },
+      "overflow": false
+    },
+    "errors": [],
+    "blocked": [
+      {
+        "url": "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/vercel-v0-icon.png",
+        "method": "GET"
+      },
+      {
+        "url": "https://lovable.dev/apple-touch-icon.png",
+        "method": "GET"
+      }
+    ],
+    "source_sha256": "a87ef5ce45519ffc4607387d45fe02731b68ffa1d95251e86bc1e3cc94bef86c",
+    "capture_css_sha256": "44b290003ebcaddc503bab38613a36a2b5cf78864e97044066163d0951d5a23d",
+    "renderer_sha256": "20c665d13980e2db31f073d9c53fd3cdc7fec3f3089ee6a638a8e9a28c9ff571",
+    "image": "point-and-talk-390.png",
+    "image_sha256": "342bcf4232c927fd3c0527883ee0038f12415b4280aa543f99dd0dd6ac5ee504"
+  }
+]

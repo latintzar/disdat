@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The tools for showing your agent what you mean — and where Dis Dat fits</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF7EE;--ink:#16110D;--soft:#6b5d44;--line:rgba(28,18,6,.12);--acc:#FF5C2A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:0 26px}
+.top{border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:8px;font-family:'Fraunces',serif;font-weight:600;font-size:22px;text-decoration:none}
+.brand .mk{width:15px;height:18px}
+.back{font-size:14px;color:var(--soft);text-decoration:none}
+.back:hover{color:var(--ink)}
+article{padding:80px 0 120px}
+.kick{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(36px,6vw,56px);line-height:1.04;letter-spacing:-.02em;margin:18px 0 0}
+.standfirst{font-size:20px;color:var(--soft);margin:28px 0 0;line-height:1.72}
+h2{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(25px,3.6vw,33px);letter-spacing:-.01em;margin:72px 0 18px}
+p{margin:0 0 18px;line-height:1.72}
+.tool{display:flex;gap:18px;align-items:flex-start;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#FBF7EE);padding:24px 26px;margin:16px 0;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.tool:hover{transform:translateY(-2px);box-shadow:0 16px 30px -18px rgba(22,17,13,.4)}
+.tlogo{flex:none;width:46px;height:46px;border-radius:12px;background:#F4EFE3;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.tlogo.dark{background:#0c0d12}
+.tlogo img{width:28px;height:28px;object-fit:contain}
+.tlogo svg{width:26px;height:26px;color:#5b4bd6}
+.tbody h3{font-family:'Fraunces',serif;font-weight:800;font-size:20px;margin:0 0 4px}
+.tbody p{font-size:15px;color:var(--soft);margin:0 0 10px;line-height:1.6}
+.tget{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--acc);font-weight:600}
+.fit{border-left:3px solid var(--acc);background:#fff;border-radius:0 18px 18px 0;padding:34px 36px;margin:56px 0 0}
+.fit h2{margin-top:0}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);padding:13px 26px;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:3px 3px 0 var(--acc);margin-top:8px}
+.foot{border-top:1px solid var(--line);padding:26px 0;color:var(--soft);font-size:13px}
+.mkpx{width:16px;height:20px;vertical-align:-3px}
+
+.kick{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:6px}
+.ameta{display:flex;align-items:center;gap:12px;margin:26px 0 0}
+.aav{width:46px;height:46px;border-radius:50%;object-fit:cover;flex:none;border:1px solid var(--line)}
+.amtxt{display:flex;flex-direction:column;line-height:1.35}
+.ameta b{font-weight:700;font-size:15px;color:var(--ink)}
+.amsub{color:var(--soft);font-size:13px}
+.arule{border:none;border-top:1px solid var(--line);margin:30px 0 8px}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><svg class="mk mkpx" viewBox="0 0 12 16" shape-rendering="crispEdges" style="image-rendering:pixelated"><rect x="0" y="0" width="1" height="1" fill="#16110D"/><rect x="0" y="1" width="2" height="1" fill="#16110D"/><rect x="0" y="2" width="3" height="1" fill="#16110D"/><rect x="0" y="3" width="4" height="1" fill="#16110D"/><rect x="0" y="4" width="5" height="1" fill="#16110D"/><rect x="0" y="5" width="6" height="1" fill="#16110D"/><rect x="0" y="6" width="7" height="1" fill="#16110D"/><rect x="0" y="7" width="8" height="1" fill="#16110D"/><rect x="0" y="8" width="9" height="1" fill="#16110D"/><rect x="0" y="9" width="10" height="1" fill="#16110D"/><rect x="0" y="10" width="11" height="1" fill="#16110D"/><rect x="0" y="11" width="6" height="1" fill="#16110D"/><rect x="0" y="12" width="4" height="1" fill="#16110D"/><rect x="0" y="13" width="3" height="1" fill="#16110D"/><rect x="0" y="14" width="2" height="1" fill="#16110D"/><rect x="0" y="15" width="1" height="1" fill="#16110D"/></svg>Dis&nbsp;Dat</a>
+  <a class="back" href="/">&larr; back to disdat.dev</a>
+</div></header>
+
+<article class="wrap">
+  <div class="kick">Field guide</div>
+  <h1>The tools for showing your agent what you mean.</h1>
+  <div class="ameta"><img class="aav" src="/peter.jpg" alt="Peter A Neyra"><span class="amtxt"><b>Peter&nbsp;A&nbsp;Neyra</b><span class="amsub">Free &amp; open source &middot; 5 min read</span></span></div>
+  <p class="standfirst">There's a small family of tools that help an AI coding agent <em>see</em> and <em>act on</em> what's on your screen. Most are genuinely good. Here's the honest map &mdash; what each is great at, where to get it, and where Dis&nbsp;Dat fits. Use whatever serves you; I mean that.</p>
+  <hr class="arule">
+
+  <h2>Inspect &amp; ground truth</h2>
+  <a class="tool" href="https://developer.chrome.com/docs/devtools" target="_blank" rel="noopener">
+    <span class="tlogo"><img src="/icons/tools/chrome.png" alt="Chrome DevTools"></span>
+    <span class="tbody"><h3>Chrome DevTools</h3><p>The original source of truth — inspect any element, read computed styles, the box model, the network. Pair it with <b>chrome-devtools-mcp</b> to hand that to an agent. Free, built into the browser.</p><span class="tget">Get it here &rarr;</span></span>
+  </a>
+
+  <h2>Point at your own app, let your editor agent fix it</h2>
+  <a class="tool" href="https://stagewise.io/" target="_blank" rel="noopener">
+    <span class="tlogo" style="color:#5b4bd6"><svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M50 0C77.6142 0 100 22.3858 100 50V90C100 95.5228 95.5228 100 90 100H50C22.3858 100 0 77.6142 0 50C0 22.3858 22.3858 0 50 0ZM50.1367 12C29.15 12.0002 12.1367 29.0133 12.1367 50C12.1367 70.9867 29.15 87.9998 50.1367 88C71.1235 88 88.1367 70.9868 88.1367 50C88.1367 29.0132 71.1235 12 50.1367 12Z" fill="currentColor"/><circle cx="50" cy="50" r="28" fill="currentColor"/></svg></span>
+    <span class="tbody"><h3>Stagewise</h3><p>A toolbar that lives inside your dev app — click an element, comment on it, and your Cursor/Windsurf agent edits the source. Brilliant when the thing you're fixing is your own running project. Open source.</p><span class="tget">Get it here &rarr;</span></span>
+  </a>
+
+  <h2>Let an agent drive the browser for you</h2>
+  <a class="tool" href="https://browser-use.com/" target="_blank" rel="noopener">
+    <span class="tlogo dark"><img src="/icons/tools/browseruse.svg" alt="Browser Use"></span>
+    <span class="tbody"><h3>Browser Use</h3><p>Hand an agent the wheel — it navigates, clicks and fills out whole tasks across the web on its own. A different job entirely: automation, not pointing. Open source.</p><span class="tget">Get it here &rarr;</span></span>
+  </a>
+  <a class="tool" href="https://claude.com/claude-for-chrome" target="_blank" rel="noopener">
+    <span class="tlogo"><img src="/icons/tools/claude.png" alt="Claude for Chrome"></span>
+    <span class="tbody"><h3>Claude for Chrome</h3><p>Claude working alongside you, right in the browser — reading the page and taking actions. Great as a general in-browser assistant.</p><span class="tget">Get it here &rarr;</span></span>
+  </a>
+
+  <h2>Copy a component off a live site</h2>
+  <a class="tool" href="https://www.divmagic.com/" target="_blank" rel="noopener">
+    <span class="tlogo"><img src="/icons/tools/divmagic.png" alt="DivMagic"></span>
+    <span class="tbody"><h3>DivMagic</h3><p>See a component you like on any site and lift its HTML &amp; CSS in a click. Perfect for "I want exactly that, in my stack."</p><span class="tget">Get it here &rarr;</span></span>
+  </a>
+
+  <div class="fit">
+    <h2>So where does Dis&nbsp;Dat fit?</h2>
+    <p>Those tools either <b>drive</b> the page, <b>inspect</b> it by hand, or <b>copy</b> a chunk of it. Dis&nbsp;Dat does a smaller, different thing: you <b>point or talk</b> at anything on your screen — your localhost, a live site, anyone's — and it works out <em>which</em> element you meant, reads the real render beneath it (computed styles, DOM, state, network, draw calls), and hands your agent the exact handle, in plain code-speak.</p>
+    <p>It doesn't try to be your agent, or wire into your repo, or automate tasks. It's the <b>capture layer</b> for the agent you already drive — Cursor, Claude&nbsp;Code, Codex. The bit none of the others do: turning <em>what you're reacting to</em> into something your agent can act on, repo or not.</p>
+    <p>If a tool above fits your job better, use it. If you keep wishing you could just <em>point and say it</em> — that's us.</p>
+    <a class="cta" href="/#join">Get Dis&nbsp;Dat &mdash; it's free &rarr;</a>
+  </div>
+</article>
+
+<footer class="foot"><div class="wrap">DIS&nbsp;DAT &middot; show your agent what you mean &middot; a free browser extension</div></footer>
+</body>
+</html>

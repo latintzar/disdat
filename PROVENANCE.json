@@ -1,0 +1,931 @@
+{
+  "source_repository": "latintzar/Leo",
+  "source_commit": "dbac69422281b857b9425ee01bb1876ddbdb7c2c",
+  "source_root": "apps/disdat/product",
+  "candidate": "initial source beta prepared for publication; original source unchanged",
+  "files": [
+    {
+      "source": "apps/disdat/product/CAPTURE-ARCHITECTURE.md",
+      "candidate": "docs/original/CAPTURE-ARCHITECTURE.md",
+      "blob": "8b99199bf0b04a8d05604b3b0fca900fba718796"
+    },
+    {
+      "source": "apps/disdat/product/DEEP-GRAB-ENGINE.md",
+      "candidate": "docs/original/DEEP-GRAB-ENGINE.md",
+      "blob": "04efda10c67bea5f8fbccad9fe769d3ca5b5e0ae"
+    },
+    {
+      "source": "apps/disdat/product/DISDAT-CAPABILITY-SET.md",
+      "candidate": "docs/original/DISDAT-CAPABILITY-SET.md",
+      "blob": "5342fbc07597961b39137e28ad23bfcffffdeca7"
+    },
+    {
+      "source": "apps/disdat/product/DISDAT-DELIVERY-V2-SPEC.md",
+      "candidate": "docs/original/DISDAT-DELIVERY-V2-SPEC.md",
+      "blob": "79e9baf7e815b05a8286a4df3242ba06227b5022"
+    },
+    {
+      "source": "apps/disdat/product/DISDAT-TOKENS-SPEC.md",
+      "candidate": "docs/original/DISDAT-TOKENS-SPEC.md",
+      "blob": "d76802b43910ccd1c751c643011405b2d268c995"
+    },
+    {
+      "source": "apps/disdat/product/FULL-SITE-CAPTURE-PLAYBOOK.md",
+      "candidate": "docs/original/FULL-SITE-CAPTURE-PLAYBOOK.md",
+      "blob": "98c03a5a5ac228908cbfcb9b3bd0f1c39bab304d"
+    },
+    {
+      "source": "apps/disdat/product/GROUND-TRUTH-CAPTURE-PLAN.md",
+      "candidate": "docs/original/GROUND-TRUTH-CAPTURE-PLAN.md",
+      "blob": "5b166d4778e846998a30b20148ee612ecf80342c"
+    },
+    {
+      "source": "apps/disdat/product/WEBGL-GRAB-METHOD.md",
+      "candidate": "docs/original/WEBGL-GRAB-METHOD.md",
+      "blob": "f205881f3e9e29f82c6c62d60cead819637bd3ad"
+    },
+    {
+      "source": "apps/disdat/product/WEBGL-REPRODUCIBILITY-VERDICT.md",
+      "candidate": "docs/original/WEBGL-REPRODUCIBILITY-VERDICT.md",
+      "blob": "06047eabc32db097973be5607c98f201a4ef245f"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/README.md",
+      "candidate": "extension/README.md",
+      "blob": "ab173be72f73dadfcacb009f9d480464229d62e1"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/agents/chatgpt.avif",
+      "candidate": "extension/agents/chatgpt.avif",
+      "blob": "64c5ea627ee9c67662140b62673fd11a87d42231"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/agents/claude.avif",
+      "candidate": "extension/agents/claude.avif",
+      "blob": "ad3d2c3317dfba8a8305e3d56bd7f4f345584ad8"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/agents/cursor.webp",
+      "candidate": "extension/agents/cursor.webp",
+      "blob": "c3de6e9f365fcf81ca0fed227c500988f70897c5"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/agents/github.webp",
+      "candidate": "extension/agents/github.webp",
+      "blob": "fd93c754caf5a79d5371b1798db90f0419fb9b27"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/agents/lovable.png",
+      "candidate": "extension/agents/lovable.png",
+      "blob": "6745a0f9442d83d3bb1a2d98c17d7c2309fd0b22"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/background.js",
+      "candidate": "extension/background.js",
+      "blob": "491b8b96a633d7d85570b43a6d4faa306c138fff"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/content.js",
+      "candidate": "extension/content.js",
+      "blob": "749f5d050d87287b330d104899affeb0c5dd00fe"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/fonts/fraunces.woff2",
+      "candidate": "extension/fonts/fraunces.woff2",
+      "blob": "ab4cb7f0d73ab0599a2984e2d3890673191db673"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/fonts/inter.woff2",
+      "candidate": "extension/fonts/inter.woff2",
+      "blob": "91dc3e8529921cabc74fb1dacf5253260b9c8cca"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/icon128.png",
+      "candidate": "extension/icon128.png",
+      "blob": "dafb8f021a3dc188a6bc9024605e7b9370750298"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/icon16.png",
+      "candidate": "extension/icon16.png",
+      "blob": "02cc5852dfa19323fc54ff56854d3044d1ab1343"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/icon32.png",
+      "candidate": "extension/icon32.png",
+      "blob": "bd8d8c865d115514d2321091f9ee3aaaaa792557"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/icon48.png",
+      "candidate": "extension/icon48.png",
+      "blob": "89ebb231ead2c5e756da304a6ae5fa1ad772d1f1"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/inject-hooks.js",
+      "candidate": "extension/inject-hooks.js",
+      "blob": "e018579464bc447c00beeb41ad53222cae35fa1b"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/inject-main.js",
+      "candidate": "extension/inject-main.js",
+      "blob": "c4166a2150a2bb0e7c45211aef1825898efd3a02"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/manifest.json",
+      "candidate": "extension/manifest.json",
+      "blob": "8e5131003cfe0b2f5ecf857bd4a0f588d64e60f2"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/offscreen.html",
+      "candidate": "extension/offscreen.html",
+      "blob": "36c124b27ffe80d690b1c983ccbd133938ed0187"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/offscreen.js",
+      "candidate": "extension/offscreen.js",
+      "blob": "d05088c9fe830ccdb15cdffe6aa6657f23ac26d9"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/onboarding.html",
+      "candidate": "extension/onboarding.html",
+      "blob": "d3cc7e67cae080b1e5b19250f03bd78263ffab4b"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/onboarding.js",
+      "candidate": "extension/onboarding.js",
+      "blob": "22702359817628dfca01d5ed9198e5574be9f2a1"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/request-mic.html",
+      "candidate": "extension/request-mic.html",
+      "blob": "a5fa6884a9c9c1bbfb603b1b8b79dd97aa291c0e"
+    },
+    {
+      "source": "apps/disdat/product/ext-pointtalk/request-mic.js",
+      "candidate": "extension/request-mic.js",
+      "blob": "9b552639e39cee320148df3ac840040b6eb1fa0d"
+    },
+    {
+      "source": "apps/disdat/product/landing/.gitignore",
+      "candidate": "website/.gitignore",
+      "blob": "e985853ed84acf10f62f639a4733083229c5a55d"
+    },
+    {
+      "source": "apps/disdat/product/landing/DEPLOY.md",
+      "candidate": "website/DEPLOY.md",
+      "blob": "0d459d5096055804f028dc60cfac164fa46f7356"
+    },
+    {
+      "source": "apps/disdat/product/landing/index.html",
+      "candidate": "website/index.html",
+      "blob": "33aa099a953da074366b54cb6cac99bf0cb45462"
+    },
+    {
+      "source": "apps/disdat/product/landing/marketing/capture-cycles.mjs",
+      "candidate": "website/marketing/capture-cycles.mjs",
+      "blob": "b77da4b2ec8b27c9cb21eacfdfb261886da545b1"
+    },
+    {
+      "source": "apps/disdat/product/landing/marketing/capture-hd.mjs",
+      "candidate": "website/marketing/capture-hd.mjs",
+      "blob": "43bff9700a8e4d53157f660e0ddf301fba4aa259"
+    },
+    {
+      "source": "apps/disdat/product/landing/marketing/capture-vt.mjs",
+      "candidate": "website/marketing/capture-vt.mjs",
+      "blob": "570f3bdbb43078ee72e511d99ab12ab2f16f512a"
+    },
+    {
+      "source": "apps/disdat/product/landing/marketing/pos.mjs",
+      "candidate": "website/marketing/pos.mjs",
+      "blob": "40345e733c77e147341b4f2909d6307231a94847"
+    },
+    {
+      "source": "apps/disdat/product/landing/marketing/record.mjs",
+      "candidate": "website/marketing/record.mjs",
+      "blob": "32726d6572cdcebb2977b035b381ca3ef02e4a50"
+    },
+    {
+      "source": "apps/disdat/product/landing/marketing/record2.mjs",
+      "candidate": "website/marketing/record2.mjs",
+      "blob": "9764444c03f4cd57f31921e087b18133818b0424"
+    },
+    {
+      "source": "apps/disdat/product/landing/marketing/record3.mjs",
+      "candidate": "website/marketing/record3.mjs",
+      "blob": "839c7d680e2e4d1132cdfdd598d8d96561a3bde1"
+    },
+    {
+      "source": "apps/disdat/product/landing/package.json",
+      "candidate": "website/package.json",
+      "blob": "57d316a62b65845d6bc8e1d9698568b690e6dbd2"
+    },
+    {
+      "source": "apps/disdat/product/landing/postcss.config.js",
+      "candidate": "website/postcss.config.js",
+      "blob": "2e7af2b7f1a6f391da1631d93968a9d487ba977d"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/_gentest.png",
+      "candidate": "website/public/_gentest.png",
+      "blob": "7e21a23ffa85498cdace00a679bf2f3782100b4a"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/apple-touch-icon.png",
+      "candidate": "website/public/apple-touch-icon.png",
+      "blob": "9dc73235cbc63fe60921b3f70256e534d22aaf73"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/ecosystem.html",
+      "candidate": "website/public/ecosystem.html",
+      "blob": "77663efeeb67310cb3c7aeb1c69bab2581a6336d"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/favicon-16.png",
+      "candidate": "website/public/favicon-16.png",
+      "blob": "02cc5852dfa19323fc54ff56854d3044d1ab1343"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/favicon-32.png",
+      "candidate": "website/public/favicon-32.png",
+      "blob": "bd8d8c865d115514d2321091f9ee3aaaaa792557"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/favicon.ico",
+      "candidate": "website/public/favicon.ico",
+      "blob": "f7b54e7e40e824b26805fbd64fe32a7b14a0e31d"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/figma-plugin-cover.png",
+      "candidate": "website/public/figma-plugin-cover.png",
+      "blob": "6dba2bd033330c57ff32a83fa43edb4c8711f570"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/figma-plugin-icon.png",
+      "candidate": "website/public/figma-plugin-icon.png",
+      "blob": "3670d9a2251413df69d326bd8ddd344b7b7e9a63"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icon-1024.png",
+      "candidate": "website/public/icon-1024.png",
+      "blob": "8e08853efb42c1e29efc169f8850b204516b36d4"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/apple-white.png",
+      "candidate": "website/public/icons/apple-white.png",
+      "blob": "97ea770e342479b44a04ae4128ba83fefb460f1f"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/applenotes.webp",
+      "candidate": "website/public/icons/applenotes.webp",
+      "blob": "eaeed59ebf840ab50034f851936c3236610ba124"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/arc.avif",
+      "candidate": "website/public/icons/arc.avif",
+      "blob": "6b05e4b4da5494d55e85ef65ec23ea9c4476e5f8"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/canva.avif",
+      "candidate": "website/public/icons/canva.avif",
+      "blob": "a3f45c519eab8836668a4dd3a16342880d20a4ad"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/chatgpt.avif",
+      "candidate": "website/public/icons/chatgpt.avif",
+      "blob": "64c5ea627ee9c67662140b62673fd11a87d42231"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/chrome-logo.png",
+      "candidate": "website/public/icons/chrome-logo.png",
+      "blob": "35c7c20f317e895e02d94277966fdbce02af966f"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/classroom.avif",
+      "candidate": "website/public/icons/classroom.avif",
+      "blob": "819a70974f5da84e8e0b816830565d56a9e65e79"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/claude.avif",
+      "candidate": "website/public/icons/claude.avif",
+      "blob": "ad3d2c3317dfba8a8305e3d56bd7f4f345584ad8"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/cursor.webp",
+      "candidate": "website/public/icons/cursor.webp",
+      "blob": "c3de6e9f365fcf81ca0fed227c500988f70897c5"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/docs.webp",
+      "candidate": "website/public/icons/docs.webp",
+      "blob": "f6b791fecdfca40be833ddc99131f5be84f2fbd1"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/evernote.avif",
+      "candidate": "website/public/icons/evernote.avif",
+      "blob": "0a4149bc008b13f36043ac7099f8e00f1dde9f04"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/figma.webp",
+      "candidate": "website/public/icons/figma.webp",
+      "blob": "37815bddce87af1b7c4690e49225e0f178850c86"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/github.webp",
+      "candidate": "website/public/icons/github.webp",
+      "blob": "fd93c754caf5a79d5371b1798db90f0419fb9b27"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/gmail.webp",
+      "candidate": "website/public/icons/gmail.webp",
+      "blob": "e71b87191dfdc9314bda578668aa224a4688c78e"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/googlekeep.avif",
+      "candidate": "website/public/icons/googlekeep.avif",
+      "blob": "20cc11cfc1da7eb8d71e7f91a2f3b2a4754e98d2"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/grammarly.avif",
+      "candidate": "website/public/icons/grammarly.avif",
+      "blob": "54c72a55928200753c840d0015bef89ec8f1e3d3"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/imessage.avif",
+      "candidate": "website/public/icons/imessage.avif",
+      "blob": "e9034cdba90d39fdeae5feb12a4bf98be989361f"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/insta.avif",
+      "candidate": "website/public/icons/insta.avif",
+      "blob": "bca950bb60ab162f247a1accafc04381e9eb68b8"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/linear.avif",
+      "candidate": "website/public/icons/linear.avif",
+      "blob": "41f7afeb96d3b4bf52a9a1218c368effa3cfc9a6"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/macos/applications.png",
+      "candidate": "website/public/icons/macos/applications.png",
+      "blob": "f66599fa1b44423feb64cd98320d7def1357e79f"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/macos/chrome.png",
+      "candidate": "website/public/icons/macos/chrome.png",
+      "blob": "15cf428025ae286c8c3e8017c30dd40eff1b9b11"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/macos/claude.png",
+      "candidate": "website/public/icons/macos/claude.png",
+      "blob": "65631a5acd4e817be20ca370792878333eb65370"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/macos/downloads.png",
+      "candidate": "website/public/icons/macos/downloads.png",
+      "blob": "1464f01bb9628e53956c4ae07528f69695d02871"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/macos/finder.png",
+      "candidate": "website/public/icons/macos/finder.png",
+      "blob": "bf69baf1c39c8f711ce9550396482ee2beae799c"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/mail.avif",
+      "candidate": "website/public/icons/mail.avif",
+      "blob": "4dab4b09e1f0306f59827aa7082725b8297f8c22"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/messenger.avif",
+      "candidate": "website/public/icons/messenger.avif",
+      "blob": "cbee5348af81be2bb3d476d5090fa7f42f8581fb"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/notion.avif",
+      "candidate": "website/public/icons/notion.avif",
+      "blob": "20a72925ec6153393a2eab8a2616444248aecec6"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/obsidian.webp",
+      "candidate": "website/public/icons/obsidian.webp",
+      "blob": "47e49d70de9ef5d3086a6c40808ceaf97e22159f"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/onenote.avif",
+      "candidate": "website/public/icons/onenote.avif",
+      "blob": "54cff78a77f313642ba97c32497c97c21a3744f5"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/outlook.webp",
+      "candidate": "website/public/icons/outlook.webp",
+      "blob": "97079069c77f05a4654e57eef1380dd23219fc62"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/perplexity.avif",
+      "candidate": "website/public/icons/perplexity.avif",
+      "blob": "85da029025710738eb941e530a0fa6968a680833"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/raycast.webp",
+      "candidate": "website/public/icons/raycast.webp",
+      "blob": "77d632ccef01beb9df64518b23cecfd35316ada4"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/replit.webp",
+      "candidate": "website/public/icons/replit.webp",
+      "blob": "b28511dff1ce1df2afbdc8af28e77657dd69542c"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/signal.avif",
+      "candidate": "website/public/icons/signal.avif",
+      "blob": "49361c460c8fdf378327a324ef4314c01cbea194"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/slack.webp",
+      "candidate": "website/public/icons/slack.webp",
+      "blob": "c2ca708090aaccb5055249edbcb40dd602a544c3"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/snap.webp",
+      "candidate": "website/public/icons/snap.webp",
+      "blob": "2f83bf27e77be6f3e93a8c2f608b8985ee5a345a"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/superhuman.avif",
+      "candidate": "website/public/icons/superhuman.avif",
+      "blob": "381c0b5e2f63a0fad2d0befa01bc0a86b13ffc60"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/teams.webp",
+      "candidate": "website/public/icons/teams.webp",
+      "blob": "638098d530b79043dcbeba0bda62d445ac9c8250"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/telegram.avif",
+      "candidate": "website/public/icons/telegram.avif",
+      "blob": "cb765cec0a10c8ba1e1f04997551aa579cba0762"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/things.webp",
+      "candidate": "website/public/icons/things.webp",
+      "blob": "923dadb4ff44f20f1ed669ac2c306de4034915ad"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/todoist.avif",
+      "candidate": "website/public/icons/todoist.avif",
+      "blob": "87823ea0cdf89f363371e50452e55e7cdd737bb7"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/tools/browseruse.svg",
+      "candidate": "website/public/icons/tools/browseruse.svg",
+      "blob": "75b2ac1fe72c1845f417dcdfc9c47631da07d370"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/tools/chrome.png",
+      "candidate": "website/public/icons/tools/chrome.png",
+      "blob": "4dbcef7d56699a72f26958888c5ce0aa8398e149"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/tools/claude.png",
+      "candidate": "website/public/icons/tools/claude.png",
+      "blob": "ae10ffb5543882643e168a4f5d6068958a436295"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/tools/divmagic.ico",
+      "candidate": "website/public/icons/tools/divmagic.ico",
+      "blob": "18b6e5714c6ed6ccddc2df690cb6d62ccbdd798b"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/tools/divmagic.png",
+      "candidate": "website/public/icons/tools/divmagic.png",
+      "blob": "1392ff5c6b660ab7312fb32715c844ba23f8ff34"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/vscode.webp",
+      "candidate": "website/public/icons/vscode.webp",
+      "blob": "dcc46b7cb279695f8563ba3f30caee73a92c946f"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/whatsapp.avif",
+      "candidate": "website/public/icons/whatsapp.avif",
+      "blob": "b00f45bcfe65f81ccf5370361d1147c2ba5c2ef1"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/x.avif",
+      "candidate": "website/public/icons/x.avif",
+      "blob": "811bfb56e5e81a49bfe9bd28a1dccef87caae709"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/icons/zoom.avif",
+      "candidate": "website/public/icons/zoom.avif",
+      "blob": "a5ade02155a35e75cc10c655442f8512aa711a6a"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/library.html",
+      "candidate": "website/public/library.html",
+      "blob": "f3ea62da93a0d4204f5d2e886972f9261e766987"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/og.png",
+      "candidate": "website/public/og.png",
+      "blob": "a9cebb70fbf44495bb09899c9ed77aef0f32a282"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/peter.jpg",
+      "candidate": "website/public/peter.jpg",
+      "blob": "a19a555b0ec8baa3f29cd6ee91150f8d529a2c89"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/research-vision.html",
+      "candidate": "website/public/research-vision.html",
+      "blob": "085f65d228afc2252772a387e30943d1bab6e17f"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/sancho-tokens.json",
+      "candidate": "website/public/sancho-tokens.json",
+      "blob": "bd17101f604b117d521521430ea0d32d3ef0e727"
+    },
+    {
+      "source": "apps/disdat/product/landing/public/tokens-lab.html",
+      "candidate": "website/public/tokens-lab.html",
+      "blob": "abc1cdd55568f1fa32d657c8b90ba62e6c28fb1c"
+    },
+    {
+      "source": "apps/disdat/product/landing/src/DisDat.tsx",
+      "candidate": "website/src/DisDat.tsx",
+      "blob": "f3597bb49935eccef4f6deb14303d60e476a8905"
+    },
+    {
+      "source": "apps/disdat/product/landing/src/Pages.tsx",
+      "candidate": "website/src/Pages.tsx",
+      "blob": "1afc501b6826640e90eb1e7f8c7aaefedc601858"
+    },
+    {
+      "source": "apps/disdat/product/landing/src/auth.ts",
+      "candidate": "website/src/auth.ts",
+      "blob": "647730ce4cd464c43bd0b310f963d098be82190c"
+    },
+    {
+      "source": "apps/disdat/product/landing/src/index.css",
+      "candidate": "website/src/index.css",
+      "blob": "d07ab657a4a49b9984c92f85fdc500e258cc8018"
+    },
+    {
+      "source": "apps/disdat/product/landing/src/main.tsx",
+      "candidate": "website/src/main.tsx",
+      "blob": "297168ad1b458ec094453f41813c4a404a633692"
+    },
+    {
+      "source": "apps/disdat/product/landing/src/vite-env.d.ts",
+      "candidate": "website/src/vite-env.d.ts",
+      "blob": "71481daf0537618d167b7ebc5f22d8f20c938cb0"
+    },
+    {
+      "source": "apps/disdat/product/landing/tailwind.config.js",
+      "candidate": "website/tailwind.config.js",
+      "blob": "97ed72b07ee7ff8b8e8c72887e8f1c710a1d4134"
+    },
+    {
+      "source": "apps/disdat/product/landing/tsconfig.json",
+      "candidate": "website/tsconfig.json",
+      "blob": "cefbab454acfa47b2cfa9986d497a10dbdef5a93"
+    },
+    {
+      "source": "apps/disdat/product/landing/vercel.json",
+      "candidate": "website/vercel.json",
+      "blob": "9f056fc41a5578f9d68267497b50c0b0c1371c8a"
+    },
+    {
+      "source": "apps/disdat/product/landing/vite.config.ts",
+      "candidate": "website/vite.config.ts",
+      "blob": "9ffcc675746194c4a34eb43404d15db40b810265"
+    },
+    {
+      "source": "apps/disdat/product/mcp/README.md",
+      "candidate": "mcp/README.md",
+      "blob": "f0e31f6dc4e8b54904aefce9e14c0a2dfbfbeda5"
+    },
+    {
+      "source": "apps/disdat/product/mcp/server.py",
+      "candidate": "mcp/server.py",
+      "blob": "2b9a26ae0b487a24c783babe0fda362f53b11cf9"
+    },
+    {
+      "source": "apps/disdat/product/skill/skills/disdat/SKILL.md",
+      "candidate": "skills/disdat/SKILL.md",
+      "blob": "3c573d788f61c04cd20a700d5b07d246d2fa20ed"
+    },
+    {
+      "source": "apps/disdat/product/skill/skills/disdat/scripts/skillify.mjs",
+      "candidate": "skills/disdat/scripts/skillify.mjs",
+      "blob": "0675b5cfdf841373fa151c9003239d4d7cda2b76"
+    }
+  ],
+  "omitted": [
+    {
+      "path": "ext-pointtalk/launch-chrome.sh",
+      "reason": "private configuration, generated artifact or owner-only packaging"
+    },
+    {
+      "path": "ext-pointtalk/package-public.sh",
+      "reason": "private configuration, generated artifact or owner-only packaging"
+    },
+    {
+      "path": "landing/.env.production",
+      "reason": "private configuration, generated artifact or owner-only packaging"
+    },
+    {
+      "path": "landing/public/disdat-figma-plugin.zip",
+      "reason": "private configuration, generated artifact or owner-only packaging"
+    },
+    {
+      "path": "landing/public/DisDat.dmg",
+      "blob": "cee7d0ad549b7c2d9c5a33419e98445e67254f5e",
+      "reason": "legacy macOS installer excluded; application source is a separate remaining extraction"
+    },
+    {
+      "path": "landing/public/orb-engine.js",
+      "blob": "eb3952b53ddda6b3c7472d5a0f915339ff8cb2d7",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/public/orb-gradient.png",
+      "blob": "111be3eff671137a5ff1357f7065442aae03344a",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/public/orb-lab.html",
+      "blob": "8c99b6a916da1885df36facc4622ac1754faf584",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/public/orb-standalone.js",
+      "blob": "e8340369b4eb9513352def94b59c4310698d2750",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/public/prancing-horse.svg",
+      "blob": "cd3c1f35eabc929725070faac183a30bc1663a8a",
+      "reason": "unused third-party reference mark from an omitted legacy demo"
+    },
+    {
+      "path": "landing/public/ref-iphone.jpg",
+      "blob": "cf8400173d4cbe39212610c6e6891c50eef734ad",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/amina-atar-tPM3nd4J8xs-unsplash.jpg",
+      "blob": "48c049973c9e03b80b622e705afc837f6df1aa67",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/igor-rand-dlR-BNDWz3g-unsplash.jpg",
+      "blob": "73624a170150747c180be5fbe872d34bac5e392c",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/ozge-karzan-fdZjAjPUQbk-unsplash.jpg",
+      "blob": "517c55a7046913b2b1951db45a9cfb57a0fe898e",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/pexels-adrienne-andersen-1174503-2661255.jpg",
+      "blob": "64c0f935b5ac2a811d1d794ba595fa31912c0ed3",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/pexels-ayomide-isaac-66354580-16273825.jpg",
+      "blob": "046080589f5a4435292f986959c29d9a408ff6ea",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/pexels-brianasarejr-12417686.jpg",
+      "blob": "bb265213a70e7ebc85b8ea56eeac7a58c1835945",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/pexels-brianasarejr-17553641.jpg",
+      "blob": "59a9636511fecb96c70765c70bd117a727418b90",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/pexels-jameshausley-3328337.jpg",
+      "blob": "cad348233aade74951c5dc55e5ff19592bfa787d",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/public/voyager/pexels-kadeem-stewart-170429769-15786936.jpg",
+      "blob": "1b304cdd0508a5c69139bb55a48c4ba20ed9b25b",
+      "reason": "unused historical reference media excluded; exact source/licence unverified"
+    },
+    {
+      "path": "landing/src/OrbCanvas.tsx",
+      "blob": "b64b58ed121cccd61f7701b571d1f2bc7fc191d8",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/src/OrbClone.tsx",
+      "blob": "ca5f42f676d77704bd6fe36e43aa8e0907d849b0",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/src/Research.tsx",
+      "blob": "9b11aaad862e7f364222cbd832beea966ed5ee17",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/src/orb-standalone.ts",
+      "blob": "587524fe88cb8fba5c4f975cfeb32f1a13e911e6",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/src/orbEngine.ts",
+      "blob": "849926eb0c834c315bf652873d66b44fca615549",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/vite.orb.config.ts",
+      "blob": "cdee130ae7313a748d4fec901cec7b8a4a7fb138",
+      "reason": "historical compiled-orb research/lab experiment and dependent code excluded pending redistribution licence; original retained privately"
+    },
+    {
+      "path": "landing/pnpm-lock.yaml",
+      "blob": "cf374b58b6e614c739f6534bc7b114f8c21beabd",
+      "reason": "superseded package-manager lock; npm package-lock.json is canonical for this source beta"
+    }
+  ],
+  "licence": {
+    "original_code": "MIT",
+    "copyright": "2026 Peter Neyra",
+    "selected_by_owner": "2026-10-28"
+  },
+  "modified_or_added": [
+    "README.md",
+    "AGENTS.md",
+    "RELEASE-STATUS.md",
+    "LICENSE",
+    "THIRD-PARTY-NOTICES.md",
+    "licenses/",
+    "docs/architecture.md",
+    "docs/configuration.md",
+    "extension/background.js",
+    "extension/content.js",
+    "extension/onboarding.js",
+    "extension/onboarding.html",
+    "extension/README.md",
+    "extension/runtime.js",
+    "extension/local-delivery.js",
+    "tools/disdat.py",
+    "tests/",
+    "skills/disdat/SKILL.md",
+    "skills/disdat-setup/SKILL.md",
+    "mcp/README.md",
+    "mcp/server.py",
+    "website/README.md",
+    ".env.example",
+    ".gitignore",
+    "disdat.config.example.json",
+    "docs/model-support.md",
+    "extension/privacy.js",
+    "extension/private-downloads.js",
+    "extension/manifest.json",
+    "extension/offscreen.html",
+    "extension/offscreen.js",
+    "extension/inject-main.js",
+    "website/src/DisDat.tsx",
+    "website/src/Pages.tsx",
+    "website/public/research-vision.html",
+    "website/index.html",
+    "website/package-lock.json",
+    "website/src/main.tsx",
+    "website/public/library.html",
+    "website/package.json",
+    "docs/export-scope.md",
+    ".github/workflows/check.yml",
+    "docs/decisions.md",
+    "website/DEPLOY.md",
+    "docs/assets/"
+  ],
+  "source_parts_omitted": [
+    {
+      "candidate": "website/src/DisDat.tsx",
+      "reason": "unused older landing/reference demos; active main website functions preserved verbatim",
+      "declarations": [
+        "openWaitlist",
+        "saveWaitlist",
+        "DMG_URL",
+        "PRO_UPGRADE_URL",
+        "STRIPE_PRO_FALLBACK",
+        "jump",
+        "WaitlistModal",
+        "BottomCTA",
+        "CookieNotice",
+        "DisDatAppIcon",
+        "Step",
+        "PointerDemoProps",
+        "PointerDemo",
+        "ChromeTabStrip",
+        "ChromeToolbar",
+        "Chrome",
+        "LovableMockup",
+        "ChromeConsoleMockup",
+        "AppleMockup",
+        "Waveform",
+        "FerrariMockup",
+        "FerrariTile",
+        "FerrariHeroImage",
+        "FerrariCar",
+        "HeroCanvas",
+        "PrimaryCTA",
+        "Hero",
+        "IconEntry",
+        "CodexIconArt",
+        "V0IconArt",
+        "LovableIconArt",
+        "AiAppsRow",
+        "Problem",
+        "Modes",
+        "Mode",
+        "FrameStep",
+        "FILMSTRIP_STEPS",
+        "MiniDock",
+        "FinderIcon",
+        "ClaudeAppIcon",
+        "ApplicationsFolderIcon",
+        "DownloadsFolderIcon",
+        "ChromeAppIcon",
+        "FilmstripThumb",
+        "FakeBrowserWindow",
+        "LiveFilmstrip",
+        "CyclingAgent",
+        "StepBlock",
+        "MacDesktopFrame",
+        "MacMenuBar",
+        "ChromeWindow",
+        "ClaudeCodeWindow",
+        "RenderClaudeLine",
+        "CmdTabSwitcher",
+        "MacDock",
+        "DockItem",
+        "Pricing",
+        "HandoffPhase",
+        "MobileComingSoon",
+        "MobilePhone",
+        "MacLandingScreen",
+        "PlatformBadge",
+        "AppleGlyph",
+        "AndroidGlyph",
+        "WindowsGlyph",
+        "EarlyAccessForm",
+        "FinalCTA",
+        "Keys",
+        "DownloadIcon"
+      ]
+    }
+  ],
+  "clean_export": {
+    "date": "2026-10-28",
+    "based_on_private_candidate_sha256": "1bc28841fd0f25796ab1203d00401860db66a2a53a8433acbe50403ce3b70f07",
+    "excluded_candidate_paths": [
+      "website/pnpm-lock.yaml",
+      "website/public/orb-engine.js",
+      "website/public/orb-gradient.png",
+      "website/public/orb-lab.html",
+      "website/public/orb-standalone.js",
+      "website/public/prancing-horse.svg",
+      "website/public/ref-iphone.jpg",
+      "website/public/voyager/amina-atar-tPM3nd4J8xs-unsplash.jpg",
+      "website/public/voyager/igor-rand-dlR-BNDWz3g-unsplash.jpg",
+      "website/public/voyager/ozge-karzan-fdZjAjPUQbk-unsplash.jpg",
+      "website/public/voyager/pexels-adrienne-andersen-1174503-2661255.jpg",
+      "website/public/voyager/pexels-ayomide-isaac-66354580-16273825.jpg",
+      "website/public/voyager/pexels-brianasarejr-12417686.jpg",
+      "website/public/voyager/pexels-brianasarejr-17553641.jpg",
+      "website/public/voyager/pexels-jameshausley-3328337.jpg",
+      "website/public/voyager/pexels-kadeem-stewart-170429769-15786936.jpg",
+      "website/src/OrbCanvas.tsx",
+      "website/src/OrbClone.tsx",
+      "website/src/Research.tsx",
+      "website/src/orb-standalone.ts",
+      "website/src/orbEngine.ts",
+      "website/vite.orb.config.ts"
+    ],
+    "visible_main_visual": "preserved original CSS/HTML; removed dormant engine loader/reveal/empty host only",
+    "library": "15 original token/spring/UI specimens retained; copied-engine orb and texture specimens omitted"
+  },
+  "publication_preparation": {
+    "date": "2026-10-28",
+    "from_clean_source_sha256": "05abea852cba3301405143c055a4b0773585e35432b55fe94674a17da555f43b",
+    "scope": "initial source beta; client, skills, token MCP and clean website; publication handled separately",
+    "accepted_runtime_code": "capture/privacy baseline retained; microphone readiness/cancellation fix in extension/background.js,content.js,offscreen.js with deterministic regressions",
+    "ci": "Python3.12,Node22;9offline Python,16Node,website npmci/build and Chromium readiness/privacy proof with Playwright1.58.0; pinned official actions; contents:read",
+    "readme_presentation": {
+      "kind": "authored first-party website demonstration",
+      "source": "website/public/research-vision.html",
+      "source_sha256": "a87ef5ce45519ffc4607387d45fe02731b68ffa1d95251e86bc1e3cc94bef86c",
+      "proof": "docs/assets/proof.json",
+      "image": "docs/assets/point-and-talk-1000.png",
+      "caption": "Website demonstration."
+    },
+    "packaging": ".github source included in public package allowlist so CI remains in regenerated source archives"
+  }
+}

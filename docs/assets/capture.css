@@ -1,0 +1,13 @@
+/* Isolate the existing first-party point-and-talk demonstration.
+ * No title, copy, target content, captured values or UI is authored here.
+ * Native demonstration geometry: 1000 × 620. Phone scales it uniformly.
+ */
+html,body { margin:0; padding:0; min-height:0; overflow:hidden; background:#F0E6CC; }
+body > :not(.hero3), .hero3 > :not(.herodemo) { display:none !important; }
+.hero3 { margin:0; padding:0; max-width:none; }
+.herodemo { margin:0; max-width:none; width:100%; }
+.herodemo .hstagewrap { margin:0; max-width:none; width:100%; border-radius:0; box-shadow:none; }
+/* Remove surrounding OS/browser furniture while retaining the actual scene. */
+.vhero .desk, .vhero .menubar, .vhero .dock, .vhero .cbar { display:none !important; }
+.vhero .winchrome { inset:0; border:0; border-radius:0; box-shadow:none; }
+.vhero .cview { inset:0; top:0; }

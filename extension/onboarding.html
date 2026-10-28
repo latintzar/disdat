@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dis Dat — get set up</title>
+<style>
+:root{--bg:#FBF7EE;--ink:#16110D;--soft:#6b5d44;--line:rgba(28,18,6,.12);--acc:#FF5C2A;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,Inter,system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:600px;margin:0 auto;padding:52px 24px 100px}
+.brand{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--acc)}
+.kick{font:600 12px/1 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-top:28px}
+h1{font-size:32px;line-height:1.08;letter-spacing:-.02em;margin:10px 0 8px;font-weight:800}
+.lede{color:var(--soft);font-size:16px;margin:0 0 26px}
+.step{display:flex;gap:16px;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:20px 22px;margin:14px 0}
+.snum{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.step.done .snum{background:#1f7a3d}
+.sbody{flex:1;min-width:0}
+.sbody h3{margin:2px 0 6px;font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sbody p{margin:0 0 12px;color:var(--soft);font-size:14px}
+.opt{display:inline-block;background:#e7e0d0;color:#6b5d44;font:600 10px/1 ui-monospace,monospace;padding:4px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.04em}
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:11px;padding:11px 16px;font-size:14px;font-weight:600;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.btn:hover{border-color:rgba(28,18,6,.3);box-shadow:0 2px 10px -4px rgba(0,0,0,.25)}
+.btn:disabled{opacity:.6;cursor:default}
+.signed{display:none;align-items:center;gap:8px;font-size:14px;color:#1f7a3d;font-weight:600}
+.signed.show{display:flex}
+.mins{color:var(--soft);font-weight:500}
+.toggle{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}
+.toggle button{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);color:var(--soft);border-radius:10px;padding:8px 13px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .14s}
+.toggle button img{width:15px;height:15px;border-radius:4px;display:block}
+.toggle button:hover{color:var(--ink)}
+.toggle button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.hint{font:600 11px/1 ui-monospace,monospace;color:var(--soft);text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px}
+.url{display:flex;gap:8px;align-items:center;background:#16110D;border-radius:11px;padding:11px 12px;font:13px/1.4 ui-monospace,monospace;margin:0 0 10px}
+.url code{flex:1;overflow:auto;white-space:nowrap;color:#FBF7EE}
+.url button{flex:none;background:var(--acc);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer}
+.fine{color:var(--soft);font-size:12.5px;margin:0}
+b{color:var(--ink)}
+.foot{color:var(--soft);font-size:13px;margin-top:30px;border-top:1px solid var(--line);padding-top:18px}
+a{color:var(--acc)}
+.refbox{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.refrow{display:flex;gap:8px;margin-bottom:10px}
+.refrow input{flex:1;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:13px ui-monospace,monospace}
+.refmine{font-size:13px;color:var(--soft);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.refcode{font:700 14px ui-monospace,monospace;background:#f4efe3;border:1px solid var(--line);border-radius:8px;padding:4px 10px;letter-spacing:.06em;color:var(--ink)}
+.reflink{background:transparent;border:none;color:var(--acc);font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.refcount{margin-left:auto;font:600 11px ui-monospace,monospace;color:#a08a6a}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,monospace}
+kbd{background:#f4efe3;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font:12px/1 ui-monospace,monospace;color:var(--ink)}
+</style></head>
+<body><div class="wrap">
+  <div class="brand"><span class="dot"></span>Dis Dat</div>
+  
+  <h1>Set up Dis Dat</h1>
+  <p class="lede">Record a page and your spoken brief for your coding agent.</p>
+
+  <div class="step" id="step-auth">
+    <div class="snum">1</div>
+    <div class="sbody">
+      <h3 id="setup-title">Hosted account</h3>
+      <p id="setup-description">Hosted mode uses your Dis Dat account for transcription and briefings.</p>
+      <pre id="setup-command" hidden>python3 tools/disdat.py setup --provider groq
+python3 tools/disdat.py doctor</pre>
+      <button class="btn" id="signin">
+        <svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A9 9 0 0 0 9 0 9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+        Sign in with Google
+      </button>
+      <div class="signed" id="signed">✓ Signed in as <b id="email">&nbsp;</b><span class="mins" id="mins"></span></div>
+      <div class="refbox" id="refbox" hidden>
+        <div class="refrow" id="ref-redeem"><input id="refin" placeholder="Got a referral code? DD-······" autocomplete="off"><button class="btn" id="refapply">Apply</button></div>
+        <div class="refmine">Your invite code: <b class="refcode" id="refcode"></b><button class="reflink" id="refcopy">copy invite</button><span class="refcount" id="refcount"></span></div>
+        <p class="fine">Give a month, get a month — you both get Pro free for 30 days.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="snum">2</div>
+    <div class="sbody">
+      <h3>Add the capture skill</h3>
+      <p>The capture skill explains the artifact format.</p>
+      <div class="toggle" id="toggle">
+        <button data-k="claude" class="on"><img src="agents/claude.avif" alt="">Claude Code</button>
+        <button data-k="cursor"><img src="agents/cursor.webp" alt="">Cursor</button>
+        <button data-k="codex"><img src="agents/chatgpt.avif" alt="">Codex</button>
+        <button data-k="copilot"><img src="agents/github.webp" alt="">Copilot</button>
+        <button data-k="lovable"><img src="agents/lovable.png" alt="">Lovable</button>
+      </div>
+      <div class="hint" id="snip-hint">Run this in your project (Claude Code)</div>
+      <div class="url"><code id="snip">npx skills add DisDat-dev/disdat</code><button id="copy-snip">Copy</button></div>
+      <p class="fine">Every capture is self-describing — the skill just makes consumption consistent.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="snum">3</div>
+    <div class="sbody">
+      <h3>Record &amp; paste</h3>
+      <p id="record-help">On any page, click the <b>Dis Dat</b> icon in your toolbar → <b>Start</b> → talk while you point, hover, click, scroll — even across pages. Hit <b>Stop</b> and your capture <b>copies itself</b>. Paste it at your agent and say <b>“use the Dis Dat skill.”</b></p>
+      <p class="fine">Allow microphone access on the first recording.</p>
+    </div>
+  </div>
+
+  <div class="foot" id="setup-footer">Manage your plan &amp; billing any time: click the Dis Dat icon → your account. Questions? <a href="mailto:peter@disdat.dev">peter@disdat.dev</a></div>
+</div>
+<script src="onboarding.js"></script>
+</body></html>

@@ -1,0 +1,1432 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Dis Dat — Library</title>
+<link rel="icon" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+  :root{
+    --bg:#FBF7EE;--ink:#16110D;--soft:#6b5d44;--faint:#a08a6a;--line:rgba(28,18,6,.11);--acc:#FF5C2A;
+    /* Sancho y Panza observed tokens */
+    --sy-crimson:#C01B2C;--sy-alerta:#F4A300;--sy-paper:#FAF7F3;--sy-cloud:#F2ECE5;--sy-elev:#FFFFFF;
+    --sy-ink:#1A1413;--sy-ease:cubic-bezier(.31,.325,0,.92);
+  }
+  *{box-sizing:border-box;margin:0}
+  [hidden]{display:none !important}
+  body{background:var(--bg);color:var(--ink);font:13.5px/1.5 'Inter',-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .top{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(251,247,238,.94);backdrop-filter:blur(8px);z-index:30}
+  .brand{display:flex;align-items:center;gap:9px;font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:16px}
+  .brand img{width:22px;height:22px;border-radius:5px;image-rendering:pixelated}
+  .crumb{color:var(--faint);font-size:12.5px}
+  .top .note{margin-left:auto;font:11px 'JetBrains Mono',ui-monospace,monospace;color:var(--faint)}
+  .intro{max-width:920px;margin:26px auto 6px;padding:0 22px}
+  .intro h1{font-family:'Fraunces',Georgia,serif;font-size:26px;letter-spacing:-.01em;margin-bottom:6px;text-wrap:balance}
+  .intro p{color:var(--soft);max-width:66ch}
+  .wrap{max-width:1160px;margin:0 auto;padding:14px 22px 90px;display:flex;flex-direction:column;gap:18px}
+
+  /* specimen row */
+  .spec{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
+  .spec>header{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--line)}
+  .spec>header b{font-family:'Fraunces',Georgia,serif;font-size:15.5px}
+  .spec>header .tok{font:10.5px 'JetBrains Mono',ui-monospace,monospace;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .spec>header .exp{margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:8px;width:30px;height:28px;cursor:pointer;color:var(--soft);font-size:13px}
+  .spec>header .exp:hover{color:var(--ink)}
+  .spec .body{display:grid;grid-template-columns:320px 1fr;min-height:270px}
+  @media(max-width:860px){.spec .body{grid-template-columns:1fr}}
+  .ctrls{padding:12px 16px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+  .demo{display:grid;place-items:center;background:radial-gradient(90% 90% at 50% 20%, #221A13 0%, #150F0B 75%);position:relative;padding:26px}
+  .demo.light{background:var(--sy-cloud)}
+  .spec.full{position:fixed;inset:0;z-index:50;border-radius:0;overflow:auto}
+  .spec.full .body{grid-template-columns:380px 1fr;min-height:calc(100vh - 52px)}
+  .lab{font:600 10.5px 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,242,234,.45);position:absolute;bottom:10px;left:50%;transform:translateX(-50%);white-space:nowrap}
+  .demo.light .lab{color:rgba(28,18,6,.35)}
+
+  .grp{font:700 10px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;padding:12px 0 7px}
+  .pills{display:flex;flex-wrap:wrap;gap:6px}
+  .pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;color:var(--soft);cursor:pointer}
+  .pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .pill:hover:not(.on){color:var(--ink);border-color:rgba(28,18,6,.3)}
+  .krow{display:grid;grid-template-columns:96px 1fr 44px;gap:9px;align-items:center;padding:4px 0}
+  .krow label{font:11px 'JetBrains Mono',ui-monospace,monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .krow output{font:600 11px 'JetBrains Mono',ui-monospace,monospace;color:var(--acc);text-align:right;font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:rgba(28,18,6,.1)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--acc);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3);cursor:grab}
+  .play{border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:9px;padding:7px 12px;font-weight:700;font-size:12.5px;cursor:pointer;margin-top:10px;width:max-content}
+  .savebtn{margin-top:12px;border:1px dashed var(--line);background:#fff;border-radius:9px;padding:7px;font-weight:700;font-size:12px;color:var(--soft);cursor:pointer}
+  .savebtn:hover{color:var(--ink)}
+  .uchip{position:relative}
+  .uchip .del{margin-left:6px;color:inherit;opacity:.55;cursor:pointer}
+  .footnote{font:10px/1.5 'JetBrains Mono',ui-monospace,monospace;color:var(--faint);padding-top:10px;margin-top:auto}
+  button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+  /* ── specimen internals ── */
+  /* spring stage */
+  .phone{width:270px;background:var(--sy-paper);border-radius:18px;padding:14px;box-shadow:0 18px 50px rgba(0,0,0,.45);min-height:210px;display:flex;flex-direction:column;gap:9px;justify-content:flex-end;overflow:hidden}
+  .bub{align-self:flex-end;background:var(--sy-crimson);color:#fff;border-radius:7.5px;border-bottom-right-radius:2px;padding:8px 12px;font-size:13px;max-width:82%;opacity:0}
+  .ocard{background:var(--sy-elev);border:1px solid var(--line);border-radius:12px;padding:10px 12px;opacity:0}
+  .ocard b{font-size:12.5px}.ocard div{font:11px 'JetBrains Mono',ui-monospace,monospace;color:var(--soft)}
+  /* modal stage */
+  .mini{width:290px;height:230px;background:var(--sy-paper);border-radius:14px;position:relative;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+  .mini .rowc{background:var(--sy-elev);border:1px solid var(--line);border-radius:8px;margin:8px 10px;padding:8px 10px;font-size:12px}
+  .mini .rowc span{font:10.5px 'JetBrains Mono',ui-monospace,monospace;color:var(--soft);display:block}
+  .backdrop{position:absolute;inset:0;opacity:0;pointer-events:none}
+  .sheet{position:absolute;left:10px;right:10px;bottom:10px;background:var(--sy-elev);border-radius:20px;padding:14px;border:1px solid var(--sy-hairline);box-shadow:0 4px 12px rgba(26,20,19,.10);opacity:0}
+  .sheet b{font-size:13.5px}.sheet p{font-size:11.5px;color:var(--soft);margin:4px 0 10px}
+  .sheet .cta{background:var(--sy-crimson);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-weight:700;font-size:12px;width:100%}
+  /* navbar stage */
+  .navmini{width:290px;height:240px;background:var(--sy-paper);border-radius:14px;position:relative;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+  .syheader{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:56px;background:var(--sy-surface);box-shadow:0 1px 2px rgba(26,20,19,.08)}
+  .syheader b{font:600 16px 'Inter',sans-serif;letter-spacing:-.2px;color:var(--sy-ink)}
+  .syface{width:34px;height:34px;border-radius:50%;border:none;background:var(--sy-saffron-dim);color:var(--sy-saffron-text);font:600 12px 'Inter',sans-serif;cursor:pointer;transition:transform 55ms cubic-bezier(0,0,.58,1)}
+  .navscroll{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;padding:64px 12px 12px}
+  .navscroll::-webkit-scrollbar{display:none}
+  .navscroll .c{background:var(--sy-elev);border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px;font-size:12px}
+  .navscroll .c span{font:10.5px 'JetBrains Mono',ui-monospace,monospace;color:var(--soft);display:block}
+  /* highlight stage */
+  .hcard{width:300px;background:var(--sy-elev);border:1px solid var(--line);border-radius:12px;padding:18px;font-size:14px;line-height:1.75;box-shadow:0 18px 50px rgba(0,0,0,.4)}
+  .hcard .kicker{font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.008em;text-transform:uppercase;color:var(--sy-faint);display:block;margin-bottom:6px}
+  mark{background:none;color:inherit;border-radius:2px}
+  /* surfaces stage */
+  .surfwrap{display:flex;flex-direction:column;gap:10px;width:290px}
+  .surf{padding:12px 14px;transition:border-radius .25s var(--sy-ease), box-shadow .25s, border-color .25s}
+  .surf b{font-size:12.5px}.surf span{font:10.5px 'JetBrains Mono',ui-monospace,monospace;color:var(--soft);display:block}
+  /* type stage */
+  .typecard{width:330px;background:var(--sy-elev);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 18px 50px rgba(0,0,0,.4)}
+  .ty-kick{font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.008em;text-transform:uppercase;color:var(--sy-faint);margin-bottom:10px}
+  .ty-h{color:var(--sy-ink);line-height:1.12;margin-bottom:10px;text-wrap:balance}
+  .ty-b{color:var(--sy-muted);font-size:14px;line-height:1.6}
+  /* button stage */
+  .btnstage{display:flex;flex-direction:column;gap:12px;align-items:center}
+  .ddbtn{border:none;cursor:pointer;font:500 14px 'Inter',sans-serif;letter-spacing:-.1px;padding:0 12px}
+  .ddbtn.primary{background:var(--sy-crimson);color:var(--sy-on-crimson)}
+  .ddbtn.secondary{background:transparent;color:var(--sy-ink);border:1px solid var(--sy-border-strong)}
+  .ddbtn.ghost{background:transparent;color:var(--sy-ink)}
+  /* Sancho composer/recorder — values verbatim from ConversationScreen.kt + VoiceRecorderBar.kt */
+  .sypill{flex:1;display:flex;align-items:center;gap:10px;background:var(--sy-surface);border:1px solid var(--sy-hairline);border-radius:var(--sy-radius-sheet);min-height:var(--sy-btn-lg);padding:4px 12px;box-shadow:0 1px 2px rgba(26,20,19,.05)}
+  .sypill .pic{color:var(--sy-muted);display:inline-flex}
+  .sypill .ptext{flex:1;font-size:13.5px;color:var(--sy-ink);line-height:1.35;word-break:break-word}
+  .sypill .ph{color:var(--sy-faint)}
+  .sybtn{width:var(--sy-btn-lg);height:var(--sy-btn-lg);border-radius:50%;border:none;background:var(--sy-crimson);color:var(--sy-on-crimson);display:grid;place-items:center;cursor:pointer;flex-shrink:0;transition:transform 130ms var(--sy-ease)}
+  .recbar{display:flex;align-items:center;gap:10px;background:var(--sy-surface);border:1px solid var(--sy-hairline);border-radius:var(--sy-radius-sheet);min-height:var(--sy-btn-lg);padding:0 16px;box-shadow:0 1px 3px rgba(26,20,19,.08)}
+  .recdot{width:10px;height:10px;border-radius:50%;background:var(--sy-alerta);animation:recblink 760ms var(--sy-ease) infinite alternate;flex-shrink:0}
+  @keyframes recblink{from{opacity:1}to{opacity:.25}}
+  .rectime{font:500 12.5px 'JetBrains Mono',monospace;color:var(--sy-ink);font-variant-numeric:tabular-nums}
+  .slidehint{margin-left:auto;display:inline-flex;align-items:center;gap:2px;color:var(--sy-muted);font-size:12.5px}
+  .lockrow{display:flex;align-items:center;margin-top:8px;padding:0 4px}
+  .lockbtn{width:var(--sy-btn-lg);height:var(--sy-btn-lg);border-radius:50%;border:none;background:none;color:var(--sy-muted);display:grid;place-items:center;cursor:pointer}
+  .lockbtn.pause{color:var(--sy-alerta-text);margin:0 auto}
+  .vbubble{align-self:flex-end;background:var(--sy-out-bubble);border:1px solid var(--sy-out-border);border-radius:12px;border-top-right-radius:6px;padding:8px 12px;display:flex;align-items:center;gap:8px;box-shadow:0 1px 2px rgba(28,18,6,.06)}
+  .vbubble .vplay{color:var(--sy-crimson);display:inline-flex}
+  .vbubble time{font:11px 'JetBrains Mono',monospace;color:var(--sy-muted)}
+  /* outgoing bubbles corrected to the REAL chatOut tokens: #FBE2E5 fill + 20% crimson hairline + ink text */
+  .bub,.cbub.me,.rpmsg.me{background:var(--sy-out-bubble) !important;color:var(--sy-ink) !important;border:1px solid var(--sy-out-border);border-radius:12px !important;border-top-right-radius:6px !important;box-shadow:0 1px 2px rgba(28,18,6,.06)}
+  .cbub.them,.rxbub,.rpmsg{background:var(--sy-in-bubble);color:var(--sy-ink);border:1px solid var(--sy-in-border);border-radius:12px;border-top-left-radius:6px;box-shadow:0 1px 2px rgba(28,18,6,.06)}
+  
+  /* ghost cursor — shows the click happening, for looped press demos */
+  .ghost{position:absolute;top:14px;left:14px;z-index:6;pointer-events:none;opacity:0;transition:opacity .25s}
+  .ghost.onn{opacity:1}
+  .ghost svg{filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+  .ghost i{position:absolute;left:-11px;top:-11px;width:24px;height:24px;border-radius:50%;background:rgba(255,92,42,.4);transform:scale(0);pointer-events:none}
+  .ghost.down i{animation:gclick .34s ease-out}
+  @keyframes gclick{0%{transform:scale(.2);opacity:1}100%{transform:scale(1.5);opacity:0}}
+  /* composer stage */
+  .composer{display:flex;gap:8px;align-items:flex-end;width:100%}
+  .composer .field{flex:1;background:var(--sy-elev);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:13px;color:var(--sy-ink);min-height:38px;line-height:1.4;word-break:break-word}
+  .composer .field .ph{color:#b3a48c}
+  .composer .send{width:38px;height:38px;border-radius:50%;border:none;background:var(--sy-crimson);color:#fff;display:grid;place-items:center;cursor:pointer;flex-shrink:0;transition:transform .12s var(--sy-ease), background .2s}
+  /* reactions stage */
+  .rxwrap{position:relative;width:100%;display:flex;flex-direction:column;gap:10px}
+  .rxbub{align-self:flex-start;padding:9px 13px;font-size:13px;position:relative}
+  .rxpicker{position:absolute;top:-46px;left:6px;background:#fff;border:1px solid var(--sy-hairline);border-radius:999px;padding:6px 8px;display:flex;gap:4px;align-items:center;font-size:22px;box-shadow:0 3px 6px rgba(28,18,6,.16);opacity:0;transition:opacity .13s linear}
+  .rxpicker span{cursor:pointer;padding:0 2.5px}
+  .rxmore{width:34px;height:34px;border-radius:50%;border:none;background:var(--sy-saffron-dim);color:var(--sy-saffron-text);font:600 20px 'Inter',sans-serif;cursor:pointer;flex-shrink:0}
+  .rxbadge{position:absolute;bottom:-10px;left:8px;background:#fff;border:1px solid var(--sy-hairline);border-radius:999px;padding:2px 4px;font-size:14px;box-shadow:0 1px 3px rgba(28,18,6,.12);display:none}
+  /* reply stage */
+  .rpmsg{align-self:flex-start;padding:9px 13px;font-size:13px;position:relative;transition:transform .3s var(--sy-ease)}
+  .rpquote{display:flex;gap:8px;background:var(--sy-saffron-dim);border-radius:6px;padding:5px 8px;margin-bottom:4px;cursor:pointer;align-items:center}
+  .rpquote i{width:4px;height:38px;border-radius:2px;flex-shrink:0}
+  .rpquote b{display:block;color:var(--sy-saffron-text);font:500 12px 'Inter',sans-serif;letter-spacing:.1px}
+  .rpquote span{display:block;font-size:13px;line-height:20px;color:var(--sy-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
+  /* sheet + transcript stage */
+  .ts-sheet{position:absolute;inset:0;background:var(--sy-paper);padding:12px;transform:translateY(100%);display:flex;flex-direction:column;gap:10px}
+  .ts-sheet .tshead{display:flex;align-items:center;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--sy-hairline)}
+  .ts-sheet .tshead b{font:600 15px 'Fraunces',Georgia,serif;display:block}
+  .tsmeta{font:400 10.5px 'Inter',sans-serif;color:var(--sy-muted);display:block}
+  .ts-x{width:40px;height:40px;border-radius:50%;border:none;background:none;color:var(--sy-muted);cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:transform 55ms cubic-bezier(0,0,.58,1)}
+  .ts-x:active{transform:scale(.96)}
+  .ts-lines{flex:1;overflow:hidden;display:flex;flex-direction:column;gap:8px}
+  .ts-line{display:flex;gap:8px;font-size:12px;line-height:1.5;border-radius:6px;padding:1px 4px}
+  .ts-line time{font:500 10.5px 'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;color:var(--sy-faint);white-space:nowrap;width:40px;flex-shrink:0;padding-top:1px}
+  /* editable order table — real spec */
+  .ordtable{width:100%;background:var(--sy-elev);border:1px solid var(--sy-hairline);border-radius:12px;overflow:hidden;font-size:12px}
+  .ordtable .tr{display:grid;grid-template-columns:1.5fr 82px 80px;border-bottom:1px solid var(--sy-hairline);border-radius:6px}
+  .ordtable .tr:last-child{border-bottom:none}
+  .ordtable .tr.total{border-top:1px solid var(--sy-border-strong);border-bottom:none}
+  .ordtable .td{padding:9px 11px;display:flex;align-items:center;font:400 14px 'Inter',sans-serif;color:var(--sy-ink)}
+  .ordtable .td.num{font:500 15px 'IBM Plex Mono',monospace;font-feature-settings:'tnum','lnum';justify-content:flex-end;gap:5px}
+  .ordtable .tlabel{font:500 14px 'Inter',sans-serif;color:var(--sy-muted)}
+  .ordtable .tbig{font:600 17px 'IBM Plex Mono',monospace}
+  .ordtable .tr.editing{box-shadow:inset 0 0 0 1px var(--sy-border-strong)}
+  .stepper{width:26px;height:26px;border-radius:6px;background:var(--sy-cloud);border:1px solid var(--sy-hairline);display:grid;place-items:center;font-size:14px;cursor:pointer;flex-shrink:0}
+  .qv{min-width:24px;text-align:center}
+  .lowconf{color:var(--sy-alerta-text);text-decoration:underline wavy var(--sy-alerta) 1.5px;text-underline-offset:3px}
+  .undobar{margin-top:8px;display:flex;align-items:center;justify-content:space-between;background:var(--sy-saffron-dim);border-radius:8px;padding:7px 12px;font:500 12.5px 'Inter',sans-serif;color:var(--sy-saffron-text)}
+  .undobar button{border:none;background:none;color:var(--sy-saffron-text);font:600 12.5px 'Inter',sans-serif;cursor:pointer;text-decoration:underline}
+  /* call screen stage — the REAL dark call system (callBgTop→callBgBottom, callBar chrome) */
+  .callscr{width:236px;height:320px;border-radius:22px;background:linear-gradient(180deg,var(--sy-call-top) 0%,var(--sy-call-bottom) 100%);box-shadow:0 18px 50px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;padding:16px 14px;position:relative;overflow:hidden}
+  .callmin{position:absolute;top:8px;left:8px;width:34px;height:34px;border:none;background:none;color:var(--sy-call-fg);font-size:16px;cursor:pointer}
+  .callav{width:96px;height:96px;border-radius:50%;background:var(--sy-saffron-dim);display:grid;place-items:center;font:600 30px 'Fraunces',Georgia,serif;color:var(--sy-saffron-text);margin-top:22px}
+  .callname{color:var(--sy-call-fg);font:500 20px 'Inter',sans-serif;letter-spacing:-.4px;margin-top:12px}
+  .calltimer{font:500 14px 'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;color:var(--sy-call-muted);margin-top:4px;min-height:18px}
+  .speakbar{width:100%;background:var(--sy-call-bar);border-radius:12px;padding:8px 10px;display:flex;align-items:center;gap:8px;margin-top:auto}
+  .speakbar .sdot{width:26px;height:26px;border-radius:50%;background:var(--sy-green);flex-shrink:0}
+  .speakbar b{color:var(--sy-call-fg);font:600 12px 'Inter',sans-serif}
+  .eq{display:flex;align-items:center;gap:2.5px;height:14px;margin-left:auto}
+  .eq i{width:3px;height:12px;border-radius:2px;background:var(--sy-green);transform-origin:center;animation:eqp 420ms cubic-bezier(.31,.325,0,.92) infinite alternate}
+  .eq i:nth-child(2){animation-duration:510ms}.eq i:nth-child(3){animation-duration:600ms}
+  @keyframes eqp{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+  @media (prefers-reduced-motion: reduce){.eq i{animation:none;transform:scaleY(.5)}.eq i:nth-child(2){transform:scaleY(1)}.eq i:nth-child(3){transform:scaleY(.7)}}
+  .joinpill{margin-top:12px;height:44px;padding:0 22px;border-radius:999px;border:none;background:var(--sy-crimson);color:var(--sy-on-crimson);font:600 14px 'Inter',sans-serif;cursor:pointer}
+  .callbtns{margin-top:12px;display:flex;gap:22px;align-items:center}
+  .cbtn{border-radius:50%;border:none;display:grid;place-items:center;cursor:pointer;transition:transform .13s var(--sy-ease),background .2s,color .2s}
+  .cbtn.mut,.cbtn.spk{width:52px;height:52px;background:var(--sy-call-bar);color:var(--sy-call-fg)}
+  .cbtn.mut.on,.cbtn.spk.on{background:#F4EFE7;color:var(--sy-call-top)}
+  .cbtn.end{width:58px;height:58px;background:var(--sy-alerta);color:var(--sy-alerta-on)}
+  /* projects sidebar — the collage-book rail */
+  .projrail{position:fixed;top:46px;left:0;bottom:0;width:196px;background:#fff;border-right:1px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;gap:4px;z-index:25;overflow-y:auto}
+  @media(max-width:1180px){.projrail{display:none}}
+  @media(min-width:1181px){.wrap{margin-left:196px;max-width:calc(1160px)}.intro{margin-left:calc(196px + ((100vw - 196px - 920px)/2));margin-right:auto}}
+  .projrail .ph2{font:700 10px 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);padding:2px 6px 8px}
+  .pj{display:flex;align-items:center;gap:7px;border:none;background:none;text-align:left;border-radius:8px;padding:7px 9px;font-size:12.5px;font-weight:600;color:var(--soft);cursor:pointer;width:100%}
+  .pj:hover{background:var(--sy-cloud)}
+  .pj.on{background:var(--ink);color:var(--bg)}
+  .pj .cnt{margin-left:auto;font:10px 'JetBrains Mono',ui-monospace,monospace;opacity:.6}
+  .pj .del2{opacity:0;font-size:11px}
+  .pj:hover .del2{opacity:.5}
+  .pjnew{margin-top:6px;border:1px dashed var(--line);background:none;border-radius:8px;padding:7px;font-size:12px;font-weight:700;color:var(--soft);cursor:pointer}
+  .pjnew:hover{color:var(--ink)}
+  .projrail .foot{margin-top:auto;font:10px/1.5 'JetBrains Mono',ui-monospace,monospace;color:var(--faint);padding:8px 6px 0}
+  .addproj{border:1px solid var(--line);background:#fff;border-radius:7px;padding:2px 8px;font:600 11px 'JetBrains Mono',ui-monospace,monospace;color:var(--soft);cursor:pointer;white-space:nowrap;flex-shrink:0}
+  .addproj:hover{border-color:var(--acc);color:var(--acc)}
+  .pjpop{position:absolute;right:12px;top:40px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 14px 40px rgba(28,18,6,.16);padding:8px;z-index:30;display:flex;flex-direction:column;gap:2px;min-width:170px}
+  .pjpop label{display:flex;gap:8px;align-items:center;font-size:12.5px;padding:5px 7px;border-radius:6px;cursor:pointer}
+  .pjpop label:hover{background:var(--sy-cloud)}
+  .spec{position:relative}
+  /* chat stage */
+  .chatphone{width:270px;height:300px;background:var(--sy-paper);border-radius:18px;padding:14px;box-shadow:0 18px 50px rgba(0,0,0,.45);display:flex;flex-direction:column;gap:8px;justify-content:flex-end;overflow:hidden}
+  .cbub{max-width:84%;padding:8px 12px 4px;font-size:13px;line-height:1.4}
+  
+  .cbub.them{align-self:flex-start;background:var(--sy-elev);border:1px solid var(--line)}
+  .cbub.me{align-self:flex-end;background:var(--sy-crimson);color:#fff}
+  .cmeta{font:400 10.5px 'Inter',sans-serif;color:var(--sy-faint);margin-left:8px;white-space:nowrap;vertical-align:bottom;font-variant-numeric:tabular-nums}
+  .transcribing{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--sy-muted)}
+  .transcribing i{width:8px;height:8px;border-radius:50%;background:var(--sy-crimson);animation:recblink 760ms var(--sy-ease) infinite alternate}
+  .fbtoggle,.fbcopy{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:12px;font-weight:700;color:var(--soft);cursor:pointer}
+  .fbtoggle:hover,.fbcopy:hover{color:var(--ink);border-color:rgba(28,18,6,.3)}
+  .fbtoggle.on{background:var(--acc);border-color:var(--acc);color:#fff}
+  .fbsave{border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:8px;padding:6px 12px;font-weight:700;font-size:12px;cursor:pointer}
+  .fbcancel{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-weight:600;font-size:12px;color:var(--soft);cursor:pointer}
+  /* ── chat rail ── */
+  .chatrail{position:fixed;top:46px;right:0;bottom:0;width:360px;max-width:88vw;background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s var(--sy-ease);z-index:45;box-shadow:-14px 0 40px rgba(28,18,6,.06)}
+  body.chat .chatrail{transform:none}
+  body.chat .wrap{padding-right:calc(22px + 360px)}
+  @media(max-width:820px){body.chat .wrap{padding-right:22px}}
+  .chathead{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .chathead b{font-family:'Fraunces',Georgia,serif;font-size:14.5px}
+  .chatx{border:none;background:none;color:var(--faint);cursor:pointer;font-size:15px}
+  .chatlog{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+  .cmsg{font-size:13px;line-height:1.5;max-width:92%;padding:9px 12px;border-radius:12px}
+  .cmsg.user{align-self:flex-end;background:var(--ink);color:var(--bg);border-bottom-right-radius:3px}
+  .cmsg.bot{align-self:flex-start;background:var(--sy-cloud);color:var(--ink);border-bottom-left-radius:3px}
+  .cmsg.err{align-self:flex-start;background:#fdeceb;color:#a3271f;font:12px 'JetBrains Mono',ui-monospace,monospace}
+  .toolcard{align-self:flex-start;width:92%;border:1px solid var(--line);border-radius:9px;background:#fff;padding:7px 10px;font:11.5px 'JetBrains Mono',ui-monospace,monospace;display:flex;align-items:center;gap:7px}
+  .toolcard .verb{color:var(--acc);font-weight:700}
+  .toolcard .ok{margin-left:auto}.toolcard .ok.y{color:var(--sy-green-text,#2E6038)}.toolcard .ok.n{color:var(--sy-saffron-text,#831521)}
+  .chatform{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+  .chatform input{flex:1;border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:13px;outline:none}
+  .chatform input:focus{border-color:var(--acc)}
+  .chatform button{border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:9px;width:40px;font-size:15px;cursor:pointer}
+  .chatform button:disabled{opacity:.4;cursor:wait}
+  .cthinking{align-self:flex-start;color:var(--faint);font:12px 'JetBrains Mono',ui-monospace,monospace}
+  /* ── export modal ── */
+  .exportmodal{position:fixed;inset:0;z-index:60;background:rgba(24,12,6,.45);backdrop-filter:blur(4px);display:grid;place-items:center;padding:24px}
+  .exportmodal[hidden]{display:none}
+  .exportcard{width:min(680px,94vw);max-height:86vh;background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+  .exporthead{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .exporthead b{font-family:'Fraunces',Georgia,serif;font-size:16px;flex:1}
+  .exportpre{flex:1;overflow:auto;margin:0;padding:14px 16px;font:11.5px/1.5 'JetBrains Mono',ui-monospace,monospace;background:#fbf8f2;white-space:pre;color:#2a2118}
+  .exportact{display:flex;gap:8px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+  .exportact .hint{font:11px 'JetBrains Mono',ui-monospace,monospace;color:var(--faint);margin-left:auto;text-align:right}
+  /* ref chip in each header + the voice recorder */
+  .spec>header .refslug{border:1px solid var(--line);background:#fff;border-radius:7px;padding:2px 8px;font:600 11px 'JetBrains Mono',ui-monospace,monospace;color:var(--acc);cursor:pointer;white-space:nowrap;flex-shrink:0}
+  .spec>header .reftitle{border:none;background:none;display:inline-flex;align-items:baseline;gap:9px;cursor:pointer;padding:0;color:inherit}
+  .spec>header .reftitle b{font-family:'Fraunces',Georgia,serif;font-size:15.5px}
+  .spec>header .reftitle .refhint{font:600 10.5px 'JetBrains Mono',monospace;color:var(--faint)}
+  .spec>header .reftitle:hover .refhint{color:var(--acc)}
+  .spec>header .figcopy{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 11px;color:var(--ink);cursor:pointer;font:600 12px 'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+  .spec>header .figcopy:hover{color:var(--acc);border-color:var(--acc)}
+  .spec>header .refslug:hover{border-color:var(--acc)}
+  .spec>header .tok{flex:1;min-width:0}
+  @keyframes fbpulse{0%,100%{opacity:1}50%{opacity:.65}}
+</style></head>
+<body>
+<header class="top">
+  <span class="brand"><img src="/icon-1024.png" alt="Dis Dat">Dis Dat <span class="crumb">/ Library</span></span>
+  <button class="fbtoggle" id="chattoggle" style="margin-left:auto"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Edit in chat</button>
+  <a class="fbtoggle" href="https://disdat.dev/account" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px" title="link your Figma account (real OAuth)"><svg width="11" height="16" viewBox="0 0 38 57" style="vertical-align:-3px"><path fill="#1abcfe" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0acf83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#ff7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#f24e1e" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#a259ff" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg> Connect Figma</a>
+  <button class="fbtoggle" id="exportbtn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg> Export</button>
+  <a class="fbtoggle" href="https://disdat.dev/account" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Account</a>
+</header>
+
+<nav class="projrail" id="projrail">
+  <div class="ph2">projects · your collage book</div>
+  <div id="pjlist"></div>
+  <button class="pjnew" id="pjnew">＋ new project</button>
+  <div class="foot">Cluster the specimens you like into projects. A specimen can live in many. Mix &amp; match.</div>
+</nav>
+
+<aside class="chatrail" id="chatrail">
+  <div class="chathead"><b>Edit in chat</b><button class="chatx" id="chatclose" style="margin-left:auto">✕</button></div>
+  <div class="chatlog" id="chatlog">
+    <div class="cmsg bot">Tell me what to change — plain English. Try “make the springs snappier and the highlight crimson”, or “the modal should fade, not slide”. I’ll show each edit as a tool call.</div>
+  </div>
+  <form class="chatform" id="chatform">
+    <input id="chatinput" autocomplete="off" placeholder="edit the library in words…">
+    <button type="submit" id="chatsend">↵</button>
+  </form>
+</aside>
+
+<div class="exportmodal" id="exportmodal" hidden>
+  <div class="exportcard">
+    <div class="exporthead"><b><svg width="11" height="16" viewBox="0 0 38 57" style="vertical-align:-3px"><path fill="#1abcfe" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0acf83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#ff7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#f24e1e" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#a259ff" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg> Connect to Figma</b><button class="chatx" id="exportclose">✕</button></div>
+    <div class="pills" id="exporttabs" style="padding:0 16px 10px"></div>
+    <pre class="exportpre" id="exportpre"></pre>
+    <div class="exportact">
+      <button class="fbsave" id="exportcopy">copy</button>
+      <button class="fbcancel" id="exportdl">download file</button>
+      <span class="hint" id="exporthint"></span>
+    </div>
+  </div>
+</div>
+
+<div class="intro">
+  <h1>Your library.</h1>
+  <p>Every specimen is live and grounded in a real capture. Turn the knobs, edit it in words, cite it by ref, send it to Figma.</p>
+</div>
+
+<div class="wrap" id="wrap"></div>
+
+<script id="sy-tokens" type="application/json"><!--SY_TOKENS_START-->{"color": {"bg": {"$value": "#FAF7F3", "$type": "color"}, "surface": {"$value": "#FAF7F3", "$type": "color"}, "surface2": {"$value": "#F2ECE5", "$type": "color"}, "elevated": {"$value": "#FFFFFF", "$type": "color"}, "border": {"$value": "rgba(26,20,19,0.141)", "$type": "color"}, "borderStrong": {"$value": "rgba(26,20,19,0.22)", "$type": "color"}, "fg": {"$value": "#1A1413", "$type": "color"}, "muted": {"$value": "#6F665C", "$type": "color"}, "faint": {"$value": "#998F83", "$type": "color"}, "saffron": {"$value": "#C01B2C", "$type": "color"}, "saffronText": {"$value": "#831521", "$type": "color"}, "saffronDim": {"$value": "rgba(192,27,44,0.161)", "$type": "color"}, "chatOutBubble": {"$value": "#FBE2E5", "$type": "color"}, "chatOutBorder": {"$value": "rgba(192,27,44,0.2)", "$type": "color"}, "chatInBubble": {"$value": "#F5F0E8", "$type": "color"}, "chatInBorder": {"$value": "rgba(42,32,24,0.122)", "$type": "color"}, "green": {"$value": "#4E9E5E", "$type": "color"}, "greenText": {"$value": "#2E6038", "$type": "color"}, "greenDim": {"$value": "rgba(78,158,94,0.188)", "$type": "color"}, "red": {"$value": "#F4A300", "$type": "color"}, "redText": {"$value": "#8A5300", "$type": "color"}, "redDim": {"$value": "rgba(244,163,0,0.188)", "$type": "color"}, "onSaffron": {"$value": "#FAF7F3", "$type": "color"}, "onGreen": {"$value": "#0C2A1E", "$type": "color"}, "onRed": {"$value": "#3D2A00", "$type": "color"}, "danger": {"$value": "#C01B2C", "$type": "color"}, "dangerText": {"$value": "#831521", "$type": "color"}, "dangerDim": {"$value": "rgba(192,27,44,0.161)", "$type": "color"}, "onDanger": {"$value": "#FAF7F3", "$type": "color"}, "highlight": {"$value": "rgba(227,184,78,0.141)", "$type": "color"}, "scrim": {"$value": "rgba(33,28,21,0.4)", "$type": "color"}, "scrimStrong": {"$value": "rgba(33,28,21,0.6)", "$type": "color"}, "onScrim": {"$value": "#FBF8F2", "$type": "color"}, "callBgTop": {"$value": "#0F3A2B", "$type": "color"}, "callBgBottom": {"$value": "#071711", "$type": "color"}, "callFg": {"$value": "#F4EFE7", "$type": "color"}, "callMuted": {"$value": "rgba(244,239,231,0.659)", "$type": "color"}, "callBar": {"$value": "rgba(251,248,242,0.102)", "$type": "color"}, "onCallBg": {"$value": "#FBF8F2", "$type": "color"}, "heroTop": {"$value": "#221A13", "$type": "color"}, "heroBottom": {"$value": "#130E0A", "$type": "color"}, "heroGlass": {"$value": "rgba(251,248,242,0.078)", "$type": "color"}, "heroGlassStrong": {"$value": "rgba(251,248,242,0.129)", "$type": "color"}, "heroGlassBorder": {"$value": "rgba(251,248,242,0.149)", "$type": "color"}, "onHero": {"$value": "#F7F2EA", "$type": "color"}, "onHeroMuted": {"$value": "rgba(247,242,234,0.702)", "$type": "color"}, "onHeroFaint": {"$value": "rgba(247,242,234,0.502)", "$type": "color"}, "heroAccent": {"$value": "#E2707D", "$type": "color"}, "heroAccentDim": {"$value": "rgba(226,112,125,0.2)", "$type": "color"}, "accentMoss": {"$value": "#2A8358", "$type": "color"}, "accentMossDeep": {"$value": "#143D24", "$type": "color"}, "accentMossDim": {"$value": "rgba(42,131,88,0.086)", "$type": "color"}, "onAccentMoss": {"$value": "#F1FAF4", "$type": "color"}, "accentRust": {"$value": "#B04A2B", "$type": "color"}, "accentRustDeep": {"$value": "#6E2C16", "$type": "color"}, "accentRustDim": {"$value": "rgba(176,74,43,0.094)", "$type": "color"}, "onAccentRust": {"$value": "#FBF1EA", "$type": "color"}, "accentBerry": {"$value": "#A8466A", "$type": "color"}, "accentBerryDeep": {"$value": "#5F2840", "$type": "color"}, "accentBerryDim": {"$value": "rgba(168,70,106,0.094)", "$type": "color"}, "onAccentBerry": {"$value": "#FBF0F4", "$type": "color"}, "accentCana": {"$value": "#C0812F", "$type": "color"}, "accentCanaDeep": {"$value": "#8A5816", "$type": "color"}, "accentCanaDim": {"$value": "rgba(192,129,47,0.094)", "$type": "color"}, "onAccentCana": {"$value": "#FBF3E6", "$type": "color"}}, "space": {"xxs": {"$value": "2px", "$type": "dimension"}, "xxs2": {"$value": "3px", "$type": "dimension"}, "xs": {"$value": "4px", "$type": "dimension"}, "sm": {"$value": "8px", "$type": "dimension"}, "md": {"$value": "12px", "$type": "dimension"}, "lg": {"$value": "16px", "$type": "dimension"}, "xl": {"$value": "20px", "$type": "dimension"}, "xxl": {"$value": "24px", "$type": "dimension"}, "xxxl": {"$value": "32px", "$type": "dimension"}, "huge": {"$value": "48px", "$type": "dimension"}, "giant": {"$value": "64px", "$type": "dimension"}}, "radius": {"sm": {"$value": "6px", "$type": "dimension"}, "base": {"$value": "8px", "$type": "dimension"}, "card": {"$value": "12px", "$type": "dimension"}, "sheet": {"$value": "20px", "$type": "dimension"}, "pill": {"$value": "999px", "$type": "dimension"}}, "elevation": {"flat": {"$value": "0px", "$type": "dimension"}, "hairline": {"$value": "1px", "$type": "dimension"}, "card": {"$value": "2px", "$type": "dimension"}, "sticky": {"$value": "3px", "$type": "dimension"}, "sheet": {"$value": "4px", "$type": "dimension"}, "popover": {"$value": "5px", "$type": "dimension"}, "toast": {"$value": "6px", "$type": "dimension"}}, "button": {"sm": {"$value": "32px", "$type": "dimension"}, "md": {"$value": "40px", "$type": "dimension"}, "lg": {"$value": "48px", "$type": "dimension"}}, "stroke": {"hairline": {"$value": "1px", "$type": "dimension"}, "thick": {"$value": "1.5px", "$type": "dimension"}}, "icon": {"sm": {"$value": "16px", "$type": "dimension"}, "md": {"$value": "20px", "$type": "dimension"}, "lg": {"$value": "24px", "$type": "dimension"}}, "chat": {"bubbleMaxWidth": {"$value": "250px", "$type": "dimension"}, "imageMaxWidth": {"$value": "290px", "$type": "dimension"}, "imageMaxHeight": {"$value": "360px", "$type": "dimension"}, "vnWidth": {"$value": "250px", "$type": "dimension"}, "vnWaveWidth": {"$value": "132px", "$type": "dimension"}, "waveHeight": {"$value": "24px", "$type": "dimension"}, "avatar": {"$value": "42px", "$type": "dimension"}, "play": {"$value": "34px", "$type": "dimension"}, "bubbleRadius": {"$value": "7.5px", "$type": "dimension"}}, "motion": {"durMicro": {"$value": 130, "$type": "number"}, "durStandard": {"$value": 250, "$type": "number"}, "durOverlay": {"$value": 380, "$type": "number"}}, "voice": {"barCap": {"$value": 56, "$type": "number"}, "barWidth": {"$value": "2.5px", "$type": "dimension"}, "barGap": {"$value": "2px", "$type": "dimension"}, "barMax": {"$value": "22px", "$type": "dimension"}, "gate": {"$value": 0.17, "$type": "number"}, "pollMs": {"$value": 60, "$type": "number"}, "cancelDrag": {"$value": "90px", "$type": "dimension"}, "lockDrag": {"$value": "70px", "$type": "dimension"}, "minRecordMs": {"$value": 1000, "$type": "number"}, "tapMaxMs": {"$value": 260, "$type": "number"}}, "spring": {"standard": {"$value": {"damping": 0.85, "stiffness": 500.0}, "$type": "spring"}, "snappy": {"$value": {"damping": 1.0, "stiffness": 2200.0}, "$type": "spring"}, "expressive": {"$value": {"damping": 0.6, "stiffness": 300.0}, "$type": "spring"}, "physicalEase": {"$value": "cubic-bezier(0.31,0.325,0,0.92)", "$type": "cubicBezier"}}, "type": {"display": {"$value": {"family": "Fraunces", "weight": 600, "size": 34.0, "lineHeight": 40.0, "tracking": -0.7, "tabular": false}, "$type": "typography"}, "title": {"$value": {"family": "Inter", "weight": 600, "size": 22.0, "lineHeight": 28.0, "tracking": -0.4, "tabular": false}, "$type": "typography"}, "heading": {"$value": {"family": "Inter", "weight": 500, "size": 17.0, "lineHeight": 24.0, "tracking": -0.2, "tabular": false}, "$type": "typography"}, "body": {"$value": {"family": "Inter", "weight": 400, "size": 16.0, "lineHeight": 24.0, "tracking": 0.0, "tabular": false}, "$type": "typography"}, "bodySm": {"$value": {"family": "Inter", "weight": 400, "size": 14.0, "lineHeight": 20.0, "tracking": 0.0, "tabular": false}, "$type": "typography"}, "label": {"$value": {"family": "Inter", "weight": 500, "size": 14.0, "lineHeight": 18.0, "tracking": -0.1, "tabular": false}, "$type": "typography"}, "labelSm": {"$value": {"family": "Inter", "weight": 500, "size": 12.0, "lineHeight": 16.0, "tracking": 0.1, "tabular": false}, "$type": "typography"}, "caption": {"$value": {"family": "Inter", "weight": 400, "size": 12.0, "lineHeight": 16.0, "tracking": 0.1, "tabular": false}, "$type": "typography"}, "data": {"$value": {"family": "IBM Plex Mono", "weight": 500, "size": 15.0, "lineHeight": 20.0, "tracking": -0.1, "tabular": true}, "$type": "typography"}, "dataLg": {"$value": {"family": "IBM Plex Mono", "weight": 600, "size": 19.0, "lineHeight": 24.0, "tracking": -0.2, "tabular": true}, "$type": "typography"}, "dataSm": {"$value": {"family": "IBM Plex Mono", "weight": 500, "size": 13.0, "lineHeight": 16.0, "tracking": 0.0, "tabular": true}, "$type": "typography"}}, "$description": "Machine-extracted from Sancho y Panza Kotlin source (Tokens.kt, VoiceRecorderBar.kt). Do not hand-edit; run scripts/extract-sancho-tokens.py."}<!--SY_TOKENS_END--></script>
+<script>
+// ───────────────────────── shared machinery ─────────────────────────
+const $ = (s, r=document) => r.querySelector(s);
+// ── SY: the Sancho design system, machine-extracted from Kotlin source (scripts/extract-sancho-tokens.py).
+// No hand-typed values below this line — read SY, never retype a hex.
+const SY = JSON.parse(document.getElementById('sy-tokens').textContent.replace('<!--SY_TOKENS_START-->', '').replace('<!--SY_TOKENS_END-->', ''));
+const sy = (path) => path.split('.').reduce((o, k) => o[k], SY).$value;
+{
+  const r = document.documentElement.style;
+  r.setProperty('--sy-crimson', sy('color.saffron'));
+  r.setProperty('--sy-on-crimson', sy('color.onSaffron'));
+  r.setProperty('--sy-paper', (SY.color.bg ? SY.color.bg.$value : sy('color.surface')));
+  r.setProperty('--sy-surface', sy('color.surface'));
+  r.setProperty('--sy-cloud', sy('color.surface2'));
+  r.setProperty('--sy-elev', sy('color.elevated'));
+  r.setProperty('--sy-ink', sy('color.fg'));
+  r.setProperty('--sy-muted', sy('color.muted'));
+  r.setProperty('--sy-faint', sy('color.faint'));
+  r.setProperty('--sy-hairline', sy('color.border'));
+  r.setProperty('--sy-out-bubble', sy('color.chatOutBubble'));
+  r.setProperty('--sy-out-border', sy('color.chatOutBorder'));
+  r.setProperty('--sy-green-text', sy('color.greenText'));
+  r.setProperty('--sy-alerta', sy('color.red'));
+  r.setProperty('--sy-alerta-text', sy('color.redText'));
+  r.setProperty('--sy-bubble-radius', sy('chat.bubbleRadius'));
+  r.setProperty('--sy-radius-sheet', sy('radius.sheet'));
+  r.setProperty('--sy-btn-lg', sy('button.lg'));
+  r.setProperty('--sy-btn-md', sy('button.md'));
+  r.setProperty('--sy-btn-sm', sy('button.sm'));
+  r.setProperty('--sy-saffron-text', sy('color.saffronText'));
+  r.setProperty('--sy-saffron-dim', sy('color.saffronDim'));
+  r.setProperty('--sy-border-strong', sy('color.borderStrong'));
+  r.setProperty('--sy-in-bubble', sy('color.chatInBubble'));
+  r.setProperty('--sy-in-border', sy('color.chatInBorder'));
+  r.setProperty('--sy-highlight', sy('color.highlight'));
+  r.setProperty('--sy-green', sy('color.green'));
+  r.setProperty('--sy-green-dim', sy('color.greenDim'));
+  r.setProperty('--sy-call-top', sy('color.callBgTop'));
+  r.setProperty('--sy-call-bottom', sy('color.callBgBottom'));
+  r.setProperty('--sy-call-fg', sy('color.callFg'));
+  r.setProperty('--sy-call-muted', sy('color.callMuted'));
+  r.setProperty('--sy-call-bar', sy('color.callBar'));
+  r.setProperty('--sy-alerta-on', '#3D2A00');
+  r.setProperty('--sy-scrim', sy('color.scrim'));
+}
+// ── icons — one stroke system, no emoji anywhere in the chrome ──
+const IC = {
+  mic: '<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4"/>',
+  send: '<path d="M3 11.5 21 3l-8 18-2.5-7.5z"/>',
+  play: '<path d="M8 5.5 19 12 8 18.5z"/>',
+  phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+  phoneOff: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.8.7a2 2 0 0 1 1.7 2z"/><path d="M23 2 2 23"/>',
+  micOff: '<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v4M2 2l20 20"/>',
+  x: '<path d="M6 6l12 12M18 6 6 18"/>',
+  expand: '<path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M16 21h3a2 2 0 0 0 2-2v-3M8 21H5a2 2 0 0 1-2-2v-3"/>',
+  chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  exportUp: '<path d="M12 15V3M7 8l5-5 5 5M5 21h14"/>',
+  folder: '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>',
+  refresh: '<path d="M3.5 12a8.5 8.5 0 1 0 2.4-5.9M3 4v4h4"/>',
+  copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  pen: '<path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  face: '<circle cx="12" cy="12" r="9"/><path d="M8.6 14.2a4.4 4.4 0 0 0 6.8 0"/><path d="M9 9.6h.01M15 9.6h.01" stroke-width="2.6"/>',
+  clip: '<path d="M21 12.2 12.9 20.3a5.4 5.4 0 0 1-7.6-7.6L13.5 4.5a3.6 3.6 0 0 1 5.1 5.1l-8.2 8.2a1.8 1.8 0 0 1-2.5-2.5L15 8.2"/>',
+  camera: '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
+  trash: '<path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>',
+  pause: '<path d="M9 4v16M15 4v16" stroke-width="3"/>',
+  chevLeft: '<path d="M15 18l-6-6 6-6"/>',
+};
+const ic = (n, sz = 13) => `<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="${n==='play'||n==='send'?'currentColor':'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px">${IC[n]||''}</svg>`;
+
+const el = (html) => { const d = document.createElement('div'); d.innerHTML = html.trim(); return d.firstChild; };
+
+// Specimen registry — the archetype contract in miniature. Each drivable row registers its ref,
+// presets, token schema and an apply(cmd) so the chat panel (and, later, the MCP server) can mutate
+// it by name. This is what makes "edit with words" and "export" possible without hand-wiring each.
+const SPECIMENS = [];
+
+// Loop registry: animated specimens replay themselves ONLY while on screen — so the whole page
+// feels alive as you scroll through it, without burning cycles on rows you can't see.
+const _loops = new Map();
+const _io = new IntersectionObserver((ents) => ents.forEach(e => { const r = _loops.get(e.target); if (r) { r.vis = e.isIntersecting; if (e.isIntersecting) { r.last = -1e9; } } }), { threshold: 0.35 }); // -1e9: fire the FIRST frame it's visible — r.last=0 made every row wait out its full interval on page-uptime
+function loopWhileVisible(elm, fn, everyMs) { _loops.set(elm, { fn, everyMs, vis: false, last: 0 }); _io.observe(elm); }
+(function driver(now) { requestAnimationFrame(driver); _loops.forEach(r => { if (r.vis && now - r.last >= r.everyMs) { r.last = now; try { r.fn(); } catch (e) {} } }); })(0);
+
+function specimen({ id, title, ref, name, tokens, light }) {
+  const s = el(`<section class="spec" id="${id}" data-ref="${ref || id}">
+    <header>
+      <button class="reftitle" title="${tokens} — click copies @${ref || id} for your coding agent"><b>${title}</b><span class="refhint">@${ref || id}</span></button>
+      <span style="flex:1"></span>
+      <button class="figcopy" title="copy this element for Figma"></button>
+    </header>
+    <div class="body"><div class="ctrls"></div><div class="demo${light ? ' light' : ''}"></div></div>
+  </section>`);
+
+  // ref button: copies an agent-ready line — "@disdat/springs — motion.spring ζ=0.85 …". Paste it
+  // into Claude Code / Cursor: "build the confirm toast like @disdat/springs" and the exact grounded
+  // values ride along. describeFn is set by each specimen so the CURRENT knob state is what copies.
+  let describeFn = () => tokens;
+  const rb = s.querySelector('.reftitle');
+  rb.addEventListener('click', async () => {
+    const line = `@${ref || id} — ${describeFn()}`;
+    const hint = rb.querySelector('.refhint');
+    try { await navigator.clipboard.writeText(line); hint.textContent = 'copied'; setTimeout(() => hint.textContent = '@' + (ref || id), 1100); } catch (e) {}
+  });
+  $('#wrap').appendChild(s);
+  const entry = { ref: ref || id, name: name || title, title, el: s, describe: () => describeFn(), presets: [], tokens: {}, apply: null };
+  const figBtn = s.querySelector('.figcopy');
+  const FIGMA_MARK = `<svg width="11" height="16" viewBox="0 0 38 57" style="vertical-align:-3px"><path fill="#1abcfe" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#0acf83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#ff7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#f24e1e" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#a259ff" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg>`;
+  figBtn.innerHTML = FIGMA_MARK + ' Copy for Figma';
+  figBtn.addEventListener('click', async () => {
+    if (!entry.exportTokens) return;
+    const flat = entry.exportTokens(); const nested = {};
+    for (const [k, v] of Object.entries(flat)) { const parts = k.split('.'); let o = nested; parts.forEach((pt, i) => { if (i === parts.length - 1) o[pt] = { $value: v.value, $type: v.type }; else o = (o[pt] = o[pt] || {}); }); }
+    try { await navigator.clipboard.writeText(JSON.stringify(nested, null, 2)); figBtn.innerHTML = FIGMA_MARK + ' Copied'; setTimeout(() => figBtn.innerHTML = FIGMA_MARK + ' Copy for Figma', 1100); } catch (e) {}
+  });
+  SPECIMENS.push(entry);
+  return {
+    root: s, ctrls: s.querySelector('.ctrls'), demo: s.querySelector('.demo'),
+    describe: (fn) => { describeFn = fn; },
+    loop: (fn, everyMs) => loopWhileVisible(s, fn, everyMs),
+    // register {presets:[names], tokens:{name:{type,min,max,options}}, apply:(cmd)=>{}} so the chat + MCP can drive it
+    register: (spec) => { entry.presets = spec.presets || []; entry.tokens = spec.tokens || {}; entry.apply = spec.apply || null; entry.exportTokens = spec.exportTokens || null; },
+  };
+}
+function group(ctrls, label, src) { ctrls.appendChild(el(`<div class="grp">${label}${src ? ` <span style="float:right;letter-spacing:.02em">${src}</span>` : ''}</div>`)); }
+function pills(ctrls, items, cur, onpick) {
+  const box = el('<div class="pills"></div>');
+  const render = (active) => {
+    box.innerHTML = '';
+    items.forEach(it => {
+      const b = el(`<button class="pill${it === active ? ' on' : ''}">${it}</button>`);
+      b.addEventListener('click', () => { render(it); onpick(it); });
+      box.appendChild(b);
+    });
+  };
+  render(cur); ctrls.appendChild(box);
+  return { set: render };
+}
+function slider(ctrls, label, lo, hi, step, val, oninput, fmt = v => (+v).toFixed(2)) {
+  const row = el(`<div class="krow"><label title="${label}">${label}</label><input type="range" min="${lo}" max="${hi}" step="${step}" value="${val}"><output>${fmt(val)}</output></div>`);
+  const inp = row.querySelector('input'), out = row.querySelector('output');
+  inp.addEventListener('input', () => { out.textContent = fmt(+inp.value); oninput(+inp.value); });
+  ctrls.appendChild(row);
+  return { set: (v) => { inp.value = v; out.textContent = fmt(v); } };
+}
+function playBtn(ctrls, label, fn) { const b = el(`<button class="play">${ic('play', 11)} ${label}</button>`); b.addEventListener('click', fn); ctrls.appendChild(b); return b; }
+// user presets per specimen: saved to localStorage, applied through the row's own state fns
+function presetKit(ctrls, key, builtins, getState, applyState) {
+  const box = el('<div class="pills" style="margin-bottom:2px"></div>');
+  const LS = 'ddlab_' + key;
+  const users = () => { try { return JSON.parse(localStorage.getItem(LS) || '[]'); } catch { return []; } };
+  const render = (active) => {
+    box.innerHTML = '';
+    const all = [...builtins, ...users().map(u => ({ ...u, user: true }))];
+    all.forEach(p => {
+      const b = el(`<button class="pill uchip${p.name === active ? ' on' : ''}">${p.name}${p.user ? '<span class="del">×</span>' : ''}</button>`);
+      b.addEventListener('click', (ev) => {
+        if (ev.target.classList.contains('del')) {
+          localStorage.setItem(LS, JSON.stringify(users().filter(x => x.name !== p.name))); render(active); return;
+        }
+        applyState(p.state); render(p.name);
+      });
+      box.appendChild(b);
+    });
+  };
+  group(ctrls, 'presets'); ctrls.appendChild(box); render(builtins[0]?.name);
+  const save = el('<button class="savebtn">＋ save current as preset</button>');
+  save.addEventListener('click', () => {
+    const name = prompt('Name this preset:'); if (!name) return;
+    localStorage.setItem(LS, JSON.stringify([...users().filter(x => x.name !== name), { name, state: getState() }]));
+    render(name);
+  });
+  const mount = () => ctrls.appendChild(save);
+  // apply a preset by NAME (used by the chat panel + MCP): find it, apply, reflect the active chip
+  const applyByName = (name) => {
+    const all = [...builtins, ...users()];
+    const p = all.find(x => x.name.toLowerCase() === String(name).toLowerCase());
+    if (!p) return false;
+    applyState(p.state); render(p.name); return true;
+  };
+  return { render, mountSave: mount, applyByName, names: () => [...builtins, ...users()].map(p => p.name) };
+}
+
+// Deterministic waveform samples for the voice-note specimen.
+const prng = (seed) => { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+
+// ───────────────────────── 2 · springs — springEnterAlpha, verbatim ─────────────────────────
+// The real recipe: ONE spring drives ALPHA (0→1); translateY = (1−a)×16px rides it. Roles per
+// Tokens.kt: standard = gesture settle/state; snappy = taps + exits; expressive = entrances.
+(() => {
+  const S = specimen({ id: 'row-spring', title: 'Springs', ref: 'disdat/springs', tokens: 'grounded: springEnterAlpha — alpha-driven, ty=(1−a)×16px · standard ζ.85 k500 (settle) · snappy ζ1 k2200 (taps/exits) · expressive ζ.6 k300 (entrances)' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="phone">
+    <div class="ocard" id="sp-card"><b>Pedido — Casa Marcial</b><div>12 × tomate pera · jueves</div></div>
+    <div class="bub" id="sp-bub" style="align-self:flex-end">Confirmado — sale el jueves a primera hora</div>
+  </div>`));
+  const SYS = { standard: sy('spring.standard'), snappy: sy('spring.snappy'), expressive: sy('spring.expressive') };
+  const st = { zeta: SYS.expressive.damping, k: SYS.expressive.stiffness };
+  let sZ, sK;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const springEnterAlpha = (elm, delay) => {
+    elm.style.opacity = 0;
+    if (reduce) { setTimeout(() => { elm.style.opacity = 1; elm.style.transform = 'none'; }, delay); return; }
+    setTimeout(() => {
+      let a2 = 0, v = 0, lt = performance.now();
+      const step = (now) => {
+        const dt = Math.min(.032, (now - lt) / 1000); lt = now;
+        const c = 2 * st.zeta * Math.sqrt(st.k);
+        v += (-st.k * (a2 - 1) - c * v) * dt; a2 += v * dt;
+        elm.style.opacity = Math.max(0, Math.min(1, a2));
+        elm.style.transform = `translateY(${((1 - a2) * 16).toFixed(2)}px)`; // (1−a)×16 — the shipped coupling
+        if (Math.abs(a2 - 1) > .004 || Math.abs(v) > .004) requestAnimationFrame(step);
+        else { elm.style.opacity = 1; elm.style.transform = 'none'; }
+      };
+      requestAnimationFrame(step);
+    }, delay);
+  };
+  const replay = () => { springEnterAlpha($('#sp-card'), 0); springEnterAlpha($('#sp-bub'), 60); };
+  const kit = presetKit(ctrls, 'spring',
+    [{ name: 'expressive (entrances)', state: { zeta: SYS.expressive.damping, k: SYS.expressive.stiffness } },
+     { name: 'standard (settle)', state: { zeta: SYS.standard.damping, k: SYS.standard.stiffness } },
+     { name: 'snappy (taps/exits)', state: { zeta: SYS.snappy.damping, k: SYS.snappy.stiffness } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); sZ.set(st.zeta); sK.set(st.k); replay(); });
+  group(ctrls, 'knobs', 'grounded: Tokens.kt springs');
+  sZ = slider(ctrls, 'damping ζ', .3, 1.2, .01, st.zeta, v => { st.zeta = v; replay(); });
+  sK = slider(ctrls, 'stiffness k', 100, 2500, 10, st.k, v => { st.k = v; replay(); }, v => String(Math.round(v)));
+  playBtn(ctrls, 'replay entrance', replay);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">springEnterAlpha: the spring animates ALPHA; the 16px rise is derived from it — one spring, no separate translate animation. 60ms offset here is a lab convenience, not a token.</div>'));
+  S.describe(() => `springEnterAlpha ζ=${st.zeta} k=${Math.round(st.k)} · ty=(1−a)×16px · PhysicalEase ${sy('spring.physicalEase')} for tweens`);
+  S.register({ presets: kit.names(), tokens: { damping: { type: 'range', min: .3, max: 1.2 }, stiffness: { type: 'range', min: 100, max: 2500 } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'damping') { st.zeta = +c.value; sZ.set(st.zeta); replay(); return true; } if (c.token === 'stiffness') { st.k = +c.value; sK.set(st.k); replay(); return true; } return false; },
+    exportTokens: () => ({ 'motion.spring.standard': { value: 'ζ0.85 k500', type: 'string' }, 'motion.spring.snappy': { value: 'ζ1.0 k2200', type: 'string' }, 'motion.spring.expressive': { value: 'ζ0.6 k300', type: 'string' }, 'motion.ease.physical': { value: sy('spring.physicalEase'), type: 'cubicBezier' } }) });
+  S.loop(replay, 3000);
+})();
+
+// ───────────────────────── 3 · modal — the real sheet recipe ─────────────────────────
+// Grounded: scrim = warm-ink DARKENED, never blurred (PedidosScreen); sheet enters as the spring
+// composite — translateY(33%)+scale(.92) from origin 12% 100%, expressive overshoot; scrim fades on
+// durMicro 130ms independent of the sheet; hairline border + quiet 4/12 shadow.
+(() => {
+  const S = specimen({ id: 'row-modal', title: 'Modal', ref: 'disdat/modal', tokens: 'grounded: scrim warm-ink (darkened, not blurred) · sheet spring expressive ζ.6 k300 from y33%/s.92 · radius.sheet 20 · hairline + 4/12 shadow' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="mini">
+    <div class="rowc"><b>Incarfer S.L.</b><span>3 pedidos esta semana</span></div>
+    <div class="rowc"><b>Casa Marcial</b><span>factura pendiente · 412 €</span></div>
+    <div class="rowc"><b>La Huerta de Iván</b><span>nuevo catálogo subido</span></div>
+    <div class="backdrop" id="md-back"></div>
+    <div class="sheet" id="md-sheet"><b>Nueva orden</b><p>12 cajas · entrega jueves · margen 22%</p><button class="cta">Confirmar pedido</button></div>
+  </div>`));
+  const st = { scrim: 'scrim' };
+  const T = mkTimers();
+  const play = () => {
+    T.clear();
+    const back = $('#md-back'), sheet = $('#md-sheet');
+    back.style.background = st.scrim === 'none' ? 'transparent' : sy('color.' + st.scrim);
+    sheet.style.transition = 'none'; back.style.transition = 'none';
+    sheet.style.transform = 'translateY(33%) scale(.92)'; sheet.style.transformOrigin = '12% 100%'; sheet.style.opacity = 0;
+    back.style.opacity = 0;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      sheet.style.transition = 'transform 500ms cubic-bezier(.34,1.36,.64,1), opacity 250ms linear'; // expressive overshoot
+      back.style.transition = 'opacity 130ms linear'; // durMicro, decoupled from the sheet
+      sheet.style.transform = 'none'; sheet.style.opacity = 1; back.style.opacity = 1;
+    }));
+    T.at(() => {
+      sheet.style.transition = 'transform 110ms cubic-bezier(.3,0,.6,1), opacity 130ms linear';
+      sheet.style.transform = 'translateY(33%) scale(.92)'; sheet.style.opacity = 0; back.style.opacity = 0;
+    }, 2100);
+  };
+  const kit = presetKit(ctrls, 'modal',
+    [{ name: 'as shipped', state: { scrim: 'scrim' } },
+     { name: 'strong scrim', state: { scrim: 'scrimStrong' } },
+     { name: 'no scrim', state: { scrim: 'none' } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); scrP.set(st.scrim); play(); });
+  group(ctrls, 'scrim · darkened, never blurred');
+  const scrP = pills(ctrls, ['scrim', 'scrimStrong', 'none'], st.scrim, v => { st.scrim = v; play(); });
+  playBtn(ctrls, 'play modal', play);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">One entrance recipe, not a duration slider: the sheet springs in (expressive) from y33%/scale .92 while the scrim fades on 130ms. Exit is asymmetric and fast.</div>'));
+  S.describe(() => `modal scrim=${st.scrim === 'none' ? 'none' : sy('color.' + st.scrim)} · sheet spring expressive from y33%/s.92 origin 12%,100% · radius 20 · exit 110ms`);
+  S.register({ presets: kit.names(), tokens: { scrim: { type: 'option', options: ['scrim', 'scrimStrong', 'none'] } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'scrim') { st.scrim = c.value; scrP.set(st.scrim); play(); return true; } return false; },
+    exportTokens: () => ({ 'modal.scrim': { value: sy('color.scrim'), type: 'color' }, 'modal.scrimStrong': { value: sy('color.scrimStrong'), type: 'color' }, 'modal.sheet.radius': { value: sy('radius.sheet'), type: 'dimension' }, 'modal.enter.spring': { value: 'expressive ζ0.6 k300', type: 'string' } }) });
+  S.loop(play, 3600);
+})();
+
+// ───────────────────────── 4 · header — Sancho headers are STATIC (no scroll morphing) ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-nav', title: 'Header', ref: 'disdat/header', tokens: 'grounded: static 56px paper header, shadow always on, title + face button — NO condense/blur-on-scroll exists in Sancho' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="navmini">
+    <div class="syheader" id="nv-bar"><b>WhatsApp</b><button class="syface" id="nv-face">CM</button></div>
+    <div class="navscroll" id="nv-scroll">${Array.from({ length: 10 }, (_, i) =>
+      `<div class="c"><b>Pedido #10${i + 2}</b><span>Casa Marcial · ${12 + i} cajas · jueves</span></div>`).join('')}</div>
+  </div>`));
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  const sc = $('#nv-scroll');
+  let t0 = performance.now();
+  loopWhileVisible($('#row-nav'), () => {}, 1e9); // placeholder; scroll driver below
+  (function autoscroll(now) { requestAnimationFrame(autoscroll); const max = sc.scrollHeight - sc.clientHeight; if (max > 0) sc.scrollTop = (0.5 - 0.5 * Math.cos((now - t0) / 2600)) * max; })(0);
+  const run = () => {
+    T.clear(); ghost.show(false);
+    T.at(async () => { ghost.show(true); await ghost.clickAt($('#nv-face'), 600); $('#nv-face').style.transform = 'scale(.95)'; T.at(() => { $('#nv-face').style.transform = ''; ghost.show(false); }, 240); }, 700);
+  };
+  const kit = presetKit(ctrls, 'nav', [{ name: 'as shipped', state: {} }], () => ({}), () => run());
+  playBtn(ctrls, 'replay', run);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">The audit killed the invented scroll-condense/blur: Sancho headers are opaque paper, 56px, quiet shadow, always. The content scrolls under; the header does not perform.</div>'));
+  S.describe(() => `header static 56px · bg ${sy('color.surface')} opaque · shadow 0 1px 2 always · title + face button (squish .95)`);
+  S.register({ presets: kit.names(), tokens: {},
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); return false; },
+    exportTokens: () => ({ 'header.height': { value: '56px', type: 'dimension' }, 'header.bg': { value: sy('color.surface'), type: 'color' } }) });
+  S.loop(run, 4200);
+})();
+
+// ───────────────────────── 5 · highlight — the real inline emphasis system ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-hl', title: 'Highlight', ref: 'disdat/highlight', tokens: 'grounded: entity = saffronText 600 · provenance = saffronDim wash + underline · low-confidence = wavy Alerta · §18 locate pulse 120/120/1200ms', light: true });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="hcard"><span class="kicker">resumen · semana 27</span>
+    Esta semana <mark class="hl">Casa Marcial</mark> subió su pedido a <mark class="hl">14 cajas</mark>,
+    el margen medio quedó en <mark class="hl">22%</mark> y quedan
+    <mark class="hl">2 facturas</mark> por cobrar antes del viernes.
+  </div>`));
+  const st = { mode: 'provenance' };
+  const T = mkTimers();
+  const apply = () => {
+    document.querySelectorAll('#row-hl .hl').forEach(m => {
+      m.style.cssText = '';
+      if (st.mode === 'entity') { m.style.color = sy('color.saffronText'); m.style.fontWeight = 600; }
+      if (st.mode === 'provenance') { m.style.background = sy('color.saffronDim'); m.style.color = sy('color.saffronText'); m.style.textDecoration = 'underline'; m.style.textUnderlineOffset = '2px'; m.style.borderRadius = '3px'; m.style.padding = '0 2px'; }
+      if (st.mode === 'low-confidence') { m.style.color = sy('color.redText'); m.style.textDecoration = `underline wavy ${sy('color.red')} 1.5px`; m.style.textUnderlineOffset = '3px'; }
+    });
+  };
+  const locate = () => { // the §18 pulse: gold wash 120ms in / 120 hold / 1200 out on PhysicalEase
+    const card = $('#row-hl .hcard');
+    card.style.transition = 'background .12s linear'; card.style.background = sy('color.highlight');
+    T.at(() => { card.style.transition = 'background 1.2s ' + sy('spring.physicalEase'); card.style.background = ''; }, 240);
+  };
+  const kit = presetKit(ctrls, 'hl',
+    [{ name: 'provenance', state: { mode: 'provenance' } },
+     { name: 'entity', state: { mode: 'entity' } },
+     { name: 'low-confidence', state: { mode: 'low-confidence' } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); modeP.set(st.mode); apply(); });
+  group(ctrls, 'mode · the three real marks');
+  const modeP = pills(ctrls, ['provenance', 'entity', 'low-confidence'], st.mode, v => { st.mode = v; apply(); });
+  playBtn(ctrls, 'locate (§18 pulse)', locate);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">Three real marks, no free knobs: entity naming (Red-700, 600), provenance (saffronDim wash + underline — tap opens the source), and the wavy Alerta low-confidence flag. Locate replays the §18 gold pulse.</div>'));
+  S.describe(() => `highlight mode=${st.mode} · saffronText ${sy('color.saffronText')} / saffronDim ${sy('color.saffronDim')} / alerta ${sy('color.red')} · §18 pulse ${sy('color.highlight')} 120/120/1200ms`);
+  S.register({ presets: kit.names(), tokens: { mode: { type: 'option', options: ['provenance', 'entity', 'low-confidence'] } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'mode') { st.mode = c.value; modeP.set(st.mode); apply(); return true; } return false; },
+    exportTokens: () => ({ 'highlight.entity': { value: sy('color.saffronText'), type: 'color' }, 'highlight.provenance.bg': { value: sy('color.saffronDim'), type: 'color' }, 'highlight.lowConfidence': { value: sy('color.red'), type: 'color' }, 'highlight.pulse': { value: sy('color.highlight'), type: 'color' }, 'motion.ease.physical': { value: sy('spring.physicalEase'), type: 'cubicBezier' } }) });
+  S.loop(locate, 4200);
+  apply();
+})();
+
+// ───────────────────────── 6 · surfaces & radius ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-surf', title: 'Surfaces', ref: 'disdat/surface', tokens: 'surface {paper FAF7F3 · cloud F2ECE5 · elevated FFF} · radius {6,8,12,20,999} + bubble 7.5 · hairline-first' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="surfwrap">
+    <div class="surf" style="background:var(--sy-paper)"><b>paper</b><span>#FAF7F3 · the page itself</span></div>
+    <div class="surf" style="background:var(--sy-cloud)"><b>cloud</b><span>#F2ECE5 · grouped regions</span></div>
+    <div class="surf" style="background:var(--sy-elev)"><b>elevated</b><span>#FFFFFF · cards & sheets</span></div>
+  </div>`));
+  const st = { radius: 12, depth: 'hairline' };
+  const apply = () => {
+    document.querySelectorAll('#row-surf .surf').forEach(c => {
+      c.style.borderRadius = st.radius + 'px';
+      c.style.border = st.depth !== 'shadow' ? '1px solid var(--line)' : '1px solid transparent';
+      c.style.boxShadow = st.depth !== 'hairline' ? '0 8px 26px rgba(28,18,6,.12)' : 'none';
+    });
+  };
+  const kit = presetKit(ctrls, 'surf',
+    [{ name: 'as shipped', state: { radius: 12, depth: 'hairline' } },
+     { name: 'floaty', state: { radius: 20, depth: 'shadow' } },
+     { name: 'sharp ops', state: { radius: 6, depth: 'hairline' } }],
+    () => ({ ...st }),
+    (s) => { Object.assign(st, s); radP.set(String(st.radius)); depP.set(st.depth); apply(); });
+  group(ctrls, 'radius · the observed set, not a slider');
+  const radP = pills(ctrls, ['6', '8', '12', '20', '999'], String(st.radius), v => { st.radius = +v; apply(); });
+  group(ctrls, 'depth');
+  const depP = pills(ctrls, ['hairline', 'shadow', 'both'], st.depth, v => { st.depth = v; apply(); });
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">An option set, not a slider — a slider would invent 11px, which never shipped.</div>'));
+  S.describe(() => `surface radius=${st.radius}px depth=${st.depth} · paper #FAF7F3 / cloud #F2ECE5 / elevated #FFF · hairline-first`);
+  S.register({
+    presets: kit.names(),
+    tokens: { radius: { type: 'option', options: ['6', '8', '12', '20', '999'] }, depth: { type: 'option', options: ['hairline', 'shadow', 'both'] } },
+    apply: (c) => {
+      if (c.preset) return kit.applyByName(c.preset);
+      if (c.token === 'radius') { st.radius = +c.value; radP.set(String(st.radius)); }
+      else if (c.token === 'depth') { st.depth = c.value; depP.set(st.depth); }
+      else return false;
+      apply(); return true;
+    },
+    exportTokens: () => ({ 'surface.paper': { value: '#FAF7F3', type: 'color' }, 'surface.cloud': { value: '#F2ECE5', type: 'color' }, 'surface.elevated': { value: '#FFFFFF', type: 'color' }, 'radius.card': { value: st.radius + 'px', type: 'dimension' } }),
+  });
+  apply();
+})();
+
+// ───────────────────────── 8 · type — the SanchoType ramp, verbatim ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-type', title: 'Type', ref: 'disdat/type', tokens: 'grounded: Type.kt ramp — display Fraunces 600 34/40 −0.7 · title Inter 600 22/28 −0.4 · data IBM Plex Mono 500 15/20 tnum' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="typecard">
+    <div class="ty-kick">resumen · semana 27</div>
+    <div class="ty-h" id="ty-h">Casa Marcial subió su pedido</div>
+    <div class="ty-b">Catorce cajas para el jueves, con un margen medio del 22% — la mejor semana del mes.</div>
+  </div>`));
+  const FAM = { Fraunces: "'Fraunces', Georgia, serif", Inter: "'Inter', -apple-system, system-ui, sans-serif", 'IBM Plex Mono': "'IBM Plex Mono', ui-monospace, monospace" };
+  const RAMP = ['display', 'title', 'heading', 'body', 'label', 'data', 'dataLg'];
+  const st = { style: 'display' };
+  const apply = () => {
+    const t = sy('type.' + st.style);
+    const h = $('#ty-h');
+    h.style.fontFamily = FAM[t.family]; h.style.fontSize = t.size + 'px'; h.style.fontWeight = t.weight;
+    h.style.lineHeight = t.lineHeight + 'px'; h.style.letterSpacing = (t.tracking / t.size).toFixed(4) + 'em';
+    h.style.fontFeatureSettings = t.tabular ? "'tnum','lnum'" : 'normal';
+    h.textContent = t.family === 'IBM Plex Mono' ? '14 cajas · 203,00 €' : 'Casa Marcial subió su pedido';
+  };
+  const kit = presetKit(ctrls, 'type',
+    RAMP.map(r => ({ name: r, state: { style: r } })).slice(0, 3),
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); styP.set(st.style); apply(); });
+  group(ctrls, 'the ramp · read from Type.kt, not chosen');
+  const styP = pills(ctrls, RAMP, st.style, v => { st.style = v; apply(); });
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">No free sliders here: the ramp is a set of named, shipped styles — picking one applies its exact family, size, leading, tracking and (for data) tabular figures.</div>'));
+  S.describe(() => { const t = sy('type.' + st.style); return `type.${st.style}: ${t.family} ${t.weight} ${t.size}/${t.lineHeight} tracking ${t.tracking}sp${t.tabular ? ' · tnum' : ''}`; });
+  S.register({ presets: kit.names(), tokens: { style: { type: 'option', options: RAMP } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'style') { st.style = c.value; styP.set(st.style); apply(); return true; } return false; },
+    exportTokens: () => { const out = {}; RAMP.forEach(r => { const t = sy('type.' + r); out['type.' + r] = { value: `${t.family} ${t.weight} ${t.size}px/${t.lineHeight}px ls ${t.tracking}`, type: 'typography' }; }); return out; } });
+  apply();
+})();
+
+// ───────────────────────── 9 · button — SquishButton, verbatim ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-btn', title: 'Button', ref: 'disdat/button', tokens: 'grounded: squish .95 in 55ms / spring release ~350ms w/ overshoot · heights {32,40,48} · radius {6,8,12,999} · primary crimson/onSaffron · secondary borderStrong' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="btnstage">
+    <button class="ddbtn primary" id="bt-a">Confirmar pedido</button>
+    <button class="ddbtn secondary" id="bt-b">Ver catálogo</button>
+  </div>`));
+  const st = { variant: 'primary', radius: 8, height: 40 };
+  let varP, radP, hP;
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  const apply = () => {
+    const a2 = $('#bt-a'); a2.className = 'ddbtn ' + st.variant;
+    document.querySelectorAll('#row-btn .ddbtn').forEach(b2 => { b2.style.borderRadius = st.radius + 'px'; b2.style.height = st.height + 'px'; });
+  };
+  // two-phase squish: fast press-in, springy release with ~2.5% overshoot (Squish.kt)
+  document.querySelectorAll('#row-btn .ddbtn').forEach(b2 => {
+    b2.addEventListener('pointerdown', () => { b2.style.transition = 'transform 55ms cubic-bezier(0,0,.58,1)'; b2.style.transform = 'scale(.95)'; });
+    b2.addEventListener('pointerup', () => { b2.style.transition = 'transform .35s linear(0,.36,.75,1.02,1.05,1.02,1,.99,1)'; b2.style.transform = 'scale(1)'; });
+  });
+  const run = () => {
+    T.clear(); ghost.show(false); apply();
+    T.at(async () => {
+      ghost.show(true); const b2 = $('#bt-a');
+      await ghost.clickAt(b2, 600);
+      b2.dispatchEvent(new PointerEvent('pointerdown')); T.at(() => b2.dispatchEvent(new PointerEvent('pointerup')), 120);
+      T.at(() => ghost.show(false), 700);
+    }, 400);
+  };
+  const kit = presetKit(ctrls, 'btn',
+    [{ name: 'as shipped', state: { variant: 'primary', radius: 8, height: 40 } },
+     { name: 'pill cta', state: { variant: 'primary', radius: 999, height: 48 } },
+     { name: 'secondary', state: { variant: 'secondary', radius: 8, height: 40 } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); varP.set(st.variant); radP.set(String(st.radius)); hP.set(String(st.height)); apply(); run(); });
+  group(ctrls, 'variant');
+  varP = pills(ctrls, ['primary', 'secondary', 'ghost'], st.variant, v => { st.variant = v; apply(); });
+  group(ctrls, 'radius · SY.radius option set');
+  radP = pills(ctrls, ['6', '8', '12', '999'], String(st.radius), v => { st.radius = +v; apply(); });
+  group(ctrls, 'height · SY.button {sm,md,lg}');
+  hP = pills(ctrls, ['32', '40', '48'], String(st.height), v => { st.height = +v; apply(); });
+  playBtn(ctrls, 'replay press', run);
+  kit.mountSave();
+  S.describe(() => `button ${st.variant} h=${st.height} r=${st.radius} · squish .95/55ms in, spring release 350ms +2.5% overshoot · Inter 500 14`);
+  S.register({ presets: kit.names(), tokens: { variant: { type: 'option', options: ['primary', 'secondary', 'ghost'] }, radius: { type: 'option', options: ['6', '8', '12', '999'] }, height: { type: 'option', options: ['32', '40', '48'] } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'variant') { st.variant = c.value; varP.set(st.variant); } else if (c.token === 'radius') { st.radius = +c.value; radP.set(String(st.radius)); } else if (c.token === 'height') { st.height = +c.value; hP.set(String(st.height)); } else return false; apply(); return true; },
+    exportTokens: () => ({ 'button.height': { value: st.height + 'px', type: 'dimension' }, 'button.radius': { value: st.radius + 'px', type: 'dimension' }, 'button.primary.bg': { value: sy('color.saffron'), type: 'color' }, 'button.primary.fg': { value: sy('color.onSaffron'), type: 'color' }, 'button.press.squish': { value: .95, type: 'number' } }) });
+  S.loop(run, 3800);
+  apply();
+})();
+
+// ───────────────────────── 10 · chat — live bubbles, verbatim (Bubbles.kt / ConversationScreen.kt) ─────────────────────────
+// Real spec: incoming chatInBubble #F5F0E8 + hairline; outgoing chatOutBubble #FBE2E5 + crimson 20%
+// hairline; radius.card 12 with a radius.sm 6 notch on the TOP corner; inline 11px timestamp +
+// grey ticks on outgoing; messages SNAP in (no entrance animation in the app); the pending state is
+// the media "Transcribing…" cue (crimson dot + muted 12px), not a typing indicator.
+(() => {
+  const S = specimen({ id: 'row-chat', title: 'Chat', ref: 'disdat/chat', tokens: 'grounded: chatOutBubble #FBE2E5 · chatInBubble #F5F0E8 · radius.card 12 / notch radius.sm 6 · Transcribing… cue · messages snap in' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el('<div class="chatphone" id="ch-phone"></div>'));
+  const st = { radius: 12, notch: 6, transcribe: 1400 };
+  let sR, sT2;
+  const T = mkTimers();
+  const phone = $('#ch-phone');
+  const stamp = (who) => `<span class="cmeta">12:4${who === 'me' ? 2 : 1}${who === 'me' ? ' ✓✓' : ''}</span>`;
+  const bubble = (who, html) => {
+    const b = el(`<div class="cbub ${who}">${html}${stamp(who)}</div>`);
+    b.style.borderRadius = st.radius + 'px';
+    if (who === 'me') b.style.borderTopRightRadius = st.notch + 'px'; else b.style.borderTopLeftRadius = st.notch + 'px';
+    phone.appendChild(b); return b;
+  };
+  const run = () => {
+    T.clear(); phone.innerHTML = '';
+    T.at(() => bubble('them', '¿Tenéis tomate pera para el jueves?'), 350);
+    T.at(() => {
+      const m = bubble('them', `<span class="transcribing"><i></i>Transcribing…</span>`);
+      T.at(() => { m.querySelector('.transcribing').outerHTML = 'Nota de voz: “catorce cajas, sale jueves temprano”'; }, st.transcribe);
+    }, 1250);
+    T.at(() => bubble('me', 'Perfecto, confírmalo.'), 1250 + st.transcribe + 800);
+  };
+  const kit = presetKit(ctrls, 'chat',
+    [{ name: 'as shipped', state: { radius: 12, notch: 6, transcribe: 1400 } },
+     { name: 'legacy WA 7.5', state: { radius: 7.5, notch: 2, transcribe: 1400 } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); sR.set(st.radius); sT2.set(st.transcribe); run(); });
+  group(ctrls, 'shape · radius.card 12 + notch radius.sm 6');
+  sR = slider(ctrls, 'radius', 4, 18, .5, st.radius, v => { st.radius = v; run(); }, v => (+v).toFixed(1) + 'px');
+  group(ctrls, 'transcription cue');
+  sT2 = slider(ctrls, 'dwell ms', 400, 3000, 50, st.transcribe, v => { st.transcribe = v; }, v => Math.round(v) + '');
+  playBtn(ctrls, 'replay conversation', run);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">Messages snap in — the app has no entrance animation and no typing indicator; the real pending state is “Transcribing…”. 7.5px is the legacy WhatsApp token, kept as a preset for honesty.</div>'));
+  S.describe(() => `chat in=${sy('color.chatInBubble')} out=${sy('color.chatOutBubble')} radius=${st.radius}/${st.notch} · transcribing cue · snap-in`);
+  S.register({ presets: kit.names(), tokens: { radius: { type: 'range', min: 4, max: 18 }, transcribe: { type: 'range', min: 400, max: 3000 } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'radius') { st.radius = +c.value; sR.set(st.radius); run(); return true; } if (c.token === 'transcribe') { st.transcribe = +c.value; sT2.set(st.transcribe); return true; } return false; },
+    exportTokens: () => ({ 'chat.in.bubble': { value: sy('color.chatInBubble'), type: 'color' }, 'chat.in.border': { value: sy('color.chatInBorder'), type: 'color' }, 'chat.out.bubble': { value: sy('color.chatOutBubble'), type: 'color' }, 'chat.out.border': { value: sy('color.chatOutBorder'), type: 'color' }, 'chat.radius': { value: sy('radius.card'), type: 'dimension' }, 'chat.notch': { value: sy('radius.sm'), type: 'dimension' } }) });
+  S.loop(run, 6200);
+})();
+
+// ───────────────────────── ghost cursor — the click, demonstrated ─────────────────────────
+// Press-things should SHOW the press: a little cursor glides in, clicks (ripple), the thing reacts.
+function mkGhost(demo) {
+  const g = el(`<div class="ghost"><i></i><svg width="20" height="27" viewBox="0 0 12 16" shape-rendering="crispEdges" style="image-rendering:pixelated;filter:drop-shadow(.6px 0 0 #fff) drop-shadow(-.6px 0 0 #fff) drop-shadow(0 .6px 0 #fff) drop-shadow(0 -.6px 0 #fff)"><rect x="0" y="0" width="1" height="1" fill="#16110D"/><rect x="0" y="1" width="1" height="1" fill="#16110D"/><rect x="1" y="1" width="1" height="1" fill="#16110D"/><rect x="0" y="2" width="1" height="1" fill="#16110D"/><rect x="1" y="2" width="1" height="1" fill="#16110D"/><rect x="2" y="2" width="1" height="1" fill="#16110D"/><rect x="0" y="3" width="1" height="1" fill="#16110D"/><rect x="1" y="3" width="1" height="1" fill="#16110D"/><rect x="2" y="3" width="1" height="1" fill="#16110D"/><rect x="3" y="3" width="1" height="1" fill="#16110D"/><rect x="0" y="4" width="1" height="1" fill="#16110D"/><rect x="1" y="4" width="1" height="1" fill="#16110D"/><rect x="2" y="4" width="1" height="1" fill="#16110D"/><rect x="3" y="4" width="1" height="1" fill="#16110D"/><rect x="4" y="4" width="1" height="1" fill="#16110D"/><rect x="0" y="5" width="1" height="1" fill="#16110D"/><rect x="1" y="5" width="1" height="1" fill="#16110D"/><rect x="2" y="5" width="1" height="1" fill="#16110D"/><rect x="3" y="5" width="1" height="1" fill="#16110D"/><rect x="4" y="5" width="1" height="1" fill="#16110D"/><rect x="5" y="5" width="1" height="1" fill="#16110D"/><rect x="0" y="6" width="1" height="1" fill="#16110D"/><rect x="1" y="6" width="1" height="1" fill="#16110D"/><rect x="2" y="6" width="1" height="1" fill="#16110D"/><rect x="3" y="6" width="1" height="1" fill="#16110D"/><rect x="4" y="6" width="1" height="1" fill="#16110D"/><rect x="5" y="6" width="1" height="1" fill="#16110D"/><rect x="6" y="6" width="1" height="1" fill="#16110D"/><rect x="0" y="7" width="1" height="1" fill="#16110D"/><rect x="1" y="7" width="1" height="1" fill="#16110D"/><rect x="2" y="7" width="1" height="1" fill="#16110D"/><rect x="3" y="7" width="1" height="1" fill="#16110D"/><rect x="4" y="7" width="1" height="1" fill="#16110D"/><rect x="5" y="7" width="1" height="1" fill="#16110D"/><rect x="6" y="7" width="1" height="1" fill="#16110D"/><rect x="7" y="7" width="1" height="1" fill="#16110D"/><rect x="0" y="8" width="1" height="1" fill="#16110D"/><rect x="1" y="8" width="1" height="1" fill="#16110D"/><rect x="2" y="8" width="1" height="1" fill="#16110D"/><rect x="3" y="8" width="1" height="1" fill="#16110D"/><rect x="4" y="8" width="1" height="1" fill="#16110D"/><rect x="5" y="8" width="1" height="1" fill="#16110D"/><rect x="6" y="8" width="1" height="1" fill="#16110D"/><rect x="7" y="8" width="1" height="1" fill="#16110D"/><rect x="8" y="8" width="1" height="1" fill="#16110D"/><rect x="0" y="9" width="1" height="1" fill="#16110D"/><rect x="1" y="9" width="1" height="1" fill="#16110D"/><rect x="2" y="9" width="1" height="1" fill="#16110D"/><rect x="3" y="9" width="1" height="1" fill="#16110D"/><rect x="4" y="9" width="1" height="1" fill="#16110D"/><rect x="5" y="9" width="1" height="1" fill="#16110D"/><rect x="6" y="9" width="1" height="1" fill="#16110D"/><rect x="7" y="9" width="1" height="1" fill="#16110D"/><rect x="8" y="9" width="1" height="1" fill="#16110D"/><rect x="9" y="9" width="1" height="1" fill="#16110D"/><rect x="0" y="10" width="1" height="1" fill="#16110D"/><rect x="1" y="10" width="1" height="1" fill="#16110D"/><rect x="2" y="10" width="1" height="1" fill="#16110D"/><rect x="3" y="10" width="1" height="1" fill="#16110D"/><rect x="4" y="10" width="1" height="1" fill="#16110D"/><rect x="5" y="10" width="1" height="1" fill="#16110D"/><rect x="6" y="10" width="1" height="1" fill="#16110D"/><rect x="7" y="10" width="1" height="1" fill="#16110D"/><rect x="8" y="10" width="1" height="1" fill="#16110D"/><rect x="9" y="10" width="1" height="1" fill="#16110D"/><rect x="10" y="10" width="1" height="1" fill="#16110D"/><rect x="0" y="11" width="1" height="1" fill="#16110D"/><rect x="1" y="11" width="1" height="1" fill="#16110D"/><rect x="2" y="11" width="1" height="1" fill="#16110D"/><rect x="3" y="11" width="1" height="1" fill="#16110D"/><rect x="4" y="11" width="1" height="1" fill="#16110D"/><rect x="5" y="11" width="1" height="1" fill="#16110D"/><rect x="6" y="11" width="1" height="1" fill="#FF5C2A"/><rect x="7" y="11" width="1" height="1" fill="#FF5C2A"/><rect x="8" y="11" width="1" height="1" fill="#FF5C2A"/><rect x="9" y="11" width="1" height="1" fill="#FF5C2A"/><rect x="10" y="11" width="1" height="1" fill="#16110D"/><rect x="0" y="12" width="1" height="1" fill="#16110D"/><rect x="1" y="12" width="1" height="1" fill="#16110D"/><rect x="2" y="12" width="1" height="1" fill="#16110D"/><rect x="3" y="12" width="1" height="1" fill="#16110D"/><rect x="4" y="12" width="1" height="1" fill="#FF5C2A"/><rect x="5" y="12" width="1" height="1" fill="#FF5C2A"/><rect x="6" y="12" width="1" height="1" fill="#16110D"/><rect x="7" y="12" width="1" height="1" fill="#16110D"/><rect x="0" y="13" width="1" height="1" fill="#16110D"/><rect x="1" y="13" width="1" height="1" fill="#16110D"/><rect x="2" y="13" width="1" height="1" fill="#16110D"/><rect x="3" y="13" width="1" height="1" fill="#FF5C2A"/><rect x="4" y="13" width="1" height="1" fill="#16110D"/><rect x="6" y="13" width="1" height="1" fill="#16110D"/><rect x="7" y="13" width="1" height="1" fill="#16110D"/><rect x="0" y="14" width="1" height="1" fill="#16110D"/><rect x="1" y="14" width="1" height="1" fill="#16110D"/><rect x="2" y="14" width="1" height="1" fill="#FF5C2A"/><rect x="3" y="14" width="1" height="1" fill="#16110D"/><rect x="7" y="14" width="1" height="1" fill="#16110D"/><rect x="8" y="14" width="1" height="1" fill="#16110D"/><rect x="0" y="15" width="1" height="1" fill="#16110D"/><rect x="1" y="15" width="1" height="1" fill="#16110D"/><rect x="2" y="15" width="1" height="1" fill="#16110D"/><rect x="8" y="15" width="1" height="1" fill="#16110D"/></svg></div>`);
+  demo.appendChild(g);
+  const move = (x, y, ms = 600) => new Promise(r => {
+    g.style.transition = `transform ${ms}ms cubic-bezier(.31,.325,0,.92)`;
+    g.style.transform = `translate(${x}px,${y}px)`;
+    setTimeout(r, ms + 40);
+  });
+  return {
+    show: (v) => g.classList.toggle('onn', v !== false),
+    move,
+    clickAt: async (target, ms = 600) => {
+      const dr = demo.getBoundingClientRect(), r = target.getBoundingClientRect();
+      await move(r.left - dr.left + r.width / 2 - 1, r.top - dr.top + r.height / 2 - 1, ms); // the arrow TIP is the hotspot
+      g.classList.add('down');
+      await new Promise(r2 => setTimeout(r2, 200));
+      g.classList.remove('down');
+    },
+  };
+}
+// per-run timer bag so loops never stack
+function mkTimers() { const t = []; return { at: (fn, ms) => t.push(setTimeout(fn, ms)), clear: () => { t.forEach(clearTimeout); t.length = 0; } }; }
+
+// ───────────────────────── 11 · composer — ConversationScreen.kt, verbatim ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-composer', title: 'Composer', ref: 'disdat/composer', tokens: 'grounded: ConversationScreen.kt — pill radius.sheet 20 · surface #FAF7F3 · hairline · button 48 crimson · mic↔send on text · squishClick .96' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="phone" style="justify-content:flex-end;min-height:200px;gap:10px">
+    <div class="bub" id="cp-out" style="opacity:1;transform:none" hidden></div>
+    <div style="display:flex;gap:8px;align-items:flex-end;width:100%">
+      <div class="sypill" id="cp-pill"><span class="pic">${ic('face', 18)}</span><span class="ptext" id="cp-text"><span class="ph">Message</span></span><span class="pic">${ic('clip', 17)}</span><span class="pic">${ic('camera', 17)}</span></div>
+      <button class="sybtn" id="cp-send">${ic('mic', 20)}</button>
+    </div>
+  </div>`));
+  const st = { radius: parseFloat(sy('radius.sheet')), squish: .96 }; // squish: Squish.kt ~0.96
+  let sR, sQ;
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  const MSG = 'Sí, 14 cajas para el jueves.';
+  const pill = $('#cp-pill'), send = $('#cp-send'), txt = $('#cp-text'), out = $('#cp-out');
+  const apply = () => { pill.style.borderRadius = st.radius + 'px'; };
+  const run = () => {
+    T.clear(); apply(); ghost.show(false); out.hidden = true;
+    txt.innerHTML = '<span class="ph">Message</span>'; send.innerHTML = ic('mic', 20);
+    let i = 0;
+    T.at(function type() {
+      if (i === 0) txt.textContent = '';
+      txt.textContent = MSG.slice(0, ++i);
+      if (i === 1) send.innerHTML = ic('send', 17); // text present → SendCircle (the real morph)
+      if (i < MSG.length) T.at(type, 30 + Math.random() * 40);
+      else T.at(async () => {
+        ghost.show(true); await ghost.clickAt(send, 550);
+        send.style.transform = `scale(${st.squish})`; T.at(() => send.style.transform = '', 130);
+        out.textContent = MSG; out.hidden = false;
+        txt.innerHTML = '<span class="ph">Message</span>'; send.innerHTML = ic('mic', 20);
+        T.at(() => ghost.show(false), 450);
+      }, 360);
+    }, 420);
+  };
+  const kit = presetKit(ctrls, 'composer',
+    [{ name: 'as shipped', state: { radius: parseFloat(sy('radius.sheet')), squish: .96 } },
+     { name: 'fully round', state: { radius: 24, squish: .96 } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); sR.set(st.radius); sQ.set(st.squish); run(); });
+  group(ctrls, 'knobs', 'radius.sheet 20 · squish .96');
+  sR = slider(ctrls, 'pill radius', 8, 24, 1, st.radius, v => { st.radius = v; apply(); }, v => Math.round(v) + 'px');
+  sQ = slider(ctrls, 'press squish', .9, 1, .005, st.squish, v => { st.squish = v; });
+  playBtn(ctrls, 'replay', run);
+  kit.mountSave();
+  S.describe(() => `composer pill radius=${Math.round(st.radius)}px bg=#FAF7F3 hairline · button 48px #C01B2C mic↔send · squish=${st.squish}`);
+  S.register({ presets: kit.names(), tokens: { radius: { type: 'range', min: 8, max: 24 }, squish: { type: 'range', min: .9, max: 1 } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'radius') { st.radius = +c.value; sR.set(st.radius); apply(); return true; } if (c.token === 'squish') { st.squish = +c.value; sQ.set(st.squish); return true; } return false; },
+    exportTokens: () => ({ 'composer.pill.radius': { value: Math.round(st.radius) + 'px', type: 'dimension' }, 'composer.pill.bg': { value: sy('color.surface'), type: 'color' }, 'composer.button.size': { value: sy('button.lg'), type: 'dimension' }, 'composer.button.bg': { value: sy('color.saffron'), type: 'color' }, 'composer.press.squish': { value: st.squish, type: 'number' }, 'chat.out.bubble': { value: sy('color.chatOutBubble'), type: 'color' }, 'chat.out.border': { value: sy('color.chatOutBorder'), type: 'color' } }) });
+  S.loop(run, 4800);
+})();
+
+// ───────────────────────── 12 · voice note — VoiceRecorderBar.kt, verbatim ─────────────────────────
+// The real machine: HOLD → the pill is REPLACED by a recording bar (blinking Alerta-yellow dot,
+// timer, "‹ slide to cancel", NO waveform). TAP/lock → hands-free: GREEN noise-gated waveform
+// (bars 2.5 wide · 2 gap · 22 max, silence renders as dots) + trash / pause / crimson send.
+(() => {
+  const S = specimen({ id: 'row-voicenote', title: 'Voice note', ref: 'disdat/voicenote', tokens: 'grounded: VoiceRecorderBar.kt — dot #F4A300 · wave #2E6038 · bars 2.5/2/22 · gate .17 · poll 60ms · send #C01B2C' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="phone" style="justify-content:flex-end;min-height:240px;gap:10px">
+    <div class="vbubble" id="vn-bub" hidden><span class="vplay">${ic('play', 14)}</span><canvas id="vn-static" width="130" height="24" style="width:130px;height:24px"></canvas><time>0:04</time></div>
+    <div id="vn-composer" style="display:flex;gap:8px;align-items:center;width:100%">
+      <div class="sypill" style="border-radius:20px"><span class="pic">${ic('face', 18)}</span><span class="ptext"><span class="ph">Message</span></span><span class="pic">${ic('clip', 17)}</span><span class="pic">${ic('camera', 17)}</span></div>
+      <button class="sybtn" id="vn-mic">${ic('mic', 20)}</button>
+    </div>
+    <div id="vn-rec" hidden style="width:100%">
+      <div class="recbar"><i class="recdot"></i><span class="rectime" id="vn-time">0:00</span>
+        <canvas id="vn-live" height="24" style="flex:1;height:24px;display:none;margin:0 4px"></canvas>
+        <span class="slidehint" id="vn-hint">${ic('chevLeft', 14)} slide to cancel</span></div>
+      <div class="lockrow" id="vn-lock" hidden>
+        <button class="lockbtn">${ic('trash', 18)}</button>
+        <button class="lockbtn pause">${ic('pause', 15)}</button>
+        <button class="sybtn" id="vn-send" style="width:48px;height:48px">${ic('send', 17)}</button>
+      </div>
+    </div>
+  </div>`));
+  const st = { barw: parseFloat(sy('voice.barWidth')), gap: parseFloat(sy('voice.barGap')), gate: sy('voice.gate'), maxh: parseFloat(sy('voice.barMax')) };
+  let sW, sG, sGate;
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  const amps = [];
+  let t0 = 0, ticking = null;
+  // speech-like envelope: voiced runs with real quiet gaps, so the gate visibly renders dots
+  const synth = (t) => { const voiced = Math.sin(t * 1.9) > -0.15; return voiced ? Math.min(1, .3 + .45 * Math.abs(Math.sin(t * 6.7)) + .15 * Math.random()) : .04 + .06 * Math.random(); };
+  const drawLive = () => {
+    const cv = $('#vn-live'); if (!cv || cv.style.display === 'none') return;
+    const W = cv.width = cv.clientWidth, H = cv.height = 24;
+    const x = cv.getContext('2d'); x.clearRect(0, 0, W, H);
+    x.lineCap = 'round'; x.strokeStyle = sy('color.greenText'); x.lineWidth = st.barw;
+    const span = st.barw + st.gap, maxBars = Math.max(1, Math.floor(W / span));
+    const shown = amps.length > maxBars ? amps.slice(-maxBars) : amps;
+    const n = shown.length, rightEdge = W - st.barw / 2, cy = H / 2, dot = st.barw;
+    for (let i = 0; i < n; i++) {
+      const posR = n - 1 - i, px = rightEdge - posR * span;
+      if (px < st.barw / 2) continue;
+      const env = Math.min(Math.min(1, posR / 2), Math.min(1, i / 1.5)); // grow-in right, collapse left
+      const a = shown[i], voiced = a < st.gate ? 0 : (a - st.gate) / (1 - st.gate);
+      const h = dot + voiced * (st.maxh - dot) * env;
+      x.beginPath(); x.moveTo(px, cy - h / 2); x.lineTo(px, cy + h / 2); x.stroke();
+    }
+  };
+  const drawStatic = () => {
+    const cv = $('#vn-static'); const x = cv.getContext('2d'); const W = cv.width, H = cv.height;
+    x.clearRect(0, 0, W, H); x.lineCap = 'round'; x.strokeStyle = sy('color.muted'); x.lineWidth = parseFloat(sy('voice.barWidth'));
+    const r = prng(11);
+    for (let px = 3; px < W - 2; px += 4.5) { const v = r(); const h = v < .2 ? 2.5 : 3 + v * 17; x.beginPath(); x.moveTo(px, H / 2 - h / 2); x.lineTo(px, H / 2 + h / 2); x.stroke(); }
+  };
+  const setPhase = (p) => {
+    $('#vn-composer').hidden = p !== 'idle';
+    $('#vn-rec').hidden = p === 'idle' || p === 'sent';
+    $('#vn-hint').style.display = p === 'holding' ? '' : 'none';
+    $('#vn-live').style.display = p === 'locked' ? 'block' : 'none';
+    $('#vn-lock').hidden = p !== 'locked';
+    $('#vn-bub').hidden = p !== 'sent';
+  };
+  const run = () => {
+    T.clear(); if (ticking) clearInterval(ticking); amps.length = 0; ghost.show(false); const tEl = $('#vn-time'); if (tEl) tEl.textContent = '0:00'; setPhase('idle');
+    T.at(async () => {
+      ghost.show(true); await ghost.clickAt($('#vn-mic'), 550);
+      setPhase('holding'); t0 = performance.now();
+      ticking = setInterval(() => {  // AMPLITUDE_POLL_MS = 60
+        const el2 = $('#vn-time'); if (!el2) return;
+        const sec = Math.floor((performance.now() - t0) / 1000);
+        el2.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+        amps.push(synth((performance.now() - t0) / 1000)); if (amps.length > sy('voice.barCap')) amps.shift();
+        drawLive();
+      }, sy('voice.pollMs'));
+      T.at(() => { setPhase('locked'); requestAnimationFrame(drawLive); }, 1500);  // the TAP → hands-free lock (the reliable default)
+      T.at(async () => {
+        await ghost.clickAt($('#vn-send'), 600);
+        clearInterval(ticking); ticking = null;
+        drawStatic(); setPhase('sent');
+        T.at(() => ghost.show(false), 450);
+      }, 3800);
+    }, 350);
+  };
+  const kit = presetKit(ctrls, 'voicenote',
+    [{ name: 'as shipped', state: { barw: parseFloat(sy('voice.barWidth')), gap: parseFloat(sy('voice.barGap')), gate: sy('voice.gate'), maxh: parseFloat(sy('voice.barMax')) } },
+     { name: 'no gate', state: { barw: 2.5, gap: 2, gate: 0, maxh: 22 } },
+     { name: 'chunky bars', state: { barw: 4, gap: 3, gate: .17, maxh: 22 } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); sW.set(st.barw); sG.set(st.gap); sGate.set(st.gate); });
+  group(ctrls, 'waveform · verbatim drawing spec');
+  sW = slider(ctrls, 'bar width', 1, 5, .25, st.barw, v => { st.barw = v; }, v => (+v).toFixed(2) + 'px');
+  sG = slider(ctrls, 'bar gap', 1, 5, .25, st.gap, v => { st.gap = v; }, v => (+v).toFixed(2) + 'px');
+  sGate = slider(ctrls, 'noise gate', 0, .4, .01, st.gate, v => { st.gate = v; });
+  playBtn(ctrls, 'replay recording', run);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">Hold → yellow dot + slide-to-cancel, no waveform. Lock → the green gated waveform: silence stays a dot, bars grow in on the right and collapse out on the left. Every constant is from VoiceRecorderBar.kt.</div>'));
+  S.describe(() => `voicenote wave: bars ${st.barw}px/${st.gap}px gap, max ${st.maxh}px, gate ${st.gate} · dot #F4A300 · wave #2E6038 · send #C01B2C`);
+  S.register({ presets: kit.names(), tokens: { barw: { type: 'range', min: 1, max: 5 }, gap: { type: 'range', min: 1, max: 5 }, gate: { type: 'range', min: 0, max: .4 } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'barw') { st.barw = +c.value; sW.set(st.barw); return true; } if (c.token === 'gap') { st.gap = +c.value; sG.set(st.gap); return true; } if (c.token === 'gate') { st.gate = +c.value; sGate.set(st.gate); return true; } return false; },
+    exportTokens: () => ({ 'voicenote.wave.barWidth': { value: st.barw + 'px', type: 'dimension' }, 'voicenote.wave.gap': { value: st.gap + 'px', type: 'dimension' }, 'voicenote.wave.max': { value: st.maxh + 'px', type: 'dimension' }, 'voicenote.wave.gate': { value: st.gate, type: 'number' }, 'voicenote.wave.color': { value: sy('color.greenText'), type: 'color' }, 'voicenote.dot': { value: sy('color.red'), type: 'color' }, 'voicenote.send.bg': { value: sy('color.saffron'), type: 'color' } }) });
+  S.loop(run, 7200);
+})();
+
+// ───────────────────────── 13 · reactions — real spec ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-react', title: 'Reactions', ref: 'disdat/reactions', tokens: 'grounded: per-emoji 0.4→1 spring(ζ.6 k300) · 👍❤️😂😮😢🙏 + more · badge composes in · row tints saffronDim while open' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="phone" style="min-height:190px;justify-content:center">
+    <div class="rxwrap">
+      <div class="rxbub" id="rx-bub" style="padding-bottom:16px">La mejor semana del mes
+        <div class="rxpicker" id="rx-pick">${['👍','❤️','😂','😮','😢','🙏'].map(e => `<span>${e}</span>`).join('')}<button class="rxmore">+</button></div>
+        <div class="rxbadge" id="rx-badge">❤️</div>
+      </div>
+    </div>
+  </div>`));
+  const st = { zeta: .6, k: 300, emoji: '❤️' };
+  let sZ, sK;
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  const pick = $('#rx-pick'), badge = $('#rx-badge'), bub = $('#rx-bub');
+  const springScale = (elm, from, to, zeta, k) => {
+    let x = from, v = 0, lt = performance.now();
+    elm.style.transform = `scale(${from})`;
+    const step = (now) => {
+      const dt = Math.min(.032, (now - lt) / 1000); lt = now;
+      const c = 2 * zeta * Math.sqrt(k);
+      v += (-k * (x - to) - c * v) * dt; x += v * dt;
+      elm.style.transform = `scale(${Math.max(0, x).toFixed(3)})`;
+      if (Math.abs(x - to) > .004 || Math.abs(v) > .004) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const run = () => {
+    T.clear(); pick.style.opacity = 0; badge.style.display = 'none'; bub.style.background = ''; ghost.show(false);
+    [...pick.querySelectorAll('span')].forEach(x => x.style.transform = 'scale(1)');
+    T.at(async () => {
+      ghost.show(true); await ghost.clickAt(bub, 550); // long-press
+      await new Promise(r => setTimeout(r, 260));
+      bub.style.background = sy('color.saffronDim'); // row tint while picker is open
+      pick.style.opacity = 1; // container fades only —
+      [...pick.querySelectorAll('span')].forEach(x => springScale(x, .4, 1, st.zeta, st.k)); // — the EMOJIS spring
+      const target = [...pick.querySelectorAll('span')].find(x => x.textContent === st.emoji) || pick.querySelector('span');
+      T.at(async () => {
+        await ghost.clickAt(target, 420);
+        pick.style.opacity = 0; bub.style.background = '';
+        badge.textContent = st.emoji; badge.style.display = 'block'; // composes in — no bounce
+        T.at(() => ghost.show(false), 400);
+      }, 900);
+    }, 300);
+  };
+  const kit = presetKit(ctrls, 'react',
+    [{ name: 'as shipped', state: { zeta: .6, k: 300, emoji: '❤️' } },
+     { name: 'thumbs', state: { zeta: .6, k: 300, emoji: '👍' } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); sZ.set(st.zeta); sK.set(st.k); emoP.set(st.emoji); run(); });
+  group(ctrls, 'picker spring · shipped ζ.6 k300 (expressive)');
+  sZ = slider(ctrls, 'damping ζ', .3, 1.1, .01, st.zeta, v => { st.zeta = v; });
+  sK = slider(ctrls, 'stiffness k', 150, 2000, 10, st.k, v => { st.k = v; }, v => String(Math.round(v)));
+  group(ctrls, 'the reaction');
+  const emoP = pills(ctrls, ['👍', '❤️', '😂', '😮', '😢', '🙏'], st.emoji, v => { st.emoji = v; run(); });
+  playBtn(ctrls, 'replay reaction', run);
+  kit.mountSave();
+  S.describe(() => `reactions: per-emoji 0.4→1 spring ζ=${st.zeta} k=${Math.round(st.k)} · row tint saffronDim while open · badge composes in (no bounce)`);
+  S.register({ presets: kit.names(), tokens: { damping: { type: 'range', min: .3, max: 1.1 }, stiffness: { type: 'range', min: 150, max: 2000 }, emoji: { type: 'option', options: ['👍', '❤️', '😂', '😮', '😢', '🙏'] } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'damping') { st.zeta = +c.value; sZ.set(st.zeta); return true; } if (c.token === 'stiffness') { st.k = +c.value; sK.set(st.k); return true; } if (c.token === 'emoji') { st.emoji = c.value; emoP.set(st.emoji); run(); return true; } return false; },
+    exportTokens: () => ({ 'reaction.picker.damping': { value: .6, type: 'number' }, 'reaction.picker.stiffness': { value: 300, type: 'number' }, 'reaction.picker.startScale': { value: .4, type: 'number' } }) });
+  S.loop(run, 5000);
+})();
+
+// ───────────────────────── 14 · reply — QuotedReply, verbatim ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-reply', title: 'Reply', ref: 'disdat/reply', tokens: 'grounded: QuotedReply — quote bg saffronDim · bar 4×38 saffronText #831521 · sender 12/500 · swipe threshold 52 · snap-back spring' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="phone" style="min-height:210px;justify-content:flex-end;gap:9px">
+    <div class="rpmsg" id="rp-src">¿Puedes para el viernes mejor?</div>
+    <div class="bub" id="rp-out" style="opacity:0"></div>
+  </div>`));
+  const st = { swipe: 52, bar: 'saffronText' };
+  let sS;
+  const T = mkTimers();
+  const src = $('#rp-src'), out = $('#rp-out');
+  const BAR = () => sy('color.' + st.bar);
+  const run = () => {
+    T.clear(); out.style.opacity = 0; out.innerHTML = ''; src.style.transform = 'none'; src.style.transition = 'transform .12s linear';
+    T.at(() => { src.style.transform = `translateX(${st.swipe}px)`; }, 450);
+    T.at(() => { src.style.transition = 'transform .35s var(--sy-ease)'; src.style.transform = 'none'; // snap-back = spring, no fixed duration in-app
+      // the quote renders at drag-RELEASE
+      out.innerHTML = `<div class="rpquote" id="rp-q"><i style="background:${BAR()}"></i><div><b>Casa Marcial</b><span>¿Puedes para el viernes mejor?</span></div></div>Claro — viernes a primera hora.`;
+      out.style.opacity = 1; out.style.transform = 'none';
+      $('#rp-q').addEventListener('click', () => { src.style.transition = 'background .12s linear'; src.style.background = sy('color.highlight'); setTimeout(() => { src.style.transition = 'background 1.2s var(--sy-ease)'; src.style.background = ''; }, 240); });
+    }, 450 + 550);
+  };
+  const kit = presetKit(ctrls, 'reply',
+    [{ name: 'as shipped', state: { swipe: 52, bar: 'saffronText' } },
+     { name: 'green quote', state: { swipe: 52, bar: 'greenText' } }],
+    () => ({ ...st }),
+    (s2) => { Object.assign(st, s2); sS.set(st.swipe); barP.set(st.bar); run(); });
+  group(ctrls, 'swipe');
+  sS = slider(ctrls, 'threshold px', 20, 96, 1, st.swipe, v => { st.swipe = Math.round(v); }, v => Math.round(v) + '');
+  group(ctrls, 'quote bar · saffronText is shipped');
+  const barP = pills(ctrls, ['saffronText', 'saffron', 'greenText'], st.bar, v => { st.bar = v; run(); });
+  playBtn(ctrls, 'replay reply', run);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">The drag follows the finger linearly; the snap-back is a spring. The quote chip is clickable — it flashes the source bubble with the §18 gold wash (120ms in, 1200ms out).</div>'));
+  S.describe(() => `reply quote: bg saffronDim · bar 4×38 ${BAR()} · swipe threshold ${st.swipe}px (haptic at threshold, fires on release)`);
+  S.register({ presets: kit.names(), tokens: { swipe: { type: 'range', min: 20, max: 96 }, bar: { type: 'option', options: ['saffronText', 'saffron', 'greenText'] } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'swipe') { st.swipe = Math.round(+c.value); sS.set(st.swipe); return true; } if (c.token === 'bar') { st.bar = c.value; barP.set(st.bar); run(); return true; } return false; },
+    exportTokens: () => ({ 'reply.quote.bg': { value: sy('color.saffronDim'), type: 'color' }, 'reply.quote.bar': { value: sy('color.saffronText'), type: 'color' }, 'reply.swipe.threshold': { value: '52px', type: 'dimension' } }) });
+  S.loop(run, 4400);
+})();
+
+// ───────────────────────── 15 · transcript — full-screen paper sheet, back arrow, asymmetric motion ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-transcript', title: 'Transcript', ref: 'disdat/transcript-sheet', tokens: 'grounded: full-screen paper sheet (no scrim) · back arrow left 48px squish · enter y100%→0 380ms PhysicalEase / exit 110ms · 40px tabular gutter' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="mini" style="height:260px">
+    <div class="rowc"><b>Casa Marcial</b><span>nota de voz · 0:41</span></div>
+    <div class="rowc"><b>Incarfer S.L.</b><span>nota de voz · 0:18</span></div>
+    <div class="ts-sheet" id="ts-sheet">
+      <div class="tshead"><button class="ts-x" id="ts-x"></button><div><b>Voice transcript</b><span class="tsmeta">Casa Marcial · 12:41 · WhatsApp · voz</span></div></div>
+      <div class="ts-lines">
+        <div class="ts-line"><time>0:04</time><span>Buenas, ¿me pones catorce cajas…</span></div>
+        <div class="ts-line" id="ts-hl"><time>0:12</time><span>…de tomate pera para el jueves?</span></div>
+        <div class="ts-line"><time>0:22</time><span>Y mándame la factura de la semana.</span></div>
+        <div class="ts-line"><time>0:31</time><span>Gracias, un abrazo.</span></div>
+      </div>
+    </div>
+  </div>`));
+  $('#ts-x').innerHTML = ic('chevLeft', 16);
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  const sheet = $('#ts-sheet');
+  const run = () => {
+    T.clear(); ghost.show(false);
+    sheet.style.transition = 'none'; sheet.style.transform = 'translateY(100%)'; sheet.style.opacity = 0;
+    $('#ts-hl').style.background = '';
+    T.at(() => {
+      sheet.style.transition = 'transform 380ms var(--sy-ease), opacity 250ms linear';
+      sheet.style.transform = 'none'; sheet.style.opacity = 1;
+    }, 350);
+    T.at(() => { const h = $('#ts-hl'); h.style.transition = 'background .12s linear'; h.style.background = sy('color.highlight'); T.at(() => { h.style.transition = 'background 1.2s var(--sy-ease)'; h.style.background = ''; }, 240); }, 1400); // karaoke wash — the §18 gold
+    T.at(async () => {
+      ghost.show(true); await ghost.clickAt($('#ts-x'), 600);
+      sheet.style.transition = 'transform 110ms cubic-bezier(.3,0,.6,1), opacity 130ms linear';
+      sheet.style.transform = 'translateY(100%)'; sheet.style.opacity = 0;
+      T.at(() => ghost.show(false), 350);
+    }, 3200);
+  };
+  const kit = presetKit(ctrls, 'transcript', [{ name: 'as shipped', state: {} }], () => ({}), () => run());
+  playBtn(ctrls, 'replay sheet', run);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">Full-screen paper, no scrim; close is a LEFT back arrow with the squish press. The gold wash on a line is the §18 highlight (120ms in, 1200ms out).</div>'));
+  S.describe(() => `transcript sheet: paper full-screen · back-left 48px squish · enter 380ms PhysicalEase / exit 110ms · gutter 40px tabular · §18 gold wash ${sy('color.highlight')}`);
+  S.register({ presets: kit.names(), tokens: {},
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); return false; },
+    exportTokens: () => ({ 'sheet.enter': { value: '380ms', type: 'duration' }, 'sheet.exit': { value: '110ms', type: 'duration' }, 'highlight.wash': { value: sy('color.highlight'), type: 'color' } }) });
+  S.loop(run, 5200);
+})();
+
+// ───────────────────────── 16 · order table — the real editable rows ─────────────────────────
+(() => {
+  const S = specimen({ id: 'row-table', title: 'Order table', ref: 'disdat/table', tokens: 'grounded: row-edit borderStrong r6 · −/＋ steppers 32 cloud · numerics Plex Mono tnum · low-confidence wavy Alerta · Save→Undo 4s · NO flash' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div style="width:300px"><div class="ordtable" id="ot">
+    <div class="tr" id="ot-row1"><div class="td">Tomate pera</div><div class="td num" id="ot-qty">12 kg</div><div class="td num" id="ot-t1">174,00 €</div></div>
+    <div class="tr"><div class="td">Calabacín</div><div class="td num lowconf">8 kg</div><div class="td num">86,40 €</div></div>
+    <div class="tr total"><div class="td tlabel">Total</div><div class="td"></div><div class="td num tbig" id="ot-total">260,40 €</div></div>
+  </div>
+  <div class="undobar" id="ot-undo" hidden><span>Guardado</span><button>Undo</button></div></div>`));
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  const row = $('#ot-row1'), qty = $('#ot-qty'), t1 = $('#ot-t1'), total = $('#ot-total');
+  const run = () => {
+    T.clear(); ghost.show(false); $('#ot-undo').hidden = true;
+    row.classList.remove('editing'); qty.innerHTML = '12 kg'; t1.textContent = '174,00 €'; total.textContent = '260,40 €';
+    T.at(async () => {
+      ghost.show(true); await ghost.clickAt(qty, 600);
+      row.classList.add('editing');
+      qty.innerHTML = `<span class="stepper" id="ot-minus">−</span><b class="qv">12</b><span class="stepper" id="ot-plus">＋</span>`;
+      T.at(async () => {
+        await ghost.clickAt($('#ot-plus'), 400); qty.querySelector('.qv').textContent = '13'; t1.textContent = '188,50 €'; total.textContent = '274,90 €';
+        await ghost.clickAt($('#ot-plus'), 250); qty.querySelector('.qv').textContent = '14'; t1.textContent = '203,00 €'; total.textContent = '289,40 €';
+        T.at(() => {
+          row.classList.remove('editing'); qty.innerHTML = '14 kg';
+          $('#ot-undo').hidden = false; // Save flips to a 4s Undo bar, then commits
+          T.at(() => { $('#ot-undo').hidden = true; ghost.show(false); }, 1800);
+        }, 700);
+      }, 500);
+    }, 350);
+  };
+  const kit = presetKit(ctrls, 'table', [{ name: 'as shipped', state: {} }], () => ({}), () => run());
+  playBtn(ctrls, 'replay edit', run);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">Editing selects the ROW (borderStrong ring), quantity moves by steppers — never free text. No flash on totals; the confirmation is a 4s Undo bar. The wavy Alerta underline marks a low-confidence quantity — the table’s signature.</div>'));
+  S.describe(() => `order table: row-edit border ${sy('color.borderStrong')} r6 · steppers 32 ${sy('color.surface2')} · numerics Plex Mono tnum · low-confidence wavy ${sy('color.red')} · undo 4000ms`);
+  S.register({ presets: kit.names(), tokens: {},
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); return false; },
+    exportTokens: () => ({ 'table.edit.border': { value: sy('color.borderStrong'), type: 'color' }, 'table.stepper.size': { value: '32px', type: 'dimension' }, 'table.stepper.bg': { value: sy('color.surface2'), type: 'color' }, 'table.lowConfidence.underline': { value: sy('color.red'), type: 'color' }, 'table.save.undoMs': { value: 4000, type: 'number' } }) });
+  S.loop(run, 6000);
+})();
+
+// ───────────────────────── 18 · call — the REAL dark call (spectate → join → active) ─────────────────────────
+// Grounded: CallUiState has NO ringing/answer phase — you LISTEN IN (spectate) and JOIN. Dark
+// warm-green gradient (callBgTop→callBgBottom), saffronDim avatar, speaker-bar with the 3-bar EQ
+// (420/510/600ms PhysicalEase), End = Alerta yellow. All values from Tokens.kt via SY.
+(() => {
+  const S = specimen({ id: 'row-call', title: 'Call', ref: 'disdat/call', tokens: 'grounded: CallUiState + Tokens.kt dark-call — callBgTop→Bottom · join saffron · end Alerta · speaker EQ 420/510/600ms PhysicalEase · timer Plex Mono tabular' });
+  const { ctrls, demo } = S;
+  demo.appendChild(el(`<div class="callscr" id="cl">
+    <button class="callmin">‹</button>
+    <div class="callav">CM</div>
+    <h3 class="callname">Casa Marcial</h3><div class="calltimer" id="cl-state">escuchando</div>
+    <div class="speakbar"><span class="sdot"></span><b>Operador</b><span class="eq" id="cl-eq"><i></i><i></i><i></i></span></div>
+    <button class="joinpill" id="cl-join">Join the call</button>
+    <div class="callbtns" id="cl-live" hidden>
+      <button class="cbtn mut" id="cl-mut" title="Mute"></button>
+      <button class="cbtn end" id="cl-end" title="End"></button>
+      <button class="cbtn spk" id="cl-spk" title="Speaker"></button>
+    </div>
+  </div>`));
+  $('#cl-mut').innerHTML = ic('micOff', 19); $('#cl-end').innerHTML = ic('phoneOff', 21); $('#cl-spk').innerHTML = ic('mic', 19);
+  const T = mkTimers(); const ghost = mkGhost(demo);
+  let tick = null;
+  const phase = (p) => {
+    $('#cl-join').hidden = p !== 'spectate';
+    $('#cl-live').hidden = p !== 'active';
+    if (p === 'spectate') { $('#cl-state').textContent = 'escuchando'; }
+  };
+  const run = () => {
+    T.clear(); if (tick) clearInterval(tick); ghost.show(false); phase('spectate');
+    $('#cl-mut').classList.remove('on');
+    T.at(async () => {
+      ghost.show(true); await ghost.clickAt($('#cl-join'), 620);
+      phase('active');
+      let sec = 0; const st = $('#cl-state');
+      st.textContent = '0:00';
+      tick = setInterval(() => { sec++; st.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }, 1000);
+      T.at(async () => { await ghost.clickAt($('#cl-mut'), 500); $('#cl-mut').classList.add('on'); }, 1600);
+      T.at(async () => {
+        await ghost.clickAt($('#cl-end'), 500);
+        clearInterval(tick); tick = null; phase('spectate');
+        T.at(() => ghost.show(false), 400);
+      }, 3900);
+    }, 700);
+  };
+  const kit = presetKit(ctrls, 'call',
+    [{ name: 'listen-in', state: { mode: 'spectate' } },
+     { name: 'operator', state: { mode: 'active' } },
+     { name: 'muted', state: { mode: 'muted' } }],
+    () => ({ mode: 'spectate' }),
+    (s2) => { T.clear(); if (tick) clearInterval(tick); ghost.show(false);
+      if (s2.mode === 'spectate') phase('spectate');
+      else { phase('active'); $('#cl-state').textContent = '1:24'; $('#cl-mut').classList.toggle('on', s2.mode === 'muted'); } });
+  playBtn(ctrls, 'replay call', run);
+  kit.mountSave();
+  ctrls.appendChild(el('<div class="footnote">There is no ringing phase — Sancho calls are listen-in → join. End is Alerta yellow (the semantic flip), the avatar is saffronDim with Red-700 initials, and the EQ pulses 420/510/600ms on PhysicalEase.</div>'));
+  S.describe(() => `call spectate→join→active · bg ${sy('color.callBgTop')}→${sy('color.callBgBottom')} · join ${sy('color.saffron')} · end ${sy('color.red')} · timer Plex Mono tabular`);
+  S.register({ presets: kit.names(), tokens: { mode: { type: 'option', options: ['spectate', 'active', 'muted'] } },
+    apply: (c) => { if (c.preset) return kit.applyByName(c.preset); if (c.token === 'mode') return kit.applyByName(c.value === 'spectate' ? 'listen-in' : c.value === 'muted' ? 'muted' : 'operator'); return false; },
+    exportTokens: () => ({ 'call.bgTop': { value: sy('color.callBgTop'), type: 'color' }, 'call.bgBottom': { value: sy('color.callBgBottom'), type: 'color' }, 'call.fg': { value: sy('color.callFg'), type: 'color' }, 'call.muted': { value: sy('color.callMuted'), type: 'color' }, 'call.bar': { value: sy('color.callBar'), type: 'color' }, 'call.end': { value: sy('color.red'), type: 'color' }, 'call.join': { value: sy('color.saffron'), type: 'color' } }) });
+  S.loop(run, 6800);
+})();
+
+// ───────────────────────── projects · the collage book ─────────────────────────
+// Left rail: cluster specimens into projects (a specimen can live in many). Selecting a project
+// filters the sheet — mix & match. localStorage v0; Pro persists server-side with the library.
+(() => {
+  const LSP = 'ddlab_projects', LSC = 'ddlab_curproj';
+  const load = () => { try { return JSON.parse(localStorage.getItem(LSP) || '[]'); } catch { return []; } };
+  const save = (p) => localStorage.setItem(LSP, JSON.stringify(p));
+  let cur = localStorage.getItem(LSC) || '';
+  const listEl = $('#pjlist');
+  const applyFilter = () => {
+    const projs = load();
+    const p = projs.find(x => x.name === cur);
+    document.querySelectorAll('.spec').forEach(sp => {
+      sp.style.display = (!p || p.refs.includes(sp.dataset.ref)) ? '' : 'none';
+    });
+  };
+  const render = () => {
+    const projs = load();
+    listEl.innerHTML = '';
+    const all = el(`<button class="pj${cur === '' ? ' on' : ''}">▦ all specimens<span class="cnt">${document.querySelectorAll('.spec').length}</span></button>`);
+    all.addEventListener('click', () => { cur = ''; localStorage.setItem(LSC, ''); render(); });
+    listEl.appendChild(all);
+    projs.forEach(p => {
+      const b = el(`<button class="pj${cur === p.name ? ' on' : ''}">▸ ${p.name}<span class="cnt">${p.refs.length}</span><span class="del2" title="delete">×</span></button>`);
+      b.addEventListener('click', (ev) => {
+        if (ev.target.classList.contains('del2')) { if (cur === p.name) { cur = ''; localStorage.setItem(LSC, ''); } save(load().filter(x => x.name !== p.name)); render(); return; }
+        cur = p.name; localStorage.setItem(LSC, cur); render();
+      });
+      listEl.appendChild(b);
+    });
+    applyFilter();
+    document.querySelectorAll('.spec').forEach(sp => {
+      const btn = sp.querySelector('.addproj'); if (btn) btn.querySelector('b').textContent = load().filter(x => x.refs.includes(sp.dataset.ref)).length || '';
+    });
+  };
+  $('#pjnew').addEventListener('click', () => {
+    const name = prompt('Project name:'); if (!name) return;
+    const projs = load(); if (!projs.find(x => x.name === name)) { projs.push({ name, refs: [] }); save(projs); }
+    render(); // stay on the current view — an empty project would blank the sheet; add specimens via the folder button first
+  });
+  // per-specimen "add to project" popover
+  document.querySelectorAll('.spec').forEach(sp => {
+    const btn = el('<button class="addproj" title="add to project">' + ic('folder', 12) + ' <b></b></button>');
+    sp.querySelector('header .figcopy').before(btn);
+    btn.addEventListener('click', () => {
+      const old = sp.querySelector('.pjpop'); if (old) { old.remove(); return; }
+      const projs = load();
+      const pop = el('<div class="pjpop"></div>');
+      if (!projs.length) pop.appendChild(el('<label style="color:var(--faint)">no projects yet — create one on the left</label>'));
+      projs.forEach(p => {
+        const inP = p.refs.includes(sp.dataset.ref);
+        const row = el(`<label><input type="checkbox" ${inP ? 'checked' : ''}> ${p.name}</label>`);
+        row.querySelector('input').addEventListener('change', (e) => {
+          const all2 = load(); const tp = all2.find(x => x.name === p.name);
+          if (e.target.checked) { if (!tp.refs.includes(sp.dataset.ref)) tp.refs.push(sp.dataset.ref); }
+          else tp.refs = tp.refs.filter(r => r !== sp.dataset.ref);
+          save(all2); render();
+        });
+        pop.appendChild(row);
+      });
+      sp.querySelector('header').appendChild(pop);
+      setTimeout(() => document.addEventListener('click', function close(e) { if (!pop.contains(e.target) && e.target !== btn) { pop.remove(); document.removeEventListener('click', close); } }), 0);
+    });
+  });
+  render();
+})();
+
+// ───────────────────────── export · tokens → JSON / CSS / Figma ─────────────────────────
+// Gathers every registered specimen's exportTokens() into one library, in three shapes. The Figma
+// tab is the same W3C JSON — Tokens Studio imports that format directly, which is how you land
+// captured taste inside the Figma ecosystem without hand-rebuilding it.
+const openExport = (() => {
+  const modal = document.getElementById('exportmodal'), pre = document.getElementById('exportpre'), hint = document.getElementById('exporthint');
+  const collect = () => { const out = {}; SPECIMENS.forEach(s => { if (s.exportTokens) Object.assign(out, s.exportTokens()); }); return out; };
+  const nest = (flat) => { const root = {}; for (const [k, v] of Object.entries(flat)) { const parts = k.split('.'); let o = root; parts.forEach((p, i) => { if (i === parts.length - 1) o[p] = { $value: v.value, $type: v.type }; else o = (o[p] = o[p] || {}); }); } return root; };
+  const asCss = (flat) => ':root {\n' + Object.entries(flat).map(([k, v]) => `  --${k.replace(/\./g, '-')}: ${v.value};`).join('\n') + '\n}';
+  const FORMATS = {
+    'Figma': { body: () => JSON.stringify(nest(collect()), null, 2), ext: 'figma-tokens.json', hint: 'Best path: Connect Figma (top-right) links your account, then the Dis Dat plugin writes these as Variables. Or copy this and paste into the plugin / Tokens Studio manually.' },
+    'CSS': { body: () => asCss(collect()), ext: 'tokens.css', hint: 'Custom properties, ready for any stylesheet.' },
+    'JSON': { body: () => JSON.stringify(nest(collect()), null, 2), ext: 'tokens.json', hint: 'W3C Design Tokens — the interchange standard.' },
+  };
+  let cur = 'Figma';
+  const tabs = document.getElementById('exporttabs');
+  Object.keys(FORMATS).forEach(name => { const b = el(`<button class="pill${name === cur ? ' on' : ''}">${name}</button>`); b.addEventListener('click', () => { cur = name; paint(); }); tabs.appendChild(b); });
+  const paint = () => { document.querySelectorAll('#exporttabs .pill').forEach(p => p.classList.toggle('on', p.textContent === cur)); pre.textContent = FORMATS[cur].body(); hint.textContent = FORMATS[cur].hint; };
+  document.getElementById('exportcopy').addEventListener('click', async (e) => { try { await navigator.clipboard.writeText(FORMATS[cur].body()); e.target.textContent = 'copied ✓'; setTimeout(() => e.target.textContent = 'copy', 1200); } catch (x) {} });
+  document.getElementById('exportdl').addEventListener('click', () => { const blob = new Blob([FORMATS[cur].body()], { type: 'text/plain' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = FORMATS[cur].ext; a.click(); URL.revokeObjectURL(a.href); });
+  const close = () => modal.hidden = true;
+  document.getElementById('exportclose').addEventListener('click', close);
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  document.getElementById('exportbtn').addEventListener('click', () => { paint(); modal.hidden = false; });
+  return (format) => { if (format === 'figma') cur = 'Figma'; if (format === 'json') cur = 'JSON'; if (format === 'css') cur = 'CSS'; paint(); modal.hidden = false; };
+})();
+
+// ───────────────────────── chat · edit the library in words (Groq) ─────────────────────────
+(() => {
+  const rail = document.getElementById('chatrail'), log = document.getElementById('chatlog');
+  const form = document.getElementById('chatform'), input = document.getElementById('chatinput'), send = document.getElementById('chatsend');
+  const toggle = document.getElementById('chattoggle');
+  const openChat = (on) => { document.body.classList.toggle('chat', on); toggle.classList.toggle('on', on); if (on) setTimeout(() => input.focus(), 60); };
+  toggle.addEventListener('click', () => openChat(!document.body.classList.contains('chat')));
+  document.getElementById('chatclose').addEventListener('click', () => openChat(false));
+  const add = (cls, html) => { const m = el(`<div class="${cls}">${html}</div>`); log.appendChild(m); log.scrollTop = log.scrollHeight; return m; };
+  const schema = () => SPECIMENS.filter(s => s.apply).map(s => ({ ref: s.ref, name: s.name, presets: s.presets, tokens: s.tokens, current: s.describe() }));
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const q = input.value.trim(); if (!q) return;
+    input.value = ''; add('cmsg user', q.replace(/</g, '&lt;'));
+    send.disabled = true; const thinking = add('cthinking', 'thinking…');
+    let res;
+    try {
+      res = await fetch('https://api.disdat.dev/x/labchat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ instruction: q, specimens: schema() }) }).then(r => r.ok ? r.json() : Promise.reject(r.status));
+    } catch (err) { thinking.remove(); add('cmsg err', 'chat is unavailable right now (' + err + ')'); send.disabled = false; return; }
+    thinking.remove();
+    if (res.message) add('cmsg bot', res.message.replace(/</g, '&lt;'));
+    let firstRef = null;
+    (res.calls || []).forEach(c => {
+      if (c.tool === 'export') { openExport(c.format); add2card('export', c.format || 'json', '', true); return; }
+      const entry = SPECIMENS.find(x => x.ref === c.ref);
+      let ok = false;
+      try { ok = !!(entry && entry.apply && entry.apply(c)); } catch (x) { ok = false; }
+      if (ok && !firstRef) firstRef = entry;
+      const arg = c.preset ? `preset=${c.preset}` : `${c.token}=${c.value}`;
+      add2card(c.tool || 'setToken', c.ref || '', arg, ok);
+    });
+    if (firstRef) firstRef.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    send.disabled = false; input.focus();
+  });
+  function add2card(verb, ref, arg, ok) {
+    add('toolcard', `<span class="verb">${verb}</span><span>${ref}${arg ? ' · ' + arg : ''}</span><span class="ok ${ok ? 'y' : 'n'}">${ok ? '✓' : '—'}</span>`);
+  }
+})();
+</script>
+</body></html>

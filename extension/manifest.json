@@ -1,0 +1,74 @@
+{
+  "manifest_version": 3,
+  "name": "Dis Dat \u2014 point & talk",
+  "version": "0.30.0",
+  "description": "Point or talk at any page \u2014 Dis Dat captures what it actually renders plus your reaction, for your coding agent.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "offscreen",
+    "webNavigation",
+    "identity",
+    "clipboardWrite",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "inject-hooks.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_title": "Dis Dat \u2014 point & talk (Alt+Shift+D)",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "activate": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "Point & talk"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject-main.js",
+        "inject-hooks.js",
+        "fonts/fraunces.woff2",
+        "fonts/inter.woff2"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
