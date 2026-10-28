@@ -13,4 +13,4 @@ swiftc -sdk "$sdk" -target arm64-apple-macos13.0 native/macos/app/Sources/*.swif
 
 A distributable app bundle requires the operator's own signing and packaging. The historical signing, deployment and updater credentials are excluded. The earlier prototype keeps crash logs local by default; its optional manual crash-report endpoint must be explicitly configured.
 
-This is recovered source and is separate from the browser extension's local model path. CI typechecks the native recorder source; no physical Mac capture, account sign-in, server upload or distribution signing has been tested as part of this release.
+This is recovered source and is separate from the browser extension's local model path. CI typechecks the native recorder and builds the earlier SmartCapture prototype; no physical Mac capture, account sign-in, server upload or distribution signing has been tested as part of this release.

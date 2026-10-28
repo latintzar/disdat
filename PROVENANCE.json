@@ -1196,7 +1196,7 @@
       }
     ],
     "changes": "Operator-configured service origins and auth key; isolated bundle and callback identifiers; automatic update and crash upload disabled; signing and deployment credentials excluded.",
-    "validation": "CI typechecks the recorder; no real Mac capture, live server or distribution signing"
+    "validation": "Hosted CI typechecks the native recorder and builds the SmartCapture prototype; no real Mac capture, live server or distribution signing"
   },
   "hosted_backend_recovery": {
     "source_commit": "dbac69422281b857b9425ee01bb1876ddbdb7c2c",
