@@ -50,6 +50,7 @@ Choose the existing hosted path explicitly with `python3 tools/disdat.py setup -
 
 ## Other tools
 
+- [Retained server source](legacy/server/README.md): the original hosted backend for review and migration.
 - [macOS recorder source](native/macos/README.md): the original native recorder and capture prototype.
 - [Figma token importer](figma-plugin/README.md): import a DTCG library as Figma Variables.
 - [Token MCP](mcp/README.md): let an agent query a local token library, export CSS/DTCG or use the existing optional Figma path.

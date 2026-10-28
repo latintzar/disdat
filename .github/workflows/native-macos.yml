@@ -23,3 +23,6 @@ jobs:
         run: |
           sdk="$(xcrun --sdk macosx --show-sdk-path)"
           swiftc -sdk "$sdk" -target arm64-apple-macos13.0 -typecheck native/macos/app/Sources/*.swift
+      - name: Build original SmartCapture prototype
+        run: |
+          xcodebuild -project native/macos/macos/SmartCapture.xcodeproj -scheme SmartCapture -configuration Debug -derivedDataPath "$RUNNER_TEMP/SmartCapture" CODE_SIGNING_ALLOWED=NO build

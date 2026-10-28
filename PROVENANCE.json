@@ -1197,5 +1197,40 @@
     ],
     "changes": "Operator-configured service origins and auth key; isolated bundle and callback identifiers; automatic update and crash upload disabled; signing and deployment credentials excluded.",
     "validation": "CI typechecks the recorder; no real Mac capture, live server or distribution signing"
+  },
+  "hosted_backend_recovery": {
+    "source_commit": "dbac69422281b857b9425ee01bb1876ddbdb7c2c",
+    "original_files": [
+      {
+        "path": "auth_billing.py",
+        "sha256": "71e9c8dbd16a0a1e8a28bf657f5c987c2bd173fc2f9b7aa8ff26bccdb047c37e"
+      },
+      {
+        "path": "ext_api.py",
+        "sha256": "5c506bb47e49f9a11b3a7b1a3bf680c9130aa7f85f73c08e6015373598cf0d3d"
+      },
+      {
+        "path": "feedback_server.py",
+        "sha256": "591af90f9dbe225c4fa8e6d2e7dfd663e6eeeb9a366497fcbe4178bf29fa2945"
+      },
+      {
+        "path": "keydrop.py",
+        "sha256": "6f3163dda563a7ba7397e9d07a93bad7bba4004c38907e53155c9f080e0cf3b1"
+      },
+      {
+        "path": "mailer.py",
+        "sha256": "36db1e2fa35ec2cdd905cee74a39c3e43e616212b30e234504eaf77a84cd4b14"
+      },
+      {
+        "path": "recdrop.py",
+        "sha256": "1e8a0fac41b9cac875f85e9cf6a7a587d2836b6c8da1869e9f63be2cfdfc98e1"
+      },
+      {
+        "path": "requirements.txt",
+        "sha256": "7761a6cd9ff77aa4768a937fc3c84a6bd223555e57c2abf8ea4e95eb0c896f7d"
+      }
+    ],
+    "changes": "Operator-specific origins, email addresses and paths replaced; explicit startup guard; capture proxy redirects disabled.",
+    "validation": "offline startup guard and redirect tests; wider security and live service unverified"
   }
 }

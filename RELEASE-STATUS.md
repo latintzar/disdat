@@ -46,3 +46,7 @@ The original token-to-Variables plugin is available in `figma-plugin/` with an o
 ## Native macOS recovery
 
 The later native recorder and earlier SmartCapture prototype are available under `native/macos/`. They use operator-configured endpoints and separate app identifiers; automatic updates and crash uploads are disabled. CI typechecks the recorder source. Physical Mac capture, sign-in, uploads, distribution signing and the older prototype build remain unverified.
+
+## Hosted backend recovery
+
+The original backend modules are retained under `legacy/server/` with operator-specific origins and paths replaced and default startup disabled. The capture proxy refuses redirects. This is development and migration source; wider server security and live provider, billing and Figma integration are unverified.
