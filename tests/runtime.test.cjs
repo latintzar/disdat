@@ -322,7 +322,11 @@ test('local briefing bounds a large capture while retaining the intended late ta
   assert.ok(result.input.length <= digest.INPUT_LIMIT);
   assert.equal(result.maxTokens,256);
   assert.match(result.input,/Make the blue checkout button easier to see/);
-  for (const fact of ['button#checkout','CheckoutButton','src/Checkout.tsx:48','rgb(0, 80, 220)','rgb(255, 255, 255)']) assert.ok(result.input.includes(fact));
+  assert.match(result.input,/Element: Checkout/);
+  assert.doesNotMatch(result.input,/rgb\(|font-size|button#checkout/);
+  const briefing=digest.format(result,'Make the blue checkout button easier to see.');
+  for (const fact of ['https://shop.example/order','button#checkout','CheckoutButton','src/Checkout.tsx:48','rgb(0, 80, 220)','rgb(255, 255, 255)']) assert.ok(briefing.includes(fact));
+  assert.match(briefing,/Observed current facts/);
   assert.doesNotMatch(result.input,/PROP_SENTINEL|RAW_STYLE_SENTINEL|NETWORK_SENTINEL|DOM_SENTINEL/);
   assert.equal(JSON.stringify(session),before,'Inference digest changed the full capture');
 });
@@ -339,4 +343,15 @@ test('local digest keeps general intent general, handles long speech and skips s
   assert.equal(digest.build({transcript:'   '},elements,'https://example.test/',{}),null);
   const escaped=digest.build({transcript:'\\'.repeat(4000)},elements,'https://example.test/'+'p'.repeat(2000),{viewport:'x'.repeat(1000)});
   assert.ok(escaped.input.length <= digest.INPUT_LIMIT);
+});
+
+test('deterministic local context preserves complete URL and selector outside the model prompt', () => {
+  const digest=require('../extension/local-briefing.js');
+  const page='https://example.test/order?context='+'a'.repeat(350);
+  const selector='main > section.'+'x'.repeat(180)+' > button#checkout';
+  const request=digest.build({transcript:'Make checkout easier to see.'},[{selector,text:'Checkout'}],page);
+  const output=digest.format(request,'Make checkout easier to see.');
+  assert.ok(output.includes(page));assert.ok(output.includes(selector));
+  assert.ok(request.input.length<=digest.INPUT_LIMIT);
+  assert.ok(!request.input.includes(page)&&!request.input.includes(selector));
 });

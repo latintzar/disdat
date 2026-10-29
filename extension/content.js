@@ -832,11 +832,12 @@
   }
   async function crunchWhole(session) {
     if (selectedRuntimeMode === 'local') {
-      const request = globalThis.DisdatLocalBriefing.build(session, dedupeAll(session.engagements || []), PAGE, sessionCtx);
+      const request = globalThis.DisdatLocalBriefing.build(session, dedupeAll(session.engagements || []), PAGE);
       if (!request) return {text: facts(session), via: 'facts only'};
-      const result = await send({type: 'llm', ...request});
+      const {sys, input, maxTokens} = request;
+      const result = await send({type: 'llm', sys, input, maxTokens});
       DBG.push({kind: 'local-whole', input: request.input, output: result?.text || '', err: result?.error});
-      return result?.text ? {text: result.text, via: result.via || 'on-device · local model'}
+      return result?.text ? {text: globalThis.DisdatLocalBriefing.format(request, result.text), via: result.via || 'on-device · local model'}
         : {text: facts(session), via: 'facts only', error: result?.error || 'local-briefing-unavailable'};
     }
     const els = dedupeAll(session.engagements || []).slice(0, 16);
