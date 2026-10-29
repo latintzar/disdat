@@ -1,6 +1,6 @@
-# Disdat is a browser extension for coding agents.
+# Disdat
 
-Point and talk while it records the DOM, styles, framework state, motion and runtime events you are looking at.
+Disdat is a browser extension that turns spoken feedback into code-level ground truth for coding agents. Record while you talk over a browser tab; Disdat captures the page’s DOM, styles, framework state, motion and runtime events, then uses a local LLM to connect your feedback to what you saw.
 
 Local mode uses the original on-device Whisper and WebLLM pipeline. You can also select your own Deepgram and Groq or Anthropic keys. The capture saves as local JSON for your coding agent.
 
