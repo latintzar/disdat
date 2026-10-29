@@ -33,7 +33,8 @@ export async function initialize() {
 
 function getASR() {
   if (!asrPromise) asrPromise = pipeline('automatic-speech-recognition', ASR_MODEL, {
-    device: 'wasm', dtype: 'q8',
+    // The pinned ORT q8 graph optimizer rejects Whisper's merged embedding scale.
+    device: 'wasm', dtype: 'q8', session_options: {graphOptimizationLevel: 'disabled'},
     progress_callback: p => { if (!engine && p.status === 'progress') progress = {text: 'Voice model: ' + p.status, progress: (p.progress || 0) / 100}; }
   }).catch(e => { asrPromise = null; throw e; });
   return asrPromise;

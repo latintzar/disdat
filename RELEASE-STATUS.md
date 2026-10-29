@@ -37,7 +37,7 @@ The Chromium recording proof used a fake microphone and mocked provider response
 
 ## Local inference recovery
 
-The original WebLLM and Whisper implementation has been reconnected as a separate local runtime mode. The convenience download selects local mode and uses WebLLM's official version-matched upstream model library. First recording downloads that library and Qwen/Whisper weights; --model-lib remains an optional private override. Local adapter, privacy and setup tests use mocks. Real GPU inference and transcription quality remain unverified; see `docs/local-models.md` for provenance, licenses and setup.
+The original WebLLM and Whisper implementation has been reconnected as a separate local runtime mode. The convenience download selects local mode and uses WebLLM's official version-matched upstream model library. First recording downloads that library and Qwen/Whisper weights; --model-lib remains an optional private override. Local adapter, privacy and setup tests use mocks. Actual adapter inference has been exercised in isolated Mac Chrome 156 with Intel gen-9 WebGPU: Qwen answered authored input, and Whisper transcribed synthetic English audio with word timestamps. Whole-extension physical-microphone local inference and broader transcription quality remain acceptance checks; see `docs/local-models.md` for provenance, licenses and setup.
 
 ## Figma importer recovery
 

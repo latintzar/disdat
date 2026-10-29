@@ -28,6 +28,12 @@ class ExtensionPackageTests(unittest.TestCase):
                 self.assertEqual(len(archive.namelist()), len(expected))
                 self.assertRegex(archive.read('disdat-extension/local-config.js'), rb'mode:[\x22\x27]local[\x22\x27]')
                 self.assertNotIn('disdat-extension/vendor/user-model.wasm', archive.namelist())
+                # The actual Whisper backend dynamically imports both halves of this pair.
+                transformer = archive.read('disdat-extension/vendor/transformers.js').decode()
+                for asset in ('ort-wasm-simd-threaded.asyncify.mjs', 'ort-wasm-simd-threaded.asyncify.wasm'):
+                    self.assertIn(asset, transformer)
+                    self.assertIn('disdat-extension/vendor/' + asset, archive.namelist())
+                self.assertTrue(archive.read('disdat-extension/vendor/ort-wasm-simd-threaded.asyncify.wasm').startswith(b'\0asm'))
                 for name in ['LICENSE', 'THIRD-PARTY-NOTICES.md', 'licenses/Inter-OFL.txt', 'licenses/Fraunces-OFL.txt']:
                     self.assertIn('disdat-extension/' + name, archive.namelist())
 

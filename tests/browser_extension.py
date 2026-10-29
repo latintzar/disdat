@@ -3,6 +3,9 @@ import functools
 import http.server
 import json
 import os
+import hashlib
+import shutil
+import zipfile
 from pathlib import Path
 import subprocess
 import tempfile
@@ -23,7 +26,16 @@ with tempfile.TemporaryDirectory() as temporary:
     environment = os.environ.copy()
     environment.update(XDG_CONFIG_HOME=str(base / 'config'), XDG_STATE_HOME=str(base / 'state'), DEEPGRAM_API_KEY='synthetic-private-deepgram', GROQ_API_KEY='synthetic-private-groq')
     setup = subprocess.run(['python3', str(ROOT / 'tools/disdat.py'), 'setup', '--provider', 'groq'], env=environment, capture_output=True, text=True, check=True)
-    runtime = json.loads(setup.stdout)['extension']
+    configured_runtime = Path(json.loads(setup.stdout)['extension'])
+    # Exercise the released ZIP bytes; only the private, mocked-provider configuration differs.
+    installer = base / 'extension.zip'
+    subprocess.run(['python3', str(ROOT / 'tools/package-extension.py'), '--output', str(installer)],
+                   capture_output=True, text=True, check=True)
+    with zipfile.ZipFile(installer) as archive:
+        archive.extractall(base / 'packaged')
+    packaged_runtime = base / 'packaged/disdat-extension'
+    shutil.copyfile(configured_runtime / 'local-config.js', packaged_runtime / 'local-config.js')
+    runtime = str(packaged_runtime)
     with sync_playwright() as playwright:
         context = playwright.chromium.launch_persistent_context(str(base / 'profile'), channel='chromium', headless=True, accept_downloads=True, args=['--disable-extensions-except=' + runtime, '--load-extension=' + runtime, '--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'])
         unexpected_network = []

@@ -15,7 +15,7 @@ python3 tools/disdat.py doctor
 
 Load the extension directory printed by setup. Local mode requires Chrome/Chromium with WebGPU, shader-f16 support, sufficient GPU memory and storage. The selected upstream Qwen configuration estimates 1,629.75 MB VRAM; the browser and page need additional memory. First recording downloads the model-specific WebAssembly library and Qwen/Whisper weights from their upstream hosts. Subsequent use reuses the browser's model cache. Download and startup time depend on the device and connection.
 
-Whisper uses onnx-community/whisper-base_timestamped with English transcription and word timestamps, WASM and q8 weights. Qwen uses Qwen2.5-1.5B-Instruct-q4f16_1-MLC with a 4,096-token context. Words are aligned to the recorded page context. Audio and briefing inference run on the device. Capture artifacts save locally. A local model failure retains captured page facts and reports the error.
+Whisper uses onnx-community/whisper-base_timestamped with English transcription and word timestamps, WASM and q8 weights. Graph optimization is disabled for this pinned ORT/model pair: its default q8 optimizer rejects the merged embedding scale on the tested runtime. Both version-matched asyncify runtime files are bundled, with npm integrity/file hashes in vendor/onnxruntime-assets.json. Qwen uses Qwen2.5-1.5B-Instruct-q4f16_1-MLC with a 4,096-token context. Words are aligned to the recorded page context. Audio and briefing inference run on the device. Capture artifacts save locally. A local model failure retains captured page facts and reports the error.
 
 ## Upstream runtime
 
@@ -35,4 +35,4 @@ The base [Qwen model](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) and [Wh
 
 ## Verification
 
-Offline tests verify the unchanged upstream model record, explicit custom override, WebGPU guard, private setup and word timestamp handoff. The browser capture proof uses a fake microphone and mocked cloud providers. Real local GPU inference and physical-microphone transcription remain separate hardware acceptance checks.
+Offline tests verify the unchanged upstream model record, explicit custom override, WebGPU guard, private setup and word timestamp handoff. The browser capture proof uses a fake microphone and mocked cloud providers. A Mac Chrome 156 hardware probe with Intel gen-9 WebGPU and shader-f16 loaded Qwen and produced an answer from authored page facts. The same packaged adapter transcribed 4.13 seconds of synthetic English speech with Whisper and returned word timestamps. That probe serves the adapter in an isolated browser harness; a physical-microphone recording through the whole extension remains a separate acceptance check. These observations describe one device, rather than a performance or transcription-quality benchmark.

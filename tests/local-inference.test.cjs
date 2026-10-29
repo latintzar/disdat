@@ -56,6 +56,7 @@ test('local adapter keeps original Whisper word timestamps', async () => {
   assert.equal(out.transcript, 'synthetic speech');
   assert.equal(out.words[0].t, 0.5);
   assert.equal(a.calls.find(x => x.kind === 'asr').model, 'onnx-community/whisper-base_timestamped');
+  assert.equal(a.calls.find(x => x.kind === 'asr').options.session_options.graphOptimizationLevel, 'disabled');
   assert.equal(a.calls.find(x => x.kind === 'transcribe').settings.return_timestamps, 'word');
 });
 
