@@ -304,3 +304,39 @@ test('local speech failure never sends audio to cloud fallback', async () => {
   assert.match(result.session.audio.error, /local model unavailable/);
   assert.equal(state.requests.length, 0);
 });
+
+
+test('local briefing bounds a large capture while retaining the intended late target and exact facts', () => {
+  const digest = require('../extension/local-briefing.js');
+  const noise = Array.from({length: 300}, (_, i) => ({selector: 'div.card-' + i, text: 'Unrelated item',
+    computed: {'color': 'rgb(2, 3, 4)', raw: 'RAW_STYLE_SENTINEL'.repeat(500)}, react: {privateTree: 'PROP_SENTINEL'.repeat(100)}}));
+  const target = {selector: 'button#checkout', text: 'Checkout', a11y: {role: 'button', name: 'Checkout'},
+    component: 'CheckoutButton', source: 'src/Checkout.tsx:48', kinds: {hover: 4},
+    computed: {'color':'rgb(255, 255, 255)', 'background-color':'rgb(0, 80, 220)', 'font-size':'16px', raw:'RAW_STYLE_SENTINEL'.repeat(500)},
+    react:{privateTree:'PROP_SENTINEL'.repeat(100)}};
+  const session = {transcript: 'Make the blue checkout button easier to see.', pages:['https://shop.example/order'],
+    engagements: noise.concat(target).map(facts => ({facts,kind:'hover'})),
+    net:[{body:'NETWORK_SENTINEL'.repeat(20000)}], dom:'DOM_SENTINEL'.repeat(30000)};
+  const before = JSON.stringify(session);
+  const result = digest.build(session, noise.concat(target), session.pages[0], {viewport:'390×844'});
+  assert.ok(result.input.length <= digest.INPUT_LIMIT);
+  assert.equal(result.maxTokens,256);
+  assert.match(result.input,/Make the blue checkout button easier to see/);
+  for (const fact of ['button#checkout','CheckoutButton','src/Checkout.tsx:48','rgb(0, 80, 220)','rgb(255, 255, 255)']) assert.ok(result.input.includes(fact));
+  assert.doesNotMatch(result.input,/PROP_SENTINEL|RAW_STYLE_SENTINEL|NETWORK_SENTINEL|DOM_SENTINEL/);
+  assert.equal(JSON.stringify(session),before,'Inference digest changed the full capture');
+});
+
+test('local digest keeps general intent general, handles long speech and skips silent inference', () => {
+  const digest = require('../extension/local-briefing.js');
+  const elements=[{selector:'button#unrelated',text:'Buy tickets',computed:{color:'red'},kinds:{click:1}}];
+  const general=digest.build({transcript:'I like this page overall.'},elements,'https://example.test/',{});
+  assert.doesNotMatch(general.input,/button#unrelated|Buy tickets/);
+  const speech='FIRST_INTENT ' + 'long detail '.repeat(1000) + ' FINAL_INTENT';
+  const result=digest.build({transcript:speech},elements,'https://example.test/',{});
+  assert.ok(result.input.length <= digest.INPUT_LIMIT);
+  assert.match(result.input,/FIRST_INTENT/);assert.match(result.input,/FINAL_INTENT/);
+  assert.equal(digest.build({transcript:'   '},elements,'https://example.test/',{}),null);
+  const escaped=digest.build({transcript:'\\'.repeat(4000)},elements,'https://example.test/'+'p'.repeat(2000),{viewport:'x'.repeat(1000)});
+  assert.ok(escaped.input.length <= digest.INPUT_LIMIT);
+});

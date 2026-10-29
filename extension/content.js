@@ -831,6 +831,14 @@
     return s;
   }
   async function crunchWhole(session) {
+    if (selectedRuntimeMode === 'local') {
+      const request = globalThis.DisdatLocalBriefing.build(session, dedupeAll(session.engagements || []), PAGE, sessionCtx);
+      if (!request) return {text: facts(session), via: 'facts only'};
+      const result = await send({type: 'llm', ...request});
+      DBG.push({kind: 'local-whole', input: request.input, output: result?.text || '', err: result?.error});
+      return result?.text ? {text: result.text, via: result.via || 'on-device · local model'}
+        : {text: facts(session), via: 'facts only', error: result?.error || 'local-briefing-unavailable'};
+    }
     const els = dedupeAll(session.engagements || []).slice(0, 16);
     const input = buildWholeInput(session, els);
     let res = null, err = '';
@@ -841,6 +849,7 @@
     return res;
   }
   async function finalizeSession(session) {
+    if (selectedRuntimeMode === 'local') return crunchWhole(session);
     const notes = (session.notes || []).slice();
     if (notes.length) return reconcile(notes, session); // live on-device notes (Nano path)
     return crunchWhole(session);                          // default: one cloud pass → prose
@@ -1122,7 +1131,7 @@
     if (!s) return;
     const ready = s.ready && (!s.progress || s.progress.progress >= 1);
     if (recording) { if (!ready && s.progress) $('lbl').textContent = 'recording… · ' + fmtProgress(s.progress); }
-    else { setStage('crunch', 'run', ready ? 'thinking on-device…' : fmtProgress(s.progress)); }
+    else { setStage('crunch', 'run', ready ? 'writing your briefing on-device…' : fmtProgress(s.progress)); }
   }
   function startProgressPoll() { stopProgressPoll(); _progTimer = setInterval(async () => { try { progressTick(await send({ type: 'localllm-status' })); } catch (e) {} }, 800); }
   function stopProgressPoll() { clearInterval(_progTimer); _progTimer = 0; }
@@ -1300,7 +1309,7 @@
     $('esc').title = 'close'; startTimer(state.audioOffset || 0);
     attachSensors(); send({ type: 'injectShim' }).then(() => { if (recording) setRec(true); });
     send({ type: 'event', ev: { k: 'nav', t: now(), url: PAGE } });
-    startShots(); ensureXOSheets(); if (LOCAL_LLM) startProgressPoll();
+    startShots(); ensureXOSheets(); if (selectedRuntimeMode === 'local') startProgressPoll();
   }
   async function startRec() {
     sessionT0 = Date.now(); recording = false; audioStarting = true; micFailure = false; liveText = ''; resetBuffers();
@@ -1350,6 +1359,7 @@
     setStage('read', 'run');
     setStage('read', 'done', els.length + ' element' + (els.length === 1 ? '' : 's') + ((session.pages && session.pages.length > 1) ? ' · ' + session.pages.length + ' pages' : ''));
     setStage('crunch', 'run', (session.notes && session.notes.length) ? ('reconciling ' + session.notes.length + ' live notes') : (selectedRuntimeMode === 'local' ? 'preparing the local model…' : 'cloud'));
+    if (selectedRuntimeMode === 'local') startProgressPoll();
     const fin = await finalizeSession(session);
     stopProgressPoll();
     setStage('crunch', 'done');

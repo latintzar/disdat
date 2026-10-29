@@ -70,7 +70,7 @@ async function activate(tab) {
   await ensureS();
   if (S && S.ownerTabId !== tab.id) return;
   rlog('bg', 'event', 'activate', { url: tab.url });
-  try { await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ['privacy.js', 'local-delivery.js', 'content.js'] }); }
+  try { await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ['privacy.js', 'local-delivery.js', 'local-briefing.js', 'content.js'] }); }
   catch (e) { console.warn('Dis Dat inject failed:', e); }
 }
 chrome.action.onClicked.addListener(activate);
@@ -105,7 +105,7 @@ async function reinjectIfGone(tabId, url) {
     catch (e) { r(false); }
   });
   if (alive) return;
-  chrome.scripting.executeScript({ target: { tabId }, files: ['privacy.js', 'local-delivery.js', 'content.js'] }).catch(() => {});
+  chrome.scripting.executeScript({ target: { tabId }, files: ['privacy.js', 'local-delivery.js', 'local-briefing.js', 'content.js'] }).catch(() => {});
 }
 // FAST resume: re-inject the instant the new page COMMITS (webNavigation.onCommitted) — seconds earlier
 // than waiting for the whole page to finish loading. So the capture panel comes back almost immediately
