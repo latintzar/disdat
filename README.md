@@ -4,7 +4,7 @@ Disdat is a browser extension that turns spoken feedback into code-level ground 
 
 Local mode uses the original on-device Whisper and WebLLM pipeline. You can also select your own Deepgram and Groq or Anthropic keys. The capture saves as local JSON for your coding agent.
 
-![Dis Dat website demonstration](docs/assets/point-and-talk-1000.png)
+![Disdat point-and-talk demonstration](docs/assets/readme-hero.jpg)
 
 [Website demonstration.](docs/assets/README.md)
 
