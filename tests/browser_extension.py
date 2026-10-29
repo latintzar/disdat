@@ -3,7 +3,6 @@ import functools
 import http.server
 import json
 import os
-import hashlib
 import shutil
 import zipfile
 from pathlib import Path

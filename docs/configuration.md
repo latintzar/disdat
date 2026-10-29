@@ -2,6 +2,10 @@
 
 The local CLI prepares an unpacked extension for the selected mode. It uses Python's standard library and POSIX private-file permissions on macOS/Linux.
 
+## Local models
+
+The extension download selects local Qwen/Whisper. From source, run `python3 tools/disdat.py setup --mode local`, then `python3 tools/disdat.py doctor`. The official version-matched runtime and models download when you first start recording. Chrome with WebGPU and model storage is required. [Local model setup](local-models.md) records the exact model/runtime versions, hardware checks and optional `--model-lib` override.
+
 ## Own keys
 
 | Selection | Required private variables | Default briefing model |
@@ -24,7 +28,7 @@ Setup writes:
 
 - `$XDG_CONFIG_HOME/disdat/config.json`, normally `~/.config/disdat/config.json`, mode 0600.
 - `$XDG_STATE_HOME/disdat/extension`, normally `~/.local/state/disdat/extension`, mode 0700.
-- `local-config.js` inside that private extension, mode 0600, for its background worker.
+- `local-config.js` inside that private extension, mode 0600, for its background worker and extension-owned offscreen document.
 
 Chrome reads the credentials from this private runtime. Keep that directory local. Source packages contain the extension template; each user generates their own runtime. `--config` and `--runtime-dir` select other private paths outside the checkout. Setup replaces only a directory carrying its own runtime marker.
 
@@ -38,11 +42,11 @@ python3 tools/disdat.py setup --mode hosted
 
 Reload the prepared extension and use its existing sign-in. This mode selects Dis Dat's existing hosted account, provider proxy, telemetry and artifact delivery. It retains that service's availability and account requirements.
 
-`SUPA_ANON` in [background.js](../extension/background.js) is a retained public Supabase `anon` client identifier for optional hosted mode. Service-side authorization and data policies control its actual access. Own-key mode ignores saved hosted authentication and gates hosted telemetry/uploads.
+`SUPA_ANON` in [background.js](../extension/background.js) is a retained public Supabase `anon` client identifier for optional hosted mode. Service-side authorization and data policies control its actual access. Local and own-key modes ignore saved hosted authentication and gates hosted telemetry/uploads.
 
 ## Capture files
 
-Own-key capture bundles use `disdat.capture/v1`. Unpack into a fresh directory:
+Local and own-key capture bundles use `disdat.capture/v1`. Unpack into a fresh directory:
 
 ```sh
 python3 tools/disdat.py unpack /path/to/capture.json --out /private/project/capture

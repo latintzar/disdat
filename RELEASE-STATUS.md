@@ -28,11 +28,11 @@ Local verification:
 - Setup-skill validation; standalone website installation and Vite build; actual root-to-install checks at 1600/390. Agent installation is the primary path, and the legacy macOS binary is excluded. The approved Home/Download React components build through ordinary Vite with self-hosted OFL fonts. The clean website uses a supported patched Vite toolchain and its locked dependencies report zero npm audit findings on 28 October 2026.
 - Portable website update: TypeScript passes; actual Chromium checks 20 page/viewport combinations (1600/390), with zero external requests, missing resources, page errors or horizontal overflow. Library JSON download and its default chat setup state pass. A synthetic privileged Supabase key fails the build before output, with its value omitted from diagnostics.
 
-CI is configured for thirteen Python tests (seven CLI, two offline MCP and four installer-package tests), nineteen Node tests (sixteen extension runtime and three hosted-configuration tests) and website `npm ci`/build on Python 3.12 and Node 22. A separate Chromium job runs the fake-microphone/privacy/download proof with Playwright 1.58.0 and mocked providers. Official actions use pinned commit SHAs and read-only repository permissions.
+CI is configured for eighteen Python tests (CLI, offline MCP, installer packaging, legacy proxy boundaries and local setup), twenty-six Node tests (extension runtime, local inference adapters, Figma import and hosted configuration) and website `npm ci`/build on Python 3.12 and Node 22. A separate Chromium job runs the fake-microphone/privacy/download proof with Playwright 1.58.0 and mocked providers. Official actions use pinned commit SHAs and read-only repository permissions.
 
 ## Acceptance limits
 
-The Chromium recording proof used a fake microphone and mocked provider responses. It exercised real extension recording, navigation, privacy boundaries, download and agent unpacking with zero live provider calls. Human microphone/device behaviour, physical-browser microphone/clipboard permissions and selected-account authentication remain untested real-world acceptance checks. These are separate from the passing offline and browser-fixture checks.
+The Chromium recording proof loads the reviewed extension ZIP with private mocked-provider configuration and uses a fake microphone. It exercised real extension recording, navigation, privacy boundaries, download and agent unpacking with zero live provider calls. Human microphone/device behaviour, physical-browser microphone/clipboard permissions and selected-account authentication remain untested real-world acceptance checks. These are separate from the passing offline and browser-fixture checks.
 
 
 ## Local inference recovery
@@ -50,3 +50,9 @@ The later native recorder and earlier SmartCapture prototype are available under
 ## Hosted backend recovery
 
 The original backend modules are retained under `legacy/server/` with operator-specific origins and paths replaced and default startup disabled. The capture proxy refuses redirects. This is development and migration source; wider server security and live provider, billing and Figma integration are unverified.
+
+## 29 October 2026: extension-origin local inference
+
+The released 45-file ZIP was loaded unpacked in Chrome for Testing 156.0.8078.73 on a 16 GB Mac with Intel gen-9 WebGPU and shader-f16. Its actual extension origin, manifest and CSP fetched the official upstream runtime/models, generated a relevant Qwen answer from synthetic DOM/feedback, then transcribed 4.13 seconds of synthetic English speech with Whisper q8 and returned word timestamps in the same browser process. Test-only harness pages were added alongside the package; its original files stayed unchanged. This proves the packaged model dependencies and extension-origin inference. Physical microphone capture, offscreen message orchestration and recording UI in local mode remain separate end-to-end checks.
+
+The exact ZIP also passed the Chromium capture/privacy/navigation/download/unpack proof with a fake microphone and private mocked-provider configuration. Final offline checks passed 18 Python and 26 Node tests. The native website Vite build and TypeScript check passed; Home and Download passed at 1600 and 390 pixels with zero browser errors, missing assets, foreign requests or overflow. The model tests used upstream downloads and local compute; cloud provider requests in the capture test were mocked.

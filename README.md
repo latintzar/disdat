@@ -1,5 +1,7 @@
 # Disdat
 
+[Website](https://disdat.dev) · [Download extension](https://github.com/latintzar/disdat/releases/latest/download/disdat-extension.zip) · [Documentation](docs/architecture.md)
+
 Disdat is a browser extension that turns spoken feedback into code-level ground truth for coding agents. Record while you talk over a browser tab; Disdat captures the page’s DOM, styles, framework state, motion and runtime events, then uses a local LLM to connect your feedback to what you saw.
 
 Local mode uses the original on-device Whisper and WebLLM pipeline. You can also select your own Deepgram and Groq or Anthropic keys. The capture saves as local JSON for your coding agent.
@@ -9,8 +11,6 @@ Local mode uses the original on-device Whisper and WebLLM pipeline. You can also
 [Website demonstration.](docs/assets/README.md)
 
 ## Install with your agent
-
-[Download the extension](https://github.com/latintzar/disdat/releases/latest/download/disdat-extension.zip) · [Website](https://disdat.dev)
 
 Unzip the download. In desktop Chrome or Chromium, open chrome://extensions, enable Developer mode and choose Load unpacked. Select the disdat-extension folder. Local mode downloads Qwen and Whisper when you first start recording; it needs WebGPU and space for the models.
 
