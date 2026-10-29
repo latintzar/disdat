@@ -98,7 +98,8 @@ def configuration(args):
     if args.mode == "hosted":
         return {"schemaVersion": 1, "mode": "hosted"}
     if args.mode == "local":
-        return {"schemaVersion": 1, "mode": "local"}
+        return {"schemaVersion": 1, "mode": "local",
+                "localModelLibrary": "custom" if getattr(args, "model_lib", None) else "upstream"}
     if not args.provider:
         raise SetupError("Choose --provider groq or --provider anthropic for own-key mode.")
     supplied = {key: os.environ.get(key, "") for key in ENV_KEYS}
@@ -149,11 +150,9 @@ def install_runtime(directory, config, model_lib=None):
                 target = temporary / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(source, target)
-        if config["mode"] == "local":
-            if model_lib is None:
-                raise SetupError("Local mode requires --model-lib with a compatible WebLLM model WASM.")
+        if config["mode"] == "local" and model_lib is not None:
             source_model = Path(model_lib).expanduser()
-            if not source_model.is_file() or source_model.stat().st_size > 100_000_000:
+            if source_model.is_symlink() or not source_model.is_file() or source_model.stat().st_size > 100_000_000:
                 raise SetupError("Provide a model WASM file under 100 MB.")
             with source_model.open("rb") as stream:
                 if stream.read(4) != b"\0asm":
@@ -204,7 +203,12 @@ def doctor(args):
               "runtime_private": runtime_path.is_dir() and stat.S_IMODE(runtime_path.stat().st_mode) == 0o700}
     if mode == "local":
         model_file = runtime_path / "vendor" / "user-model.wasm"
-        checks["model_library_present"] = model_file.is_file()
+        library = config.get("localModelLibrary", "upstream")
+        checks["model_library_selected"] = library in {"upstream", "custom"}
+        if library == "custom":
+            checks["model_library_present"] = model_file.is_file()
+        else:
+            checks["official_upstream_library_selected"] = library == "upstream"
     if mode == "byok":
         checks.update({"provider_selected": config.get("llmProvider") in DEFAULT_MODELS,
                        "deepgram_key_present": bool(config.get("deepgramKey")),
@@ -310,7 +314,7 @@ def main():
         command.set_defaults(handler=setup if name == "setup" else doctor)
         if name == "setup":
             command.add_argument("--mode", choices=("byok", "hosted", "local"), default="byok")
-            command.add_argument("--model-lib", help="Path to a compatible, operator-supplied WebLLM model WASM")
+            command.add_argument("--model-lib", help="Optional compatible WebLLM model WASM override; local mode uses the official upstream library by default")
             command.add_argument("--provider", choices=tuple(DEFAULT_MODELS))
             command.add_argument("--model")
             command.add_argument("--env-file", help="Owned mode-0600 env file (values stay local)")

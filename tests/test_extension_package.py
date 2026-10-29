@@ -15,7 +15,7 @@ spec.loader.exec_module(packager)
 
 
 class ExtensionPackageTests(unittest.TestCase):
-    def test_exact_reproducible_unconfigured_download(self):
+    def test_exact_reproducible_local_download(self):
         with tempfile.TemporaryDirectory() as temporary:
             a, b = [Path(temporary) / name for name in ('a.zip', 'b.zip')]
             receipt = packager.package(a)
@@ -26,7 +26,8 @@ class ExtensionPackageTests(unittest.TestCase):
                 lock = json.loads((ROOT / 'tools/extension-files.json').read_text())
                 expected = set(lock['files']) | {('local-config.js' if n == 'local-config.template.js' else n) for n in lock['template_files']}
                 self.assertEqual(len(archive.namelist()), len(expected))
-                self.assertRegex(archive.read('disdat-extension/local-config.js'), rb'mode:[\x22\x27]setup[\x22\x27]')
+                self.assertRegex(archive.read('disdat-extension/local-config.js'), rb'mode:[\x22\x27]local[\x22\x27]')
+                self.assertNotIn('disdat-extension/vendor/user-model.wasm', archive.namelist())
                 for name in ['LICENSE', 'THIRD-PARTY-NOTICES.md', 'licenses/Inter-OFL.txt', 'licenses/Fraunces-OFL.txt']:
                     self.assertIn('disdat-extension/' + name, archive.namelist())
 
@@ -75,7 +76,7 @@ class ExtensionPackageTests(unittest.TestCase):
             script = base / 'unpacked/disdat/tools/package-extension.py'
             result = subprocess.run([sys.executable, str(script), '--output', str(base / 'extension.zip')],
                                     check=True, capture_output=True, text=True)
-            self.assertEqual(json.loads(result.stdout)['configuration'], 'unconfigured')
+            self.assertEqual(json.loads(result.stdout)['configuration'], 'local')
 
 
 if __name__ == '__main__':

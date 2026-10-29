@@ -10,16 +10,19 @@ function renderAuth(me) {
     $('signin').style.display = 'none';
     $('refbox').hidden = true;
     $('step-auth').classList.toggle('done', !!me.ready);
-    $('setup-title').textContent = me.ready ? 'Your provider setup is ready' : 'Configure your providers';
-    $('setup-description').textContent = me.ready
-      ? 'Deepgram transcribes your audio. ' + me.provider + ' writes your briefing. Capture artifacts save locally.'
-      : 'Ask your coding agent to run the checkout’s tools/disdat.py setup with your private provider environment.';
+    const localMode = me.mode === 'local';
+    $('setup-title').textContent = localMode ? 'On-device voice and briefing' : (me.ready ? 'Your provider setup is ready' : 'Configure your providers');
+    $('setup-description').textContent = localMode
+      ? 'Whisper transcribes your audio and Qwen connects it to the page on your device. Start recording to download the models. Chrome with WebGPU is required.'
+      : me.ready
+        ? 'Deepgram transcribes your audio. ' + me.provider + ' writes your briefing. Capture artifacts save locally.'
+        : 'Ask your coding agent to run the checkout’s tools/disdat.py setup with your private provider environment.';
     $('signed').classList.remove('show');
     $('setup-command').hidden = !!me.ready;
-    $('setup-footer').textContent = 'Provider setup: local CLI. Check it with doctor.';
+    $('setup-footer').textContent = localMode ? 'Optional cloud mode: configure your own provider keys with the setup skill.' : 'Provider setup: local CLI. Check it with doctor.';
     $('toggle').style.display = 'none';
     $('snip-hint').textContent = 'Ask your coding agent';
-    $('snip').textContent = 'Install skills/disdat from this checkout.';
+    $('snip').textContent = 'Read https://github.com/latintzar/disdat/tree/main/skills/disdat to use my capture.';
     $('record-help').textContent = 'Click Dis Dat on a page, start recording, and talk while you point or scroll. Stop downloads the capture and copies the briefing for your agent.';
     return;
   }

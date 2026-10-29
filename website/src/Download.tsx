@@ -28,18 +28,18 @@ export function Download() {
       <div className="pt-8 max-w-lg mx-auto text-center">
         <img src="/icon-1024.png" alt="" width={84} height={84} className="mx-auto rounded-[20px] shadow-lg mb-6" />
         <h1 className="display text-4xl md:text-5xl font-medium tracking-tight mb-3">Download the Chrome extension</h1>
-        <p className="text-[#16110D]/60 mb-8">Unzip the download and load the folder in Chrome. Your agent configures your own Deepgram and Groq or Anthropic accounts through private local input.</p>
+        <p className="text-[#16110D]/60 mb-8">Unzip and load the folder in Chrome. Whisper transcribes your voice and Qwen connects your feedback to the captured page, on your device.</p>
         <a href={DOWNLOAD_URL} className="inline-flex bg-[#FF5C2A] text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#16110D] transition">Download extension</a>
         <div className="rounded-2xl border border-[#16110D]/10 bg-white p-6 text-left mt-8">
           <p className="font-semibold mb-3">Give your agent this instruction</p>
-          <p className="mono text-sm text-[#16110D]/75 break-words">Read {SOURCE_URL}/blob/main/skills/disdat-setup/SKILL.md and set up Dis Dat in own-key mode. Use private local input for my provider keys.</p>
+          <p className="mono text-sm text-[#16110D]/75 break-words">Read {SOURCE_URL}/blob/main/skills/disdat-setup/SKILL.md and install Disdat in local mode. Use the capture skill to work from my recordings.</p>
         </div>
         <ol className="text-left space-y-3 mt-10">
-          {['Download and unzip the extension. It opens in provider setup mode.', 'Your agent runs setup and doctor, then gives you the private configured extension directory.', 'In chrome://extensions, enable Developer mode and load that directory with Load unpacked.', 'Record a page, save the capture locally and give your agent the downloaded file.'].map((t, i) => (
+          {['Download and unzip the extension.', 'In chrome://extensions, enable Developer mode and load the disdat-extension folder with Load unpacked.', 'Allow microphone access and start recording. The first recording downloads Qwen and Whisper; Chrome with WebGPU and space for the models is required.', 'Talk over the page, then Stop. Give your agent the briefing and downloaded capture.'].map((t, i) => (
             <li key={i} className="flex gap-3 items-start text-[15px] text-[#16110D]/75"><span className="mono text-[#FF5C2A] font-semibold">{i + 1}.</span><span>{t}</span></li>
           ))}
         </ol>
-        <p className="text-sm text-[#16110D]/60 mt-8">macOS or Linux · Python 3.10+ · desktop Chrome · provider usage billed by your providers</p>
+        <p className="text-sm text-[#16110D]/60 mt-8">Optional cloud mode uses your own Deepgram and Groq or Anthropic keys. Your agent configures them through private local input.</p>
         <a className="inline-block text-sm text-[#FF5C2A] underline mt-4" href={`${SOURCE_URL}/blob/main/docs/configuration.md`}>Configuration and data flow</a>
       </div>
     </Shell>

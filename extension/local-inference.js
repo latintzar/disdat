@@ -19,10 +19,10 @@ export async function initialize() {
   if (!enginePromise) enginePromise = (async () => {
     const model = webllm.prebuiltAppConfig.model_list.find(item => item.model_id === MODEL);
     if (!model) throw new Error('Bundled WebLLM model configuration is missing');
-    // The operator supplies this binary during setup. Model weights download on first use.
-    const appConfig = { ...webllm.prebuiltAppConfig, model_list: [
-      {...model, model_lib: chrome.runtime.getURL('vendor/user-model.wasm')}
-    ]};
+    // Keep the version-matched upstream record. An explicit private setup can override its library.
+    const selected = self.DISDAT_CONFIG?.localModelLibrary === 'custom'
+      ? {...model, model_lib: chrome.runtime.getURL('vendor/user-model.wasm')} : model;
+    const appConfig = {...webllm.prebuiltAppConfig, model_list: [selected]};
     engine = await webllm.CreateMLCEngine(MODEL, {appConfig,
       initProgressCallback: p => { progress = {text: p.text, progress: p.progress}; }});
     progress = null;

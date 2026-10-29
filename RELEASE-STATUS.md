@@ -9,12 +9,12 @@
 - Local capture download and agent unpacking.
 - Existing capture/skillify skill and script; new setup skill.
 - Existing token MCP server and website source.
-- Approved Disdat.dev Home/Download components, bundled OFL fonts and a portable packager that reproduces the released unconfigured extension ZIP exactly.
+- Approved Disdat.dev Home/Download components, bundled OFL fonts and a portable packager that reproduces the released local-mode extension ZIP exactly.
 - Original capture/architecture specifications, source provenance, MIT licence and font notices.
 
 ## Deferred source
 
-The original hosted server/auth/billing/capture delivery, Figma plugin, former macOS app and earlier browser prototype remain in the private original repository for separate extraction. Hosted mode uses the existing service. [Export scope](docs/export-scope.md) and PROVENANCE.json record the omitted historical compiled-orb experiment and unused reference demos/media.
+The recovered hosted server, Figma plugin and native macOS sources are included as described below; their live integration and distribution acceptance remain separate. Hosted mode uses the existing service. [Export scope](docs/export-scope.md) and PROVENANCE.json record the omitted historical compiled-orb experiment and unused reference demos/media.
 
 ## Validation
 
@@ -37,7 +37,7 @@ The Chromium recording proof used a fake microphone and mocked provider response
 
 ## Local inference recovery
 
-The original WebLLM and Whisper implementation has been reconnected as a separate local runtime mode. It requires an operator-supplied compatible model WASM and downloads model weights after the operator starts recording. Local adapter, privacy and setup tests use mocks. Real GPU inference and transcription quality remain unverified; see `docs/local-models.md` for provenance, licenses and setup.
+The original WebLLM and Whisper implementation has been reconnected as a separate local runtime mode. The convenience download selects local mode and uses WebLLM's official version-matched upstream model library. First recording downloads that library and Qwen/Whisper weights; --model-lib remains an optional private override. Local adapter, privacy and setup tests use mocks. Real GPU inference and transcription quality remain unverified; see `docs/local-models.md` for provenance, licenses and setup.
 
 ## Figma importer recovery
 

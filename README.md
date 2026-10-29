@@ -12,12 +12,12 @@ Local mode uses the original on-device Whisper and WebLLM pipeline. You can also
 
 [Download the extension](https://github.com/latintzar/disdat/releases/latest/download/disdat-extension.zip) · [Website](https://disdat.dev)
 
-Requirements: Python 3.10+ on macOS or Linux, and desktop Chrome or Chromium. Give your agent this checkout and the [setup skill](skills/disdat-setup/SKILL.md).
+Unzip the download. In desktop Chrome or Chromium, open chrome://extensions, enable Developer mode and choose Load unpacked. Select the disdat-extension folder. Local mode downloads Qwen and Whisper when you first start recording; it needs WebGPU and space for the models.
 
-For local models, prepare a compatible operator-supplied model library as described in [local model setup](docs/local-models.md):
+For installation from source, give your agent this checkout and the [setup skill](skills/disdat-setup/SKILL.md). Python 3.10+ on macOS or Linux prepares a private runtime:
 
 ```sh
-python3 tools/disdat.py setup --mode local --model-lib /private/path/to/compatible-model.wasm
+python3 tools/disdat.py setup --mode local
 python3 tools/disdat.py doctor
 ```
 
@@ -55,7 +55,7 @@ Choose the existing hosted path explicitly with `python3 tools/disdat.py setup -
 - [Figma token importer](figma-plugin/README.md): import a DTCG library as Figma Variables.
 - [Token MCP](mcp/README.md): let an agent query a local token library, export CSS/DTCG or use the existing optional Figma path.
 - [Website source](website/README.md): the Dis Dat home page, download page and product demonstrations.
-- [Extension packaging](docs/extension-download.md): reproduce the exact unconfigured download from reviewed source files.
+- [Extension packaging](docs/extension-download.md): reproduce the exact local-mode download from reviewed source files.
 - [Release status](RELEASE-STATUS.md): included source, validation and remaining work.
 - [Provenance](PROVENANCE.json): exact original source commit and copied files.
 - [Export scope](docs/export-scope.md): retained source and historical experiments preserved privately.

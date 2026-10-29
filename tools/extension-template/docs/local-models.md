@@ -1,22 +1,38 @@
 # Local voice and briefing models
 
-Dis Dat's original local pipeline runs Whisper in the extension's offscreen document and runs Qwen through WebLLM on the device's WebGPU. The recovered source is from the original v0.6.1 snapshot `7a587a7fd4e72772d98d4d7a6b8413a469809244`. It uses WebLLM 0.2.84, Transformers.js 4.2.0 and ONNX Runtime Web 1.26.0-dev.20260416-b7804b056c. Their bundled files remain under `extension/vendor/`; one Transformers class-name string is expressed as equivalent concatenated literals to resolve a GitHub push-protection false positive.
+Disdat runs Whisper in the extension's offscreen document and Qwen through WebLLM on the device's WebGPU. The implementation is recovered from the original v0.6.1 snapshot 7a587a7fd4e72772d98d4d7a6b8413a469809244. Bundled runtime code uses WebLLM 0.2.84, Transformers.js 4.2.0 and ONNX Runtime Web 1.26.0-dev.20260416-b7804b056c, with their own notices.
 
-## Prepare
+## Start
 
-Local mode needs a supported Chrome/Chromium WebGPU device, sufficient GPU memory, and a compatible Qwen model-specific WebAssembly library supplied by the operator. The first recording downloads the Qwen and Whisper model weights; this can take substantial time and storage. Actual inference has not been verified in this release on physical hardware.
+The extension download already selects local mode. Unzip it, load disdat-extension through chrome://extensions → Developer mode → Load unpacked, allow microphone access and start recording.
 
-The original WebLLM configuration used [this upstream model library](https://raw.githubusercontent.com/mlc-ai/binary-mlc-llm-libs/main/web-llm-models/v0_2_84/base/Qwen2-1.5B-Instruct-q4f16_1_cs1k-webgpu.wasm), observed with SHA-256 `0fceb50bbaf47efdc31fce96b72c115dcb7f5221c85abe6a9fc02dda9d1d6fc3`. The binary repository did not declare a license in the metadata reviewed. This project does not redistribute that binary or assign it an MIT license. Review the upstream terms and provenance, or provide a compatible library you build and control. The setup command checks the file is WebAssembly, copies it into the user's private unpacked extension, and never downloads it.
+From source, prepare a private runtime with Python 3.10+:
 
 ```sh
-python3 tools/disdat.py setup --mode local --model-lib /private/path/to/compatible-model.wasm
+python3 tools/disdat.py setup --mode local
 python3 tools/disdat.py doctor
 ```
 
-Load the private extension directory printed by setup. Select Start to begin recording and initialize the models. The model-loading status depends on the device and downloaded artifacts. If the local model fails, Dis Dat keeps the captured ground truth and reports the failure; local mode does not send the audio or briefing to a cloud provider as a fallback.
+Load the extension directory printed by setup. Local mode requires Chrome/Chromium with WebGPU, shader-f16 support, sufficient GPU memory and storage. The selected upstream Qwen configuration estimates 1,629.75 MB VRAM; the browser and page need additional memory. First recording downloads the model-specific WebAssembly library and Qwen/Whisper weights from their upstream hosts. Subsequent use reuses the browser's model cache. Download and startup time depend on the device and connection.
 
-The local ASR request uses the original Whisper base timestamped model and English setting. Qwen uses the original 1.5B quantized WebLLM model. Word timestamps correlate the speech to the recorded page context. Model weights are third-party data: the base [Qwen model](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) and [Whisper model](https://huggingface.co/openai/whisper-base) each identify Apache-2.0 in their own model metadata; their separately hosted converted artifacts have their own provenance and terms. Review the linked model repositories before use.
+Whisper uses onnx-community/whisper-base_timestamped with English transcription and word timestamps, WASM and q8 weights. Qwen uses Qwen2.5-1.5B-Instruct-q4f16_1-MLC with a 4,096-token context. Words are aligned to the recorded page context. Audio and briefing inference run on the device. Capture artifacts save locally. A local model failure retains captured page facts and reports the error.
+
+## Upstream runtime
+
+Verified 29 October 2026 against the npm 0.2.84 package's exact [WebLLM source configuration](https://github.com/mlc-ai/web-llm/blob/9e572d6ed95e248f29634996cd32cc8f3023d89d/src/config.ts). The selected prebuilt record is preserved, including its Qwen2-1.5B-Instruct-q4f16_1_cs1k-webgpu.wasm library under upstream v0_2_84/base. The Qwen2 library filename is the upstream record for this Qwen2.5 model.
+
+[WebLLM's loading guide](https://webllm.mlc.ai/docs/user/basic_usage.html) describes asynchronous CreateMLCEngine initialization and model downloads; its [advanced guide](https://webllm.mlc.ai/docs/user/advanced_usage.html) covers Chrome extensions and browser caching. The upstream runtime is fetched as a dependency at first use. This download contains the JavaScript loader and licensed ONNX runtime, while the model-specific MLC binary and weights stay upstream. Their terms remain separate from this project's MIT code. The binary repository's reviewed metadata did not declare a licence; this project makes no redistribution grant for that upstream file.
+
+For a compatible library you build or control, an optional private override replaces only the model library URL:
+
+```sh
+python3 tools/disdat.py setup --mode local --model-lib /private/path/to/model.wasm
+```
+
+Setup checks the WebAssembly header and size, then copies it into the private extension's vendor/user-model.wasm. The public source and download exclude that private file. doctor checks the selected configuration and private file presence, with zero model or provider requests.
+
+The base [Qwen model](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) and [Whisper model](https://huggingface.co/openai/whisper-base) identify Apache-2.0 in their model metadata. Converted model artifacts retain their upstream provenance and terms.
 
 ## Verification
 
-Offline tests mock both model adapters and verify the model configuration, private model-library installation, word timestamp handoff, and isolation from hosted or own-key provider routes. They do not download weights, run a GPU, or claim transcription quality. Browser and hardware acceptance remain separate checks.
+Offline tests verify the unchanged upstream model record, explicit custom override, WebGPU guard, private setup and word timestamp handoff. The browser capture proof uses a fake microphone and mocked cloud providers. Real local GPU inference and physical-microphone transcription remain separate hardware acceptance checks.

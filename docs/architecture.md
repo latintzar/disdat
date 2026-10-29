@@ -22,7 +22,7 @@ Setup copies the source extension into a private runtime and writes its configur
 
 Own-key mode chooses direct provider requests before inspecting a hosted session. Existing hosted auth in Chrome therefore cannot change the selected provider or redirect a capture to the hosted service. Provider errors stay with the selected provider. The candidate makes the hosted telemetry and upload paths conditional on explicit hosted mode.
 
-Local mode loads the operator-supplied model-specific WebAssembly library from the private extension and downloads model weights on first use. Whisper and Qwen execute on the device. It does not route audio or briefing requests through hosted or own-key providers. [Local model setup](local-models.md) documents the binary and hardware boundary.
+Local mode uses WebLLM's version-matched upstream model library and downloads the library and model weights on first recording. An explicit private --model-lib override can use a compatible local library. Whisper and Qwen execute on the device. It does not route audio or briefing requests through hosted or own-key providers. [Local model setup](local-models.md) documents the binary and hardware boundary.
 
 Own keys still means external model processing: audio goes to Deepgram; the briefing inputs go to the chosen Groq or Anthropic account. Captured assets and source files are delivered locally. The existing page/asset acquisition needed to observe the site remains part of capture.
 

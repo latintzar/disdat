@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce the unconfigured extension download from reviewed source files."""
+"""Reproduce the local-mode extension download from reviewed source files."""
 import argparse
 import hashlib
 import json
@@ -63,7 +63,7 @@ def package(output, root=ROOT):
             output.unlink(missing_ok=True)
         raise
     return {'files': len(members), 'sha256': digest, 'version': version,
-            'configuration': 'unconfigured', 'source_commit': lock['source_commit']}
+            'configuration': 'local', 'source_commit': lock['source_commit']}
 
 
 def main():

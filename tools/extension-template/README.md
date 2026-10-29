@@ -1,9 +1,11 @@
-# Dis Dat extension download
+# Disdat extension
 
-This is the original Manifest V3 Chrome extension in unconfigured setup mode. Unzip and load this directory in chrome://extensions with Developer mode → Load unpacked. The extension opens provider setup instructions.
+Unzip this download. In desktop Chrome or Chromium, open chrome://extensions, enable Developer mode and choose Load unpacked. Select this disdat-extension folder.
 
-Give your agent https://github.com/latintzar/disdat/blob/main/skills/disdat-setup/SKILL.md. Clone the public source and run `python3 tools/disdat.py setup --provider groq --prompt`, then `python3 tools/disdat.py doctor`. Provider keys use hidden local input and the CLI writes a private extension runtime outside the source tree. Replace this unconfigured extension in Chrome with the private directory printed by setup.
+Click Dis Dat on a page and start recording. Allow microphone access. The first recording downloads Qwen and Whisper from upstream; local inference needs WebGPU and storage for the models. Talk while you point, scroll or navigate in that tab, then Stop. Give your coding agent the briefing and downloaded capture file.
 
-Local mode uses the recovered Whisper and WebLLM stack with an operator-supplied compatible model WASM. See https://github.com/latintzar/disdat/blob/main/docs/local-models.md for the binary and first-download boundary. Deepgram transcribes audio in own-key mode. Groq or Anthropic writes the briefing. Own-key captures download locally. Existing hosted mode is an explicit separate setup choice. See https://github.com/latintzar/disdat/blob/main/docs/configuration.md.
+Local setup and upstream versions: https://github.com/latintzar/disdat/blob/main/docs/local-models.md
 
-Source https://github.com/latintzar/disdat, reviewed source and historical inference provenance recorded in tools/extension-files.json. Original capture source remains MIT; notices and font licences travel with this download. The public local-config.js sets setup mode and contains no account/provider values.
+For optional cloud mode, give your agent https://github.com/latintzar/disdat/blob/main/skills/disdat-setup/SKILL.md. It configures your own Deepgram and Groq or Anthropic accounts through private local input. Hosted mode remains an explicit separate choice.
+
+Source: https://github.com/latintzar/disdat. tools/extension-files.json records reviewed source hashes and provenance. Original code is MIT; third-party runtimes and fonts retain their notices. Model-specific MLC WebAssembly and weights are upstream dependencies, fetched at first use rather than bundled here.
