@@ -1,5 +1,5 @@
 {
-  "source_commit": "6a07e62dcf373ad033f7821695bd4c77a0dcae48",
+  "source_commit": "81710491ff1cfbbd7282f63ab33756230df61e1a",
   "files": {
     "request-mic.js": "1a885277ac093148fecb5a9b945b3a01a80797c550fd3334a09e55113a5e677b",
     "manifest.json": "3b02f85d8c9a97e32bee6c80520988e4de24c9ebc5e52288208e013a288577ca",
@@ -10,7 +10,7 @@
     "onboarding.js": "d89ef20ac95ceaf00ab9bb61e97f17a46486b17fe9f8c7ecf9471bcbc3abf0e5",
     "onboarding.html": "f0a4e4e3cd24d7ae33e3c4eeac1c1afa434920253535e1385571e006de4e6dd6",
     "runtime.js": "a4ab4711579ffd4f411ea64fe7e5bad2b65240769a20838a6838aadca2c9017e",
-    "background.js": "4eed797715636bf83cf262f92e1c41603f05182502c36246e5fb6722ec0a65e0",
+    "background.js": "cefecdf1b89bd46fab648874dcdc8cecc854c2004e17a683353db84dd39e5b06",
     "README.md": "fdc88ee11081d646eb2f938fe7f92f9f2635473a254f87475c77e8d0381bd81d",
     "inject-main.js": "dc231f9bd9bfc088eb99014f5899f7d0f3863c0cd57076ba6d073e01443d7832",
     "request-mic.html": "0ef9a435197049f9b51050cafdd42934c2a162425223417d1ab4974f0cccc903",
@@ -20,7 +20,7 @@
     "inject-hooks.js": "502daf74a7106a558614232c39da0de1d861bc5e3f4b7138c7946aa031380236",
     "offscreen.js": "fd76946d19098285cccab53188d3cd22fc6097bee90511d2bcb10f20cd964c3d",
     "offscreen.html": "ddedaa445be2a7dac9ade3e540ced0d007fc2116577a9f726f7d266d921c0bec",
-    "content.js": "666f7c4be9ba278a299f5c32f2a3ed812d4bf5201d4ed5968b683af714882215",
+    "content.js": "946e4a05b6fe66349620a14fd38b1a582380054359c8caebdc91889ca97965cd",
     "agents/lovable.png": "2e7d15a9884a33d9aada100617356c7678472d00e6e935e78dd02045f969afc1",
     "agents/github.webp": "38273b3f6a241a75a398e5147dd0b6311b979d19f5dc1f8725cf8795010c4883",
     "agents/cursor.webp": "728221a6c0a428a740d3f7853fafa94e85d71a7af228bbe3a356054dddd64ceb",
@@ -36,10 +36,11 @@
     "vendor/ort-wasm-simd-threaded.jsep.wasm": "ae61141f8fbf0a4e43fd7b4f4d40a1a115627f6facc4f33ddf84074a655e33ea",
     "vendor/onnxruntime-assets.json": "688ebcb1341daac28c997ff73bd6bce8ba99232cd522eff56ff7eb100bc05161",
     "vendor/ort-wasm-simd-threaded.asyncify.mjs": "5959c6733039619c9af710d8e1bae8d6e84402787990637be987c2b1bd6c5fa9",
-    "vendor/ort-wasm-simd-threaded.asyncify.wasm": "e0c0c6d3e73d43b8a249972f8358f845b08cc16fec3c80efafdf8bed40366786"
+    "vendor/ort-wasm-simd-threaded.asyncify.wasm": "e0c0c6d3e73d43b8a249972f8358f845b08cc16fec3c80efafdf8bed40366786",
+    "local-briefing.js": "689995c03f315425c7af33d077b74ade1f85fdceae005471c689b045816e4f42"
   },
   "manifest_version": "0.30.0",
-  "zip_sha256": "86c14a1fc2128676ba3d10623407d94b1e4214bc429cd1ebf7d357806fcf000e",
+  "zip_sha256": "bd24440de1de8ea35830e5354cfb30eafcb19f3301ee32acf1a3bac0b1e727fb",
   "template_files": {
     "LICENSE": "fbbd31cd652b5a98eea06d275bf845949a67301b85d7b03a823d1747aa35182f",
     "THIRD-PARTY-NOTICES.md": "985ec47647a23f53440a0adc20bf6c79e34d7cfc49ee51a9fbabd560b15339da",

@@ -23,7 +23,7 @@ function VisionEmbed() {
     f.addEventListener('load', fit); const iv = window.setInterval(fit, 800)
     return () => { f.removeEventListener('load', fit); window.clearInterval(iv) }
   }, [])
-  return <iframe ref={ref} id="demos" src="/research-vision.html#embed" title="Dis Dat" scrolling="no" style={{ width: '100%', border: 0, display: 'block', background: '#FBF7EE' }} />
+  return <iframe ref={ref} id="demos" src="/research-vision.html#embed" title="DisDat" scrolling="no" style={{ width: '100%', border: 0, display: 'block', background: '#FBF7EE' }} />
 }
 
 export default function DisDat() {
@@ -182,7 +182,7 @@ function Logo({ withText = true, small = false, framed = false }: { withText?: b
           <PixelCursor dark scale={scale} />
         </span>
       )}
-      {withText && <span className="display font-semibold tracking-tight" style={{ fontSize: small ? 18 : 22 }}>Dis Dat</span>}
+      {withText && <span className="display font-semibold tracking-tight" style={{ fontSize: small ? 18 : 22 }}>DisDat</span>}
     </div>
   )
 }

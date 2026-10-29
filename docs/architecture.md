@@ -37,3 +37,9 @@ Hosted mode preserves the original Google/Supabase account flow, Dis Dat provide
 The technical specifications in `docs/original/` preserve the product's original architecture and experiments. They contain historical proposals as well as implementation notes. This document and RELEASE-STATUS.md describe the present candidate.
 
 [Extraction decisions](decisions.md) records the source-beta choices and tradeoffs.
+
+## Local briefing input
+
+The local builder separates generated intent from observed evidence. Qwen receives a bounded spoken-feedback excerpt and relevant target labels, capped at 2,200 characters and 256 output tokens. The URL, selectors, component/source names and selected current styles are formatted deterministically as observed context. General page feedback stays general; silent captures retain their facts directly.
+
+The transcript, captured elements, full computed styles, framework/runtime evidence, DOM, screenshots and source stay in the existing capture artifacts and ground-truth appendix. Own-key and hosted modes retain their richer original prompt. [local-briefing.js](../extension/local-briefing.js) contains the pure builder/formatter; [content.js](../extension/content.js) selects it only for local mode.
