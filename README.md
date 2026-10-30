@@ -8,7 +8,7 @@ DisDat is a Chrome extension that records spoken feedback with the page behind i
 
 Local mode uses the original on-device Whisper and WebLLM pipeline. You can also select your own Deepgram and Groq or Anthropic keys. The capture saves as local JSON for your coding agent.
 
-![DisDat.dev](https://atelierneyra.com/assets/product-shots-20261030/disdat.jpg)
+![DisDat.dev](https://atelierneyra.com/assets/product-motion-v3/disdat.jpg)
 
 [Website demonstration.](docs/assets/README.md)
 
